@@ -61,9 +61,9 @@
         </div>
     </div>
 
-    <div class="flex justify-center items-center space-x-reverse space-x-6 gap-[200px] py-20">
+    <div class="flex justify-between items-center space-x-reverse space-x-6 h-[196px]">
         <!-- Statistic 1 -->
-        <div class="items-center text-center px-16">
+        <div class="text-center px-16">
             <div class="flex items-center text-6xl font-bold text-[#BF9874] ">
                 <span class="text-black text-2xl font-bold px-3">المحاكم</span>
                 <span>1000</span>
@@ -84,8 +84,6 @@
                     class="text-black text-2xl font-bold px-3">المحامين</span>100</div>
         </div>
     </div>
-
-
 </body>
 
 </html>
