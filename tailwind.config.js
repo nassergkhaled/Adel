@@ -12,7 +12,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Almarai", ...defaultTheme.fontFamily.sans],
+                'Almarai': ['Almarai', 'sans-serif'],
 
             },
         },
