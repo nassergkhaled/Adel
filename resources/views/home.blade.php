@@ -38,21 +38,19 @@
                 <div class="flex items-center">
                     <a href="#" class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium">تسجيل
                         الدخول</a>
-                    <a href="#"
-                        class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline">إنشاءحساب</a>
+                    <a href="#" class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline">إنشاء
+                        حساب</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="relative">
-        <img src="{{ asset('images\Rectangle 5.jpg') }}" alt="photo" class="w-full h-auto">
+    <div class="relative w-auto">
+        <img src="{{ asset('images\Rectangle 5.jpg') }}" alt="photo" class="w-screen h-auto sm:object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent">
-
-            <div class="text-rigth mt-[310px] mr-[200px]">
-                <h1 class="text-white text-5xl font-bold my-5">أصبحت برامج إدارة</h1>
-                <h1 class="text-white text-5xl font-bold my-5">الممارسات القانونيـة سهلة</h1>
-                <p class="text-[#AAAAAA] text-lg font-bold my-5 ">قم بأتمتة شركتك وإانجاز المزيد من المهام في وقت أقل
+            <div class="text-right mt-[310px] mr-[200px]">
+                <h1 class="text-white text-5xl font-bold my-5 w-[724px]">أصبحت برامج إدارةالممارسات القانونيـة سهلة</h1>
+                <p class="text-[#AAAAAA] text-lg font-bold my-5">قم بأتمتة شركتك وإانجاز المزيد من المهام في وقت أقل
                     بإستخدام ADEL</p>
                 <button
                     class="text-white bg-[#BF9874] px-4 py-2 my-3 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50">معرفة
@@ -61,7 +59,8 @@
         </div>
     </div>
 
-    <div class="flex justify-center items-center space-x-reverse space-x-6 gap-[200px] py-20">
+
+    <div class="flex justify-between items-center space-x-reverse space-x-6 h-[196px]">
         <!-- Statistic 1 -->
         <div class="items-center text-center px-16">
             <div class="flex items-center text-6xl font-bold text-[#BF9874] ">
@@ -85,6 +84,107 @@
         </div>
     </div>
 
+    <div class="flex justify-between items-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4]">
+
+        <div class="text-start w-[35%] h-[395px] ms-[10%]">
+            <h1 class="text-[#1C1C1C] text-[60px]">عنّا</h1>
+            <p class="text-[#B4B4B4] text-[16px]"> إدارة الملفات القانونية: السماح بإنشاء ملفات لكل عميل بما في ذلك
+                معلومات شخصية وخرائط شخصية وقانونية. يتم تنظيم الملفات بشكل هرمي، مع إمكانية إضافة التعليقات والوثائق
+                المتعلقة. تتبع الوقت والفواتير:يوفر النظام واجهة سهلة لتسجيل ساعات العمل والقانون القانوني لكل محامي.
+                اتخذ المحامون من إنشاء فواتير للخدمات الرائدة في الوقت والنشاط. إدارة المواعيد:يسمح النظام بجدولة
+                المواعيد والمهام للمحامين فقط. يمكن تعيين التنبيهات والتذكيرات وعدم تفويت أي موعد مهم. إدارة المستندات:
+                تتيح تخزين المستندات بشكل آمن ومنظم. يمكن مشاركة المستندات بسهولة بين أعضاء الفريق أو مع العملاء. تقارير
+                تحليلية: تقدم التقارير تقارير دورية عن أداء المكتب وتحليلات مفصلة عن النتائج والدخل. تساعد هذه التحديد
+                على تحديد المجالات التي تحتاج إلى تحديد القرار الصحيح. أمان:يوفر النظام مستويات بيانات عالية من الأمان
+                وموثوقة ولكن المعلومات القانونية. تتميز بآليات النسخ الاحتياطي والتشفير لحماية البيانات من الفقدان أو
+                كلمة المرور. باختصار، يهدف المشروع إلى توفير برامج متخصصة في إدارة مكاتب المحاماة لتقديم منصة شاملة
+                ومتكاملة وفعالة للعمل المكتبي وتسهيل والتواصل مع العملاء بطريقة مؤسسية وآمنة.</p>
+
+
+        </div>
+        <div class="items-start h-full w-auto">
+            <img src="{{ asset('images/img3.png') }}" alt="" class="mt-[23px] h-[612px] w-full">
+        </div>
+
+    </div>
+    <style>
+        p.bubble {
+            position: relative;
+            width: 300px;
+            text-align: center;
+            line-height: 1.4em;
+            margin: 40px auto;
+            background-color: #fff;
+            border: 8px solid #333;
+            border-radius: 30px;
+            font-family: sans-serif;
+            padding: 20px;
+            font-size: large;
+        }
+
+        p.thought {
+            width: 300px;
+            border-radius: 200px;
+            padding: 30px;
+        }
+
+        p.bubble:before,
+        p.bubble:after {
+            content: ' ';
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+        p.speech:before {
+            left: 30px;
+            bottom: -50px;
+            border: 25px solid;
+            border-color: #333 transparent transparent #333;
+        }
+
+        p.speech:after {
+            left: 38px;
+            bottom: -30px;
+            border: 15px solid;
+            border-color: #fff transparent transparent #fff;
+        }
+
+        p.thought:before,
+        p.thought:after {
+            left: 10px;
+            bottom: -30px;
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border: 8px solid #333;
+            -webkit-border-radius: 28px;
+            -moz-border-radius: 28px;
+            border-radius: 28px;
+        }
+
+        p.thought:after {
+            width: 20px;
+            height: 20px;
+            left: 5px;
+            bottom: -40px;
+            -webkit-border-radius: 18px;
+            -moz-border-radius: 18px;
+            border-radius: 18px;
+        }
+    </style>
+
+
+<div class="flex justify-center items-start text-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4]">
+
+    <div class="text-center mt-[3%]">
+        <br>
+        <h1 class="text-[60px] text-[#282828]">ماذا يقول عملاؤنا</h1>
+        <br>
+    </div>
+
+
+</div>
 
 </body>
 
