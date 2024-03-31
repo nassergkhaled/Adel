@@ -29,8 +29,8 @@
                         <x-nav-link :href="'#' . $id='us'" :active="request()->is($id)">
                             عنا
                         </x-nav-link>
-                        
-                        
+
+
                     <a href="#ourServices"
                         class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">خدماتنا</a>
                     <a href="#partners"
@@ -115,55 +115,51 @@
     </div>
 
     {{-- Start of OUR FEATURES section --}}
-    <div class="bg-gray-100 w-full h-[227px] my-2" >
+    <div class="bg-gray-100 w-full my-24">
         <!-- Title centered -->
-        <div class="flex justify-center items-center text-[#1C1C1C] ">
+        <div class="flex justify-center items-center text-[#1C1C1C] py-4 pb-8">
             <div class="text-[2.9rem] font-bold text-center font-Almarai">خدماتنـا</div>
         </div>
 
         <!-- Cards below the title -->
-        <div class="flex justify-center items-center py-8">
-            <div class="flex justify-between items-center  mx-auto space-x-reverse space-x-10">
-                <!-- Card 1 -->
-                <div
-                    class="bg-white flex items-center px-[17px] py-[24px] rounded border border-[#E1E1E1] shadow w-[464px] h-[90px] ">
-                    <div class="flex p-1 ">
-                        <img src="{{ asset('images\Frame 1300.png') }}" alt="Icon" class="h-[70px] w-[71px]">
-                    </div>
-
-                    <div class="flex-grow">
-                        <p class="text-black font-bold text-xl pr-4 font-Almarai">جدولة المواعيد</p>
-                    </div>
+        <div class="flex flex-wrap justify-center items-center gap-4 px-4">
+            <!-- Card 1 -->
+            <div class="bg-white flex items-center px-4 py-4 rounded border border-[#E1E1E1] shadow max-w-sm w-full">
+                <div class="flex-shrink-0 p-1">
+                    <img src="{{ asset('images/Frame 1300.png') }}" alt="Icon" class="h-16 w-16">
                 </div>
 
-                <!-- Card 2 -->
-                <div
-                    class="bg-white flex items-center px-[17px] py-[24px] rounded border border-[#E1E1E1] shadow w-[464px] h-[90px] ">
-                    <div class="flex p-1 ">
-                        <img src="{{ asset('images\Frame 1298.png') }}" alt="Icon" class="h-[70px] w-[71px]">
-                    </div>
+                <div class="flex-grow">
+                    <p class="text-black font-bold text-lg pr-4 font-Almarai">جدولة المواعيد</p>
+                </div>
+            </div>
 
-                    <div class="flex-grow">
-                        <p class="text-black font-bold text-xl pr-4 font-Almarai">تتبع الوقت والفواتير </p>
-                    </div>
+            <!-- Card 2 -->
+            <div class="bg-white flex items-center px-4 py-4 rounded border border-[#E1E1E1] shadow max-w-sm w-full">
+                <div class="flex-shrink-0 p-1">
+                    <img src="{{ asset('images/Frame 1298.png') }}" alt="Icon" class="h-16 w-16">
                 </div>
 
-                <!-- Card 3 -->
-                <div
-                    class="bg-white flex items-center px-[17px] py-[24px] rounded border border-[#E1E1E1] shadow w-[464px] h-[90px] ">
-                    <div class="flex p-1 ">
-                        <img src="{{ asset('images\Frame 1299.png') }}" alt="Icon" class="h-[70px] w-[71px]">
-                    </div>
+                <div class="flex-grow">
+                    <p class="text-black font-bold text-lg pr-4 font-Almarai">تتبع الوقت والفواتير</p>
+                </div>
+            </div>
 
-                    <div class="flex-grow">
-                        <p class="text-black font-bold text-xl pr-4 font-Almarai"> إدارة الملفات القانونية </p>
-                    </div>
+            <!-- Card 3 -->
+            <div class="bg-white flex items-center px-4 py-4 rounded border border-[#E1E1E1] shadow max-w-sm w-full">
+                <div class="flex-shrink-0 p-1">
+                    <img src="{{ asset('images/Frame 1299.png') }}" alt="Icon" class="h-16 w-16">
+                </div>
+
+                <div class="flex-grow">
+                    <p class="text-black font-bold text-lg pr-4 font-Almarai">إدارة الملفات القانونية</p>
                 </div>
             </div>
         </div>
     </div>
+
     {{-- End of OUR FEATURES section --}}
-    
+
     <style>
         p.bubble {
             position: relative;
@@ -255,6 +251,6 @@
     </div>
 
 
-</body>
 
+</body>
 </html>

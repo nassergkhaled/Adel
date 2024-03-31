@@ -19,7 +19,7 @@ export default {
     },
 
     plugins: [require("daisyui"),forms],
-    
+
     corePlugins: {
         rtl: true,
     },
