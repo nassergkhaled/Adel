@@ -13,7 +13,7 @@
     <script src="https://kit.fontawesome.com/98c9346143.js" crossorigin="anonymous"></script>
 
 
-    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
+    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 
 </head>
 
@@ -25,7 +25,7 @@
 
                     <!-- Logo on the right -->
                     <div class="flex items-center">
-                        <img src="{{ asset('images\Group.png') }}" alt="">
+                        <img src="{{ asset('images\Group.png') }}" alt="Adel Logo">
                     </div>
 
                     <!-- Navigation buttons in the middle -->
@@ -60,50 +60,58 @@
             </div>
         </nav>
     </header>
-    <div class="relative w-auto" id="main">
-        <img src="{{ asset('images\Rectangle 5.jpg') }}" alt="photo" class="w-screen h-auto sm:object-cover">
-        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent">
-            <div class="text-right mt-80 mr-52">
-                <h1 class="text-white text-4xl font-bold my-5 w-1/3 leading-relaxed">أصبحت برامج إدارة الممارسات
-                    القانونيـة سهلة</h1>
-                <p class="text-[#AAAAAA] text-lg font-bold w-1/2 my-5">قم بأتمتة شركتك وإانجاز المزيد من المهام في وقت
-                    أقل
-                    بإستخدام ADEL</p>
+
+    <div class="relative w-full" id="main">
+        <img src="{{ asset('images/Rectangle 5.jpg') }}" alt="photo" class="w-full h-auto sm:h-screen object-cover">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-center justify-start ">
+
+            <div class="text-right p-4 sm:p-5 lg:mr-32 xl:mr-52 2xl:mr-45 lg:-mt-36">
+                <h1
+                    class="text-white sm:text-2xl md:text-5xl font-bold md:my-0 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-[65%] lg:leading-snug">
+                    أصبحت برامج إدارة الممارسات القانونية سهلة</h1>
+                <p
+                    class="text-[#AAAAAA] text-base md:text-lg font-bold w-full sm:w-3/4 md:w-2/3 lg:w-full my-2 md:my-3">
+                    قم بأتمتة شركتك وإنجاز المزيد من المهام في وقت أقل بإستخدام ADEL</p>
                 <button
-                    class="text-white bg-[#BF9874] font-Almarai px-4 py-2 my-3 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50">معرفة
+                    class="text-white bg-[#BF9874] px-2 py-2 mt-3 font-bold rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 transition ease-in-out duration-150">معرفة
                     المزيد</button>
             </div>
         </div>
     </div>
 
 
-    <div class="flex justify-between items-center space-x-reverse space-x-6 h-48">
+
+    <div class="flex flex-wrap justify-between items-center md:space-x-6 h-auto">
         <!-- Statistic 1 -->
-        <div class="text-center px-16">
-            <div class="flex items-center text-6xl font-bold text-[#BF9874] ">
-                <span class="text-black text-2xl font-bold px-3 font-Almarai">المحاكم</span>
+        <div class="w-full md:w-auto text-center px-4 md:px-16 py-8 md:py-16">
+            <div
+                class="flex flex-col md:flex-row items-center justify-center md:text-6xl text-4xl font-bold text-[#BF9874] ">
+                <span class="text-black text-xl md:text-2xl font-bold px-2 md:px-3 font-Almarai">المحاكم</span>
                 <span>1000</span>
             </div>
         </div>
-
         <!-- Statistic 2 -->
-        <div class="text-center px-16">
-            <div class="flex text-6xl text-[#BF9874] font-bold items-center">
-                <span class="text-black text-2xl font-bold px-3 font-Almarai">شركائنا</span>
+        <div class="w-full md:w-auto text-center px-4 md:px-16 py-8 md:py-16">
+            <div
+                class="flex flex-col md:flex-row items-center justify-center md:text-6xl text-4xl text-[#BF9874] font-bold">
+                <span class="text-black text-xl md:text-2xl font-bold px-2 md:px-3 font-Almarai">شركائنا</span>
                 <span>500</span>
             </div>
         </div>
-
         <!-- Statistic 3 -->
-        <div class="text-center px-16">
-            <div class="flex items-center text-6xl font-bold text-[#BF9874]"><span
-                    class="text-black text-2xl font-bold px-3 font-Almarai">المحامين</span>100</div>
+        <div class="w-full md:w-auto text-center px-4 md:px-16 py-8 md:py-16">
+            <div
+                class="flex flex-col md:flex-row items-center justify-center md:text-6xl text-4xl font-bold text-[#BF9874]">
+                <span class="text-black text-xl md:text-2xl font-bold px-2 md:px-3 font-Almarai">المحامين</span>
+                <span>100</span>
+            </div>
         </div>
     </div>
 
+
+
     {{-- About us dev ,amr qabaha --}}
-
-
     <div class="flex justify-between items-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4] overflow-hidden lg:text-clip"
         id="us" style="scrollbar-width: none;">
 
@@ -121,24 +129,24 @@
                 كلمة المرور. باختصار، يهدف المشروع إلى توفير برامج متخصصة في إدارة مكاتب المحاماة لتقديم منصة شاملة
                 ومتكاملة وفعالة للعمل المكتبي وتسهيل والتواصل مع العملاء بطريقة مؤسسية وآمنة.</p>
 
-
         </div>
+
         <div id="ourServices"></div>
         <div class="items-start h-full w-auto flex-none bye">
             <img src="{{ asset('images/img3.png') }}" alt="" class="mt-[23px] h-[612px] w-full">
         </div>
-
     </div>
 
+
     {{-- Start of OUR FEATURES section --}}
-    <div class="bg-gray-100 w-full my-24">
+    <div class="bg-gray-100 w-full my-20 ">
         <!-- Title centered -->
-        <div class="flex justify-center items-center text-[#1C1C1C] py-4 pb-8">
+        <div class="flex justify-center items-center text-[#1C1C1C]  pb-8">
             <div class="text-[2.9rem] font-bold text-center font-Almarai">خدماتنـا</div>
         </div>
 
         <!-- Cards below the title -->
-        <div class="flex flex-wrap justify-center items-center gap-4 px-4">
+        <div class="flex flex-wrap justify-center items-center gap-10 px-4 ">
             <!-- Card 1 -->
             <div class="bg-white flex items-center px-4 py-4 rounded border border-[#E1E1E1] shadow max-w-sm w-full">
                 <div class="flex-shrink-0 p-1">
@@ -173,18 +181,25 @@
             </div>
         </div>
     </div>
-
     {{-- End of OUR FEATURES section --}}
 
+
+    {{-- Customer Feedbacks --}}
     <div class="flex justify-center items-start text-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4]">
 
-        <div class="text-center mt-[3%]">
-            <br>
-            <h1 class="text-[60px] text-[#282828]">ماذا يقول عملاؤنا</h1>
+
+        {{-- Title --}}
+        <div class="text-center mt-[7%]">
+            <h1 class="text-3xl text-[#282828] font-bold md:text-[2.9rem lg:text-6xl ">ماذا يقول عملاؤنا ؟</h1>
             <br>
         </div>
 
+        <div class=" absolute mt-16 left-72 text-6xl">
+            <img src="{{ asset('images\quote-up.png') }}" alt="">
+        </div>
+
     </div>
+    {{-- End of Customer FeedBacks --}}
 
 
     <div class="flex justify-center items-center my-3" id="partners">
@@ -197,6 +212,8 @@
             </div>
         </div>
     </div>
+
+
 
     <footer class="bg-[#433529] w-full h-[322px] items-center justify-center flex">
         <div class="flex flex-col w-[75%]">
@@ -254,4 +271,5 @@
 
 
 </body>
+
 </html>
