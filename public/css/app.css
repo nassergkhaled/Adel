@@ -1,0 +1,10 @@
+@media (max-width: 1400px) {
+    .bye {
+        width: 0;
+        height: 0;
+    }
+
+    .hi {
+        width: 90%;
+    }
+}

@@ -13,6 +13,8 @@ export default {
         extend: {
             fontFamily: {
                 'Almarai': ['Almarai', 'sans-serif'],
+                'Inter': ['Inter', 'sans-serif']
+
 
             },
         },
