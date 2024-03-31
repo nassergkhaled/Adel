@@ -1,18 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap')
 
 
-/* fade in animation class */
-@keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  .animate-fade-in {
-    animation: fadeIn 1s ease-in-out;
-  }
-  
