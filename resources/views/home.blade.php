@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth focus:scroll-auto">
 
 <head>
     <link rel="icon" href="{{ asset('images\Group.png') }}" type="image/x-icon">
@@ -32,9 +32,9 @@
 
                     <!-- Navigation buttons in the middle -->
                     <div class="flex-grow flex items-center justify-center">
-                        <a href="#main"
+                        <a href="#main" onclick="scrollToDiv(event, 'main')"
                             class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">الرئيسية</a>
-                        <a href="#us"
+                        <a href="#us" onclick="scrollToDiv(event, 'us')"
                             class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">عنا</a>
 
                         {{--
@@ -43,9 +43,9 @@
                     </x-nav-link>
                     --}}
 
-                        <a href="#ourServices"
+                        <a href="#ourServices" onclick="scrollToDiv(event, 'ourServices')"
                             class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">خدماتنا</a>
-                        <a href="#partners"
+                        <a href="#partners" onclick="scrollToDiv(event, 'partners')"
                             class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">شركائنا</a>
                     </div>
 
@@ -133,7 +133,6 @@
 
         </div>
 
-        <div id="ourServices"></div>
         <div class="items-start h-full w-auto flex-none bye">
             <img src="{{ asset('images/img3.png') }}" alt="" class="mt-[23px] h-[612px] w-full">
         </div>
@@ -141,13 +140,14 @@
 
 
     {{-- Start of OUR FEATURES section --}}
-    <div class="bg-gray-100 w-full my-28 ">
+
+    <div class="bg-gray-100 w-full my-28 " id="ourServices">
         <!-- Title centered -->
-        
+
         <div class="text-center mt-[0px] mb-10">
             <h1 class="text-3xl text-[#282828] font-bold md:text-[2.9rem] lg:text-6xl">خدماتنـا
             </h1>
-            
+
         </div>
 
         <!-- Cards below the title -->
@@ -371,14 +371,12 @@
 
                     {{-- social media --}}
                     <div class=" justify-end items-end text-white" dir="ltr">
-                        <a href="#" class=" text-lg me-6"> <i class="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" class=" text-lg me-6"> <i class="fa-brands fa-x-twitter"></i> </a>
-                        <a href="#" class=" text-lg me-6"> <i class="fa fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" class=" text-lg me-6"> <i class="fa fa-google-plus"
-                                aria-hidden="true"></i> </a>
+                        <a href="https://www.facebook.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="https://www.x.com" target="_blank" class=" text-lg me-6"> <i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://www.linkedin.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        <a href="https://www.google.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
                     </div>
+                    
 
                 </div>
 
@@ -391,10 +389,10 @@
 
                     <div class="leading-[3.5rem] justiy-start items-start">
 
-                        <a class="text-white" href="">الرئيسية</a>
-                        <a class="ms-10" href="">عنا</a>
-                        <a class="ms-10" href="">شركائنا</a>
-                        <a class="ms-10" href="">خدماتنا</a>
+                        <a class="text-white" href="#main" onclick="scrollToDiv(event, 'main')">الرئيسية</a>
+                        <a class="ms-10" href="#us" onclick="scrollToDiv(event, 'us')">عنا</a>
+                        <a class="ms-10" href="#ourServices" onclick="scrollToDiv(event, 'ourServices')">خدماتنا</a>
+                        <a class="ms-10" href="#partners" onclick="scrollToDiv(event, 'partners')">شركائنا</a>
                     </div>
 
                     {{-- social media --}}
@@ -408,8 +406,7 @@
             </div>
         </div>
     </footer>
-
-
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>
