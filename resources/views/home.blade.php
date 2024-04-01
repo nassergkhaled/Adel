@@ -21,36 +21,51 @@
 
 <body class="bg-gray-100 font-Almarai">
     <header>
+        
+        
         <nav class="bg-white shadow-md">
+            <div class="lg:mx-5 sm:mx-20 max-[640px]:mx-5">
             <div class="max-w-7xl mx-auto">
-                <div class="flex justify-between items-center py-5">
-
+                <div class="flex max-[640px]:justify-between sm:justify-between lg:justify-between items-center max-[640px]:py-2 py-5">
+        
                     <!-- Logo on the right -->
-                    <div class="flex items-center">
-                        <img src="{{ asset('images\Group.png') }}" alt="Adel Logo">
+                    <div class="flex h-auto max-[640px]:ms-0 max-[640px]:justify-start" >
+                        <img src="{{ asset('images\Group.png') }}" alt="Adel Logo" class="max-[640px]:w-[60%]">
                     </div>
 
-                    <!-- Navigation buttons in the middle -->
-                    <div class="flex-grow flex items-center justify-center">
-                        <a href="#main" onclick="scrollToDiv(event, 'main')"
+                    <div class="block lg:hidden">
+                        <h1 class="text-[#7C8893] font-bold">عـــادل</h1>
+                    </div>
+        
+                    <!-- Toggle button for mobile -->
+                    <div class="block lg:hidden">
+                        <button id="mobile-menu-toggle"
+                            class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16m-7 6h7"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    
+
+        
+                    <!-- Navigation buttons -->
+                    <div class="hidden lg:flex lg:items-center lg:justify-center lg:flex-grow">
+                        <a href="#main"
                             class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">الرئيسية</a>
-                        <a href="#us" onclick="scrollToDiv(event, 'us')"
+                        <a href="#us"
                             class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">عنا</a>
-
-                        {{--
-                        <x-nav-link :href="'#' . $id='us'" :active="request()->is($id)">
-                        عنا
-                    </x-nav-link>
-                    --}}
-
-                        <a href="#ourServices" onclick="scrollToDiv(event, 'ourServices')"
+                        <a href="#ourServices"
                             class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">خدماتنا</a>
-                        <a href="#partners" onclick="scrollToDiv(event, 'partners')"
+                        <a href="#partners"
                             class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">شركائنا</a>
                     </div>
-
-                    <!-- Buttons on the left with red background -->
-                    <div class="flex items-center">
+        
+                    <!-- Buttons for login and register -->
+                    <div class="hidden lg:flex lg:items-center">
                         <a href="{{ route('login') }}"
                             class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai">تسجيل
                             الدخول</a>
@@ -60,7 +75,30 @@
                     </div>
                 </div>
             </div>
+        </div>
+            <!-- Responsive menu for mobile -->
+            <div class="hidden lg:hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#main"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] hover:text-gray-600 transition-colors duration-200">الرئيسية</a>
+                    <a href="#us"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-gray-600 transition-colors duration-200">عنا</a>
+                    <a href="#ourServices"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-gray-600 transition-colors duration-200">خدماتنا</a>
+                    <a href="#partners"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-gray-600 transition-colors duration-200">شركائنا</a>
+                </div>
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="{{ route('login') }}"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-white bg-[#BF9874]">تسجيل
+                        الدخول</a>
+                    <a href="{{ route('register') }}"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] underline">إنشاء
+                        حساب</a>
+                </div>
+            </div>
         </nav>
+        
     </header>
 
     <div class="relative w-full" id="main">
@@ -117,7 +155,7 @@
     <div class="flex justify-between items-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4] overflow-hidden lg:text-clip"
         id="us" style="scrollbar-width: none;">
 
-        <div class="text-start w-[35%] h-[395px] ms-[10%] overflow-auto hi" style="scrollbar-width: none;">
+        <div class="text-start w-[40%] h-[395px] mx-[10%] overflow-auto max-[1400px]:w-[90%]" style="scrollbar-width: none;">
             <h1 class="text-[#1C1C1C] text-[60px] font-bold ">عنا</h1>
             <p class="text-[#B4B4B4] text-[100%]"> إدارة الملفات القانونية: السماح بإنشاء ملفات لكل عميل بما في ذلك
                 معلومات شخصية وخرائط شخصية وقانونية. يتم تنظيم الملفات بشكل هرمي، مع إمكانية إضافة التعليقات والوثائق
@@ -133,7 +171,7 @@
 
         </div>
 
-        <div class="items-start h-full w-auto flex-none bye">
+        <div class="items-start w-auto flex-none absolute h-auto end-0">
             <img src="{{ asset('images/img3.png') }}" alt="" class="mt-[23px] h-[612px] w-full">
         </div>
     </div>
