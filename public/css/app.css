@@ -7,4 +7,9 @@
     .hi {
         width: 90%;
     }
+   
+    .speechBubble
+    {
+        background-image: image("/images/speech.png");
+    }
 }

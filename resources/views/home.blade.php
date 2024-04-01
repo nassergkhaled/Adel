@@ -2,6 +2,8 @@
 <html lang="ar" dir="rtl">
 
 <head>
+    <link rel="icon" href="{{ asset('images\Group.png') }}" type="image/x-icon">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adel</title>
@@ -116,7 +118,7 @@
         id="us" style="scrollbar-width: none;">
 
         <div class="text-start w-[35%] h-[395px] ms-[10%] overflow-auto hi" style="scrollbar-width: none;">
-            <h1 class="text-[#1C1C1C] text-[60px] ">عنا</h1>
+            <h1 class="text-[#1C1C1C] text-[60px] font-bold ">عنا</h1>
             <p class="text-[#B4B4B4] text-[100%]"> إدارة الملفات القانونية: السماح بإنشاء ملفات لكل عميل بما في ذلك
                 معلومات شخصية وخرائط شخصية وقانونية. يتم تنظيم الملفات بشكل هرمي، مع إمكانية إضافة التعليقات والوثائق
                 المتعلقة. تتبع الوقت والفواتير:يوفر النظام واجهة سهلة لتسجيل ساعات العمل والقانون القانوني لكل محامي.
@@ -139,10 +141,13 @@
 
 
     {{-- Start of OUR FEATURES section --}}
-    <div class="bg-gray-100 w-full my-20 ">
+    <div class="bg-gray-100 w-full my-28 ">
         <!-- Title centered -->
-        <div class="flex justify-center items-center text-[#1C1C1C]  pb-8">
-            <div class="text-[2.9rem] font-bold text-center font-Almarai">خدماتنـا</div>
+        
+        <div class="text-center mt-[0px] mb-10">
+            <h1 class="text-3xl text-[#282828] font-bold md:text-[2.9rem] lg:text-6xl">خدماتنـا
+            </h1>
+            
         </div>
 
         <!-- Cards below the title -->
@@ -185,28 +190,163 @@
 
 
     {{-- Customer Feedbacks --}}
-    <div class="flex justify-center items-start text-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4]">
+    <div class="flex flex-col relative space-x-reverse space-x-6 h-auto bg-[#EFEAE4]">
 
 
-        {{-- Title --}}
-        <div class="text-center mt-[7%]">
-            <h1 class="text-3xl text-[#282828] font-bold md:text-[2.9rem lg:text-6xl ">ماذا يقول عملاؤنا ؟</h1>
-            <br>
+        <img src="{{ asset('images\quote-up.png') }}" class=" absolute end-0 me-48 mt-16">
+        <div class="start-0 bottom-0 absolute">
+            <img src="{{ asset('images\quote-down.png') }}" class="ms-48 mb-12">
         </div>
 
-        <div class=" absolute mt-16 left-72 text-6xl">
-            <img src="{{ asset('images\quote-up.png') }}" alt="">
-        </div>
 
+
+        <div class="w-auto justify-center items-center text-center py-3">
+            {{-- Title --}}
+            <div class="text-center mt-[0px]">
+                <h1 class="text-3xl text-[#282828] font-bold md:text-[2.9rem lg:text-6xl mt-32">ماذا يقول عملاؤنا ؟
+                </h1>
+                <br>
+            </div>
+
+
+
+
+
+            <div class="flex flex-wrap justify-center h-auto mb-52">
+                <div>
+                    <div class="flex flex-col items-center w-full h-auto justify-center relative">
+                        <p class="absolute justify-center w-[85%] text-start text-lg text-[#7C8893]">يا لها من إقامة
+                            رائعة!
+                            إطلالات جبلية رائعة
+                            وحديقة كبيرة بين أشجار الزيتون خاصة جدًا. المنزل نفسه بسيط ومصمم بشكل جميل.
+                            يوجد بالجوار الكثير مما يمكن رؤيته والقيام به.</p>
+
+                        <br>
+                        <div class="w-auto h-[100%]">
+                            <img src="{{ asset('images/speech.png') }}" alt=""
+                                class="w-full h-full bg-cover bg-center bg-no-repeat">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="chat chat-start justify-start">
+                            <div class="chat-image avatar ms-8">
+                                <div class="w-14 rounded-full">
+                                    <img src="{{ asset('images/avatar.png') }}" />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <h1 class="text-[#1C1C1C]">علا ابو خضر</h1>
+                                <p class="ms-0 size-[40%] text-[80%]">زبون</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="flex flex-col items-center w-full h-auto justify-center relative">
+                        <p class="absolute justify-center w-[85%] text-start text-lg text-[#7C8893]">يا لها من إقامة
+                            رائعة!
+                            إطلالات جبلية رائعة
+                            وحديقة كبيرة بين أشجار الزيتون خاصة جدًا. المنزل نفسه بسيط ومصمم بشكل جميل.
+                            يوجد بالجوار الكثير مما يمكن رؤيته والقيام به.</p>
+
+                        <br>
+                        <div class="w-auto h-[100%]">
+                            <img src="{{ asset('images/speech.png') }}" alt=""
+                                class="w-full h-full bg-cover bg-center bg-no-repeat">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="chat chat-start justify-start">
+                            <div class="chat-image avatar ms-8">
+                                <div class="w-14 rounded-full">
+                                    <img src="{{ asset('images/avatar.png') }}" />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <h1 class="text-[#1C1C1C]">علا ابو خضر</h1>
+                                <p class="ms-0 size-[40%] text-[80%]">زبون</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+                    <div class="flex flex-col items-center w-full h-auto justify-center relative">
+                        <p class="absolute justify-center w-[85%] text-start text-lg text-[#7C8893]">يا لها من إقامة
+                            رائعة!
+                            إطلالات جبلية رائعة
+                            وحديقة كبيرة بين أشجار الزيتون خاصة جدًا. المنزل نفسه بسيط ومصمم بشكل جميل.
+                            يوجد بالجوار الكثير مما يمكن رؤيته والقيام به.</p>
+
+                        <br>
+                        <div class="w-auto h-[100%]">
+                            <img src="{{ asset('images/speech.png') }}" alt=""
+                                class="w-full h-full bg-cover bg-center bg-no-repeat">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="chat chat-start justify-start">
+                            <div class="chat-image avatar ms-8">
+                                <div class="w-14 rounded-full">
+                                    <img src="{{ asset('images/avatar.png') }}" />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <h1 class="text-[#1C1C1C]">علا ابو خضر</h1>
+                                <p class="ms-0 size-[40%] text-[80%]">زبون</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="flex flex-col items-center w-full h-auto justify-center relative">
+                        <p class="absolute justify-center w-[85%] text-start text-lg text-[#7C8893]">يا لها من إقامة
+                            رائعة!
+                            إطلالات جبلية رائعة
+                            وحديقة كبيرة بين أشجار الزيتون خاصة جدًا. المنزل نفسه بسيط ومصمم بشكل جميل.
+                            يوجد بالجوار الكثير مما يمكن رؤيته والقيام به.</p>
+
+                        <br>
+                        <div class="w-auto h-[100%]">
+                            <img src="{{ asset('images/speech.png') }}" alt=""
+                                class="w-full h-full bg-cover bg-center bg-no-repeat">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="chat chat-start justify-start">
+                            <div class="chat-image avatar ms-8">
+                                <div class="w-14 rounded-full">
+                                    <img src="{{ asset('images/avatar.png') }}" />
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <h1 class="text-[#1C1C1C]">علا ابو خضر</h1>
+                                <p class="ms-0 size-[40%] text-[80%]">زبون</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
     {{-- End of Customer FeedBacks --}}
 
 
-    <div class="flex justify-center items-center my-3" id="partners">
-        <div class="w-[1440px] h-[285px] flex flex-col justify-center items-center py-4">
+    <div class="flex justify-center items-center my-3 py-28" id="partners">
+        <div class="w-[1440px] h-[285px] flex flex-col justify-center items-center py-20">
             <!-- Title centered -->
-            <div class="text-[2.9rem] font-bold text-center font-Almarai pb-3 text-[#1C1C1C]">شركاؤنا</div>
-            <!-- Partner logos -->
+            <div class="text-center mt-[0px]">
+                <h1 class="text-3xl text-[#282828] font-bold md:text-[2.9rem lg:text-6xl mb-5">شركائنا</h1>
+                <br>
+            </div> <!-- Partner logos -->
             <div>
                 <img src="{{ asset('images/partners.png') }}" alt="Partners Photo Here">
             </div>
