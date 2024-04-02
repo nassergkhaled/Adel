@@ -53,7 +53,7 @@
 
         
                     <!-- Navigation buttons -->
-                    <div class="hidden lg:flex lg:items-center lg:justify-center lg:flex-grow">
+                    <div class="sm:hidden max-[640px]:hidden lg:flex lg:items-center lg:justify-center lg:flex-grow">
                         <a href="#main"
                             class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">الرئيسية</a>
                         <a href="#us"
@@ -65,7 +65,7 @@
                     </div>
         
                     <!-- Buttons for login and register -->
-                    <div class="hidden lg:flex lg:items-center">
+                    <div class="sm:hidden max-[640px]:hidden lg:flex lg:items-center">
                         <a href="{{ route('login') }}"
                             class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai">تسجيل
                             الدخول</a>
