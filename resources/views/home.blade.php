@@ -152,12 +152,12 @@
 
 
     {{-- About us dev ,amr qabaha --}}
-    <div class="flex justify-between items-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4] overflow-hidden lg:text-clip"
+    <div class="flex justify-between items-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4] overflow-auto lg:text-clip"
         id="us" style="scrollbar-width: none;">
 
-        <div class="text-start w-[40%] h-[395px] mx-[10%] overflow-auto max-[1400px]:w-[90%]" style="scrollbar-width: none;">
+        <div class="text-start w-[40%] h-[395px] max-[750px]:h-[90%] mx-[10%] overflow-auto max-[1400px]:w-[90%]" style="scrollbar-width: none;">
             <h1 class="text-[#1C1C1C] text-[60px] font-bold ">عنا</h1>
-            <p class="text-[#B4B4B4] text-[100%]"> إدارة الملفات القانونية: السماح بإنشاء ملفات لكل عميل بما في ذلك
+            <p class="text-[#B4B4B4] text-[100%] max-[750px]:text-[90%]"> إدارة الملفات القانونية: السماح بإنشاء ملفات لكل عميل بما في ذلك
                 معلومات شخصية وخرائط شخصية وقانونية. يتم تنظيم الملفات بشكل هرمي، مع إمكانية إضافة التعليقات والوثائق
                 المتعلقة. تتبع الوقت والفواتير:يوفر النظام واجهة سهلة لتسجيل ساعات العمل والقانون القانوني لكل محامي.
                 اتخذ المحامون من إنشاء فواتير للخدمات الرائدة في الوقت والنشاط. إدارة المواعيد:يسمح النظام بجدولة
@@ -231,8 +231,8 @@
     <div class="flex flex-col relative space-x-reverse space-x-6 h-auto bg-[#EFEAE4]">
 
 
-        <img src="{{ asset('images\quote-up.png') }}" class=" absolute end-0 me-48 mt-16">
-        <div class="start-0 bottom-0 absolute">
+        <img src="{{ asset('images\quote-up.png') }}" class=" absolute end-0 me-48 mt-16 max-[1100px]:hidden">
+        <div class="start-0 bottom-0 absolute max-[1100px]:hidden">
             <img src="{{ asset('images\quote-down.png') }}" class="ms-48 mb-12">
         </div>
 
@@ -241,7 +241,7 @@
         <div class="w-auto justify-center items-center text-center py-3">
             {{-- Title --}}
             <div class="text-center mt-[0px]">
-                <h1 class="text-3xl text-[#282828] font-bold md:text-[2.9rem lg:text-6xl mt-32">ماذا يقول عملاؤنا ؟
+                <h1 class="text-3xl text-[#282828] font-bold md:text-[2.9rem] lg:text-6xl mt-32">ماذا يقول عملاؤنا ؟
                 </h1>
                 <br>
             </div>
@@ -394,28 +394,26 @@
 
 
     <footer class="bg-[#433529] w-full h-[322px] items-center justify-center flex">
-        <div class="flex flex-col w-[75%]">
+        <div class="flex flex-col w-[75%] max-[720px]:w-[95%]">
             <div class="">
 
-                <div class="flex flex-initial items-center justify-between">
+                <div class="flex max-[1173px]:flex-col md:flex-initial items-center justify-between">
 
-                    <div class="flex flex-col leading-[3.5rem] justiy-start items-start">
+                    <div class="flex flex-col leading-[3.5rem] max-[942px]:leading-[2.5rem] justiy-start items-start max-[1173px]:justify-center max-[1173px]:items-center">
                         <div class="size-fit">
-                            <img src="{{ asset('images\Group.png') }}" alt="" class=" size-[65%] h-auto">
+                            <img src="{{ asset('images\Group.png') }}" alt="" class="max-[942px]:ms-4 size-[65%] h-auto max-[942px]:mb-2">
                         </div>
-                        <p class="text-[#C0C2C9]">إدارة الملفات القانونية: وجود ملفات لكل عميل بما في ذلك المعلومات
+                        <p class="text-[#C0C2C9] max-[640px]:text-sm max-[640px]:leading-[2.5rem] md:text-[100%]">إدارة الملفات القانونية: وجود ملفات لكل عميل بما في ذلك المعلومات
                             الشخصية وخرائط الشخصية والقانونية.</p>
                     </div>
 
                     {{-- social media --}}
-                    <div class=" justify-end items-end text-white" dir="ltr">
+                    <div class=" justify-end items-end text-white max-[1173px]:my-2" dir="ltr">
                         <a href="https://www.facebook.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
                         <a href="https://www.x.com" target="_blank" class=" text-lg me-6"> <i class="fa-brands fa-x-twitter"></i></a>
                         <a href="https://www.linkedin.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-linkedin" aria-hidden="true"></i></a>
                         <a href="https://www.google.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
                     </div>
-                    
-
                 </div>
 
 
@@ -423,7 +421,7 @@
             <div class=" border-t border-[#C0C2C9] w-full"></div>
             <div class="">
 
-                <div class="flex flex-initial items-center justify-between">
+                <div class="flex max-[720px]:flex-col md:flex-initial items-center justify-between">
 
                     <div class="leading-[3.5rem] justiy-start items-start">
 
