@@ -21,61 +21,63 @@
 
 <body class="bg-gray-100 font-Almarai">
     <header>
-        
-        
+
+
         <nav class="bg-white shadow-md">
             <div class="lg:mx-5 sm:mx-20 max-[640px]:mx-5">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex max-[640px]:justify-between sm:justify-between lg:justify-between items-center max-[640px]:py-2 py-5">
-        
-                    <!-- Logo on the right -->
-                    <div class="flex h-auto max-[640px]:ms-0 max-[640px]:justify-start" >
-                        <img src="{{ asset('images\Group.png') }}" alt="Adel Logo" class="max-[640px]:w-[60%]">
-                    </div>
+                <div class="max-w-7xl mx-auto">
+                    <div
+                        class="flex max-[640px]:justify-between sm:justify-between lg:justify-between items-center max-[640px]:py-2 py-5">
 
-                    <div class="block lg:hidden">
-                        <h1 class="text-[#7C8893] font-bold">عـــادل</h1>
-                    </div>
-        
-                    <!-- Toggle button for mobile -->
-                    <div class="block lg:hidden">
-                        <button id="mobile-menu-toggle"
-                            class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 6h16M4 12h16m-7 6h7"></path>
-                            </svg>
-                        </button>
-                    </div>
+                        <!-- Logo on the right -->
+                        <div class="flex h-auto max-[640px]:ms-0 max-[640px]:justify-start">
+                            <img src="{{ asset('images\Group.png') }}" alt="Adel Logo" class="max-[640px]:w-[60%]">
+                        </div>
 
-                    
+                        <div class="block lg:hidden">
+                            <h1 class="text-[#7C8893] font-bold">عـــادل</h1>
+                        </div>
 
-        
-                    <!-- Navigation buttons -->
-                    <div class="sm:hidden max-[640px]:hidden lg:flex lg:items-center lg:justify-center lg:flex-grow">
-                        <a href="#main"
-                            class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">الرئيسية</a>
-                        <a href="#us"
-                            class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">عنا</a>
-                        <a href="#ourServices"
-                            class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">خدماتنا</a>
-                        <a href="#partners"
-                            class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">شركائنا</a>
-                    </div>
-        
-                    <!-- Buttons for login and register -->
-                    <div class="sm:hidden max-[640px]:hidden lg:flex lg:items-center">
-                        <a href="{{ route('login') }}"
-                            class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai">تسجيل
-                            الدخول</a>
-                        <a href="{{ route('register') }}"
-                            class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline">إنشاء
-                            حساب</a>
+                        <!-- Toggle button for mobile -->
+                        <div class="block lg:hidden">
+                            <button id="mobile-menu-toggle"
+                                class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16m-7 6h7"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+
+
+
+                        <!-- Navigation buttons -->
+                        <div
+                            class="sm:hidden max-[640px]:hidden lg:flex lg:items-center lg:justify-center lg:flex-grow">
+                            <a href="#main"
+                                class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">الرئيسية</a>
+                            <a href="#us"
+                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">عنا</a>
+                            <a href="#ourServices"
+                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">خدماتنا</a>
+                            <a href="#partners"
+                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">شركائنا</a>
+                        </div>
+
+                        <!-- Buttons for login and register -->
+                        <div class="sm:hidden max-[640px]:hidden lg:flex lg:items-center">
+                            <a href="{{ route('login') }}"
+                                class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai">تسجيل
+                                الدخول</a>
+                            <a href="{{ route('register') }}"
+                                class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline">إنشاء
+                                حساب</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
             <!-- Responsive menu for mobile -->
             <div class="hidden lg:hidden" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1">
@@ -98,7 +100,7 @@
                 </div>
             </div>
         </nav>
-        
+
     </header>
 
     <div class="relative w-full" id="main">
@@ -155,9 +157,11 @@
     <div class="flex justify-between items-center space-x-reverse space-x-6 h-[636px] bg-[#EFEAE4] overflow-auto lg:text-clip"
         id="us" style="scrollbar-width: none;">
 
-        <div class="text-start w-[40%] h-[395px] max-[750px]:h-[90%] mx-[10%] overflow-auto max-[1400px]:w-[90%]" style="scrollbar-width: none;">
+        <div class="text-start w-[40%] h-[395px] max-[750px]:h-[90%] mx-[10%] overflow-auto max-[1400px]:w-[90%]"
+            style="scrollbar-width: none;">
             <h1 class="text-[#1C1C1C] text-[60px] font-bold ">عنا</h1>
-            <p class="text-[#B4B4B4] text-[100%] max-[750px]:text-[90%]"> إدارة الملفات القانونية: السماح بإنشاء ملفات لكل عميل بما في ذلك
+            <p class="text-[#B4B4B4] text-[100%] max-[750px]:text-[90%]"> إدارة الملفات القانونية: السماح بإنشاء ملفات
+                لكل عميل بما في ذلك
                 معلومات شخصية وخرائط شخصية وقانونية. يتم تنظيم الملفات بشكل هرمي، مع إمكانية إضافة التعليقات والوثائق
                 المتعلقة. تتبع الوقت والفواتير:يوفر النظام واجهة سهلة لتسجيل ساعات العمل والقانون القانوني لكل محامي.
                 اتخذ المحامون من إنشاء فواتير للخدمات الرائدة في الوقت والنشاط. إدارة المواعيد:يسمح النظام بجدولة
@@ -399,20 +403,27 @@
 
                 <div class="flex max-[1173px]:flex-col md:flex-initial items-center justify-between">
 
-                    <div class="flex flex-col leading-[3.5rem] max-[942px]:leading-[2.5rem] justiy-start items-start max-[1173px]:justify-center max-[1173px]:items-center">
+                    <div
+                        class="flex flex-col leading-[3.5rem] max-[942px]:leading-[2.5rem] justiy-start items-start max-[1173px]:justify-center max-[1173px]:items-center">
                         <div class="size-fit">
-                            <img src="{{ asset('images\Group.png') }}" alt="" class="max-[942px]:ms-4 size-[65%] h-auto max-[942px]:mb-2">
+                            <img src="{{ asset('images\Group.png') }}" alt=""
+                                class="max-[942px]:ms-4 size-[65%] h-auto max-[942px]:mb-2">
                         </div>
-                        <p class="text-[#C0C2C9] max-[640px]:text-sm max-[640px]:leading-[2.5rem] md:text-[100%]">إدارة الملفات القانونية: وجود ملفات لكل عميل بما في ذلك المعلومات
+                        <p class="text-[#C0C2C9] max-[640px]:text-sm max-[640px]:leading-[2.5rem] md:text-[100%]">إدارة
+                            الملفات القانونية: وجود ملفات لكل عميل بما في ذلك المعلومات
                             الشخصية وخرائط الشخصية والقانونية.</p>
                     </div>
 
                     {{-- social media --}}
                     <div class=" justify-end items-end text-white max-[1173px]:my-2" dir="ltr">
-                        <a href="https://www.facebook.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        <a href="https://www.x.com" target="_blank" class=" text-lg me-6"> <i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="https://www.linkedin.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                        <a href="https://www.google.com" target="_blank" class=" text-lg me-6"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
+                        <a href="https://www.facebook.com" target="_blank" class=" text-lg me-6"> <i
+                                class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="https://www.x.com" target="_blank" class=" text-lg me-6"> <i
+                                class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://www.linkedin.com" target="_blank" class=" text-lg me-6"> <i
+                                class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        <a href="https://www.google.com" target="_blank" class=" text-lg me-6"> <i
+                                class="fa fa-google-plus" aria-hidden="true"></i> </a>
                     </div>
                 </div>
 
@@ -433,16 +444,44 @@
 
                     {{-- social media --}}
                     <div class=" justify-end items-end font-Inter" dir="ltr">
-                        <p>© CopyRight Adel 2024</p>
+                        <p>&copy; CopyRight Adel 2024</p>
                     </div>
 
                 </div>
-
-
             </div>
         </div>
     </footer>
+
+    <button id="scrollTopBtn"
+        class="hidden fixed bottom-5 right-5 bg-[#433529] hover:bg-[#BF9874] text-white font-bold py-3 px-4 rounded-full z-50 transition duration-300 ease-in-out transform hover:scale-110">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+            // Show button when page is scrolled more than 500px
+            window.onscroll = function() {
+                if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                    scrollTopBtn.classList.remove("hidden");
+                } else {
+                    scrollTopBtn.classList.add("hidden");
+                }
+            };
+
+            // Scroll to top when button is clicked
+            scrollTopBtn.addEventListener("click", function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>
