@@ -22,5 +22,16 @@
     "Email": "البريد الالكتروني",
     "Your email address is unverified.": "لم يتم التحقق من عنوان بريدك الإلكتروني.",
     "Click here to re-send the verification email." : "انقر هنا لإعادة إرسال رسالة التحقق عبر البريد الإلكتروني.",
-    "A new verification link has been sent to your email address.": "تم إرسال رابط تحقق جديد إلى عنوان بريدك الإلكتروني."
+    "A new verification link has been sent to your email address.": "تم إرسال رابط تحقق جديد إلى عنوان بريدك الإلكتروني.",
+    "Remember me": "تذكرني",
+    "Forgot your password?": "نسيت كلمة المرور؟",
+    "Log in": "تسجيل الدخول",
+    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.":"نسيت كلمة السر؟ لا مشكلة. فقط أخبرنا بعنوان بريدك الإلكتروني وسنرسل إليك عبر البريد الإلكتروني رابط إعادة تعيين كلمة المرور الذي سيسمح لك باختيار كلمة مرور جديدة.",
+    "Email Password Reset Link": "ارسل لي رابط استعادة كلمة المرور",
+    "Already registered?": "لديك حساب ؟",
+    "Register": "إنشاء حساب",
+    "First name": "الاسم الاول",
+    "Last name": "الاسم الاخير",
+    "I agree to the terms and conditions":"اوافق على الشروط والاحكام",
+    "ff" :"sdfgdfg wsdffgs dfg sdfgsdfr"
 }

@@ -1,52 +1,61 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
-
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+    
+    <!-- Right Pane -->
+    <div class="w-full bg-white lg:w-1/2 flex items-center justify-center font-Almarai">
+        <div class="md:w-[80%] sm:w-full max-h-full lg:w-[60%] p-6">
+            <div class="w-full justify-center items-center flex mb-10">
+                <a href="/">
+                <x-application-logo />
             </a>
+            </div>
+            <h1 class="text-2xl font-bold font-Almarai mb-6 text-black text-center">{{ __('Register') }}</h1>
+            <h1 class=" mb-10 text-[#B4B4B4] text-center">أدخل المعلومات التالية لانشاء حساب خاص بك</h1>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+
+            <form form method="POST" action="{{ route('register') }}" class="space-y-4" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+                <!-- Your form elements go here -->
+                <div>
+                    <label for="first_name" class="block text-sm font-medium text-gray-700">{{ __('First name') }}</label>
+                    <input type="text" id="first_name" name="first_name" placeholder="{{ __('First name') }}"
+                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                </div>
+                <div>
+                    <label for="last_name" class="block text-sm font-medium text-gray-700">{{ __('Last name') }}</label>
+                    <input type="text" id="last_name" name="last_name" placeholder="{{ __('Last name') }}"
+                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">{{ __('Email') }}</label>
+                    <input type="text" id="email" name="email" placeholder="{{ __('Email') }}"
+                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">{{ __('Password') }}</label>
+                    <input type="password" id="password" name="password" placeholder="{{ __('Password') }}"
+                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="agree" name="agree"
+                        class="h-4 w-4 text-gray-700 focus:ring-gray-300 border-gray-300 rounded transition duration-300">
+                    <label for="agree" class="ml-2 block text-sm text-gray-900"> &nbsp
+                        {{ __('I agree to the terms and conditions') }}</label>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Register') }}</button>
+                </div>
+            </form>
+            <div class="mt-4 text-sm text-gray-600 text-center">
+                <p>{{ __('Already registered?') }} <a href="{{ route('login') }}"
+                        class="text-[#BF9874] hover:underline">{{ __('Log in') }} </a></p>
+            </div>
         </div>
-    </form>
+    </div>
+
+    <div class="sm:hidden lg:flex items-center justify-center flex-1 bg-white text-black">
+        <div class="w-full h-full text-center overflow-hidden">
+            <x-register-image />
+        </div>
+    </div>
 </x-guest-layout>
