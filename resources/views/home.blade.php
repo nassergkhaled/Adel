@@ -68,12 +68,18 @@
 
                         <!-- Buttons for login and register -->
                         <div class="sm:hidden max-[640px]:hidden lg:flex lg:items-center">
+                            @guest
                             <a href="{{ route('login') }}"
-                                class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai">تسجيل
+                                class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai hover:bg-[#282828]">تسجيل
                                 الدخول</a>
                             <a href="{{ route('register') }}"
                                 class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline">إنشاء
                                 حساب</a>
+                                @endguest
+                                @auth
+                                <a href="{{ route('dashboard') }}"
+                                class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai hover:bg-[#282828]">{{__("Dashboard")}}</a>
+                                @endauth
                         </div>
                     </div>
                 </div>
@@ -453,7 +459,7 @@
     </footer>
 
     <button id="scrollTopBtn"
-        class="hidden fixed bottom-5 right-5 bg-[#433529] hover:bg-[#BF9874] text-white font-bold py-3 px-4 rounded-full z-50 transition duration-300 ease-in-out transform hover:scale-110">
+        class="hidden fixed bottom-5 border border-[#C0C2C9] right-5 bg-[#433529] hover:bg-[#BF9874] text-white font-bold py-3 px-4 rounded-full z-50 duration-300 ease-in-out transform hover:scale-110">
         <i class="fas fa-chevron-up"></i>
     </button>
 

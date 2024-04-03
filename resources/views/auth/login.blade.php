@@ -12,8 +12,15 @@
             </h1>
 
 
-            <form form method="POST" action="{{ route('register') }}" class="space-y-4"
+            @error('email')
+            {{$message}}
+            @enderror 
+            @error('password')
+            {{$message}}
+            @enderror
+            <form form method="POST" action="{{ route('login') }}" class="space-y-4"
                 dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+                @csrf
 
                 <div>
                     <label for="email"
