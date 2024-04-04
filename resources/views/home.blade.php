@@ -30,7 +30,7 @@
                         <!-- Logo on the right -->
                         <div class="flex h-auto max-[640px]:ms-0 max-[640px]:justify-start">
                             <a href="/">
-                                <img src="{{ asset('images\Group.png') }}" alt="Adel Logo" class="max-[640px]:w-[60%]">
+                                <x-application-logo class="max-[640px]:w-[60%]" />
                             </a>
                         </div>
 
@@ -81,7 +81,7 @@
                                     @csrf
                                     <button type="submit">
                                         <a
-                                            class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline hover:text-[#433529]">{{ __('Log Out') }}</a>
+                                            class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium hover:underline hover:text-[#433529]">{{ __('Log Out') }}</a>
                                     </button>
                             @endauth
                         </div>
@@ -113,7 +113,7 @@
                             @csrf
                             <button type="submit">
                                 <a
-                                    class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] underline">{{ __('Log Out') }}</a>
+                                    class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] hover:underline">{{ __('Log Out') }}</a>
                             </button>
                         </form>
                     @endguest
@@ -124,7 +124,7 @@
     </header>
 
     <div class="relative w-full" id="main">
-        <img src="{{ asset('images/Rectangle 5.jpg') }}" alt="photo" class="w-full h-auto sm:h-screen object-cover">
+        <img src="{{ asset('images/Rectangle 5.jpg') }}" alt="photo" class="w-full h-auto min-[1024px]:h-screen object-cover">
 
         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-center justify-start ">
 
@@ -144,7 +144,7 @@
 
 
 
-    <div class="flex flex-wrap justify-between items-center md:space-x-6 h-auto">
+    <div class="flex flex-wrap lg:justify-between sm:justify-center items-center md:space-x-6 h-auto">
         <!-- Statistic 1 -->
         <div class="w-full md:w-auto text-center px-4 md:px-16 py-8 md:py-16">
             <div

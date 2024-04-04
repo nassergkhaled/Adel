@@ -4,4 +4,4 @@
 </svg>
 --}}
 
-<img src="{{ asset('images\Group.png') }}" alt="Adel Logo">
+<img src="{{ asset('images\Group.png') }}" alt="Adel Logo" class="filter-none grayscale hover:filter transition duration-200">
