@@ -32,5 +32,7 @@
     "Register": "إنشاء حساب",
     "First name": "الاسم الاول",
     "Last name": "الاسم الاخير",
-    "I agree to the terms and conditions":"اوافق على الشروط والاحكام"
+
+    "I agree to":"اوافق على",
+    "The terms and conditions":"الشروط والاحكام"
 }

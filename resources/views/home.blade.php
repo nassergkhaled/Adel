@@ -21,8 +21,6 @@
 
 <body class="bg-gray-100 font-Almarai">
     <header>
-
-
         <nav class="bg-white shadow-md">
             <div class="lg:mx-5 sm:mx-20 max-[640px]:mx-5">
                 <div class="max-w-7xl mx-auto">
@@ -31,7 +29,9 @@
 
                         <!-- Logo on the right -->
                         <div class="flex h-auto max-[640px]:ms-0 max-[640px]:justify-start">
-                            <img src="{{ asset('images\Group.png') }}" alt="Adel Logo" class="max-[640px]:w-[60%]">
+                            <a href="/">
+                                <img src="{{ asset('images\Group.png') }}" alt="Adel Logo" class="max-[640px]:w-[60%]">
+                            </a>
                         </div>
 
                         <div class="block lg:hidden">
@@ -41,7 +41,7 @@
                         <!-- Toggle button for mobile -->
                         <div class="block lg:hidden">
                             <button id="mobile-menu-toggle"
-                                class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">
+                                class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-[#433529] transition-colors duration-200">
                                 <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -56,30 +56,34 @@
                         <!-- Navigation buttons -->
                         <div
                             class="sm:hidden max-[640px]:hidden lg:flex lg:items-center lg:justify-center lg:flex-grow">
-                            <a href="#main"
-                                class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">الرئيسية</a>
-                            <a href="#us"
-                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">عنا</a>
-                            <a href="#ourServices"
-                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">خدماتنا</a>
-                            <a href="#partners"
-                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-gray-600 transition-colors duration-200">شركائنا</a>
+                            <a href="#main" onclick="scrollToDiv(event, 'main')"
+                                class="text-[#BF9874] px-3 py-2 rounded-md text-lg font-medium hover:text-[#433529] transition-colors duration-200">الرئيسية</a>
+                            <a href="#us" onclick="scrollToDiv(event, 'us')"
+                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-[#433529] transition-colors duration-200">عنا</a>
+                            <a href="#ourServices" onclick="scrollToDiv(event, 'ourServices')"
+                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-[#433529] transition-colors duration-200">خدماتنا</a>
+                            <a href="#partners" onclick="scrollToDiv(event, 'partners')"
+                                class="text-[#B9B4B4] px-3 py-2 rounded-md text-lg font-medium hover:text-[#433529] transition-colors duration-200">شركائنا</a>
                         </div>
 
                         <!-- Buttons for login and register -->
                         <div class="sm:hidden max-[640px]:hidden lg:flex lg:items-center">
                             @guest
-                            <a href="{{ route('login') }}"
-                                class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai hover:bg-[#282828]">تسجيل
-                                الدخول</a>
-                            <a href="{{ route('register') }}"
-                                class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline">إنشاء
-                                حساب</a>
-                                @endguest
-                                @auth
+                                <a href="{{ route('login') }}"
+                                    class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai hover:bg-[#433529]">{{ __('Log in') }}</a>
+                                <a href="{{ route('register') }}"
+                                    class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline hover:text-[#433529]">{{ __('Register') }}</a>
+                            @endguest
+                            @auth
                                 <a href="{{ route('dashboard') }}"
-                                class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai hover:bg-[#282828]">{{__("Dashboard")}}</a>
-                                @endauth
+                                    class="bg-[#BF9874] text-white px-4 py-2 rounded-md text-sm font-medium font-Almarai hover:bg-[#433529]">{{ __('Dashboard') }}</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit">
+                                        <a
+                                            class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium underline hover:text-[#433529]">{{ __('Log Out') }}</a>
+                                    </button>
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -87,22 +91,32 @@
             <!-- Responsive menu for mobile -->
             <div class="hidden lg:hidden" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1">
-                    <a href="#main"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] hover:text-gray-600 transition-colors duration-200">الرئيسية</a>
-                    <a href="#us"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-gray-600 transition-colors duration-200">عنا</a>
-                    <a href="#ourServices"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-gray-600 transition-colors duration-200">خدماتنا</a>
-                    <a href="#partners"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-gray-600 transition-colors duration-200">شركائنا</a>
+                    <a href="#main" onclick="scrollToDiv(event, 'main')"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] hover:text-[#433529] transition-colors duration-200">الرئيسية</a>
+                    <a href="#us" onclick="scrollToDiv(event, 'us')"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-[#433529] transition-colors duration-200">عنا</a>
+                    <a href="#ourServices" onclick="scrollToDiv(event, 'ourServices')"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-[#433529] transition-colors duration-200">خدماتنا</a>
+                    <a href="#partners" onclick="scrollToDiv(event, 'partners')"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-[#B9B4B4] hover:text-[#433529] transition-colors duration-200">شركائنا</a>
                 </div>
                 <div class="px-2 pt-2 pb-3 space-y-1">
-                    <a href="{{ route('login') }}"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-white bg-[#BF9874]">تسجيل
-                        الدخول</a>
-                    <a href="{{ route('register') }}"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] underline">إنشاء
-                        حساب</a>
+                    @guest
+                        <a href="{{ route('login') }}"
+                            class="block px-3 py-2 rounded-md text-base font-medium text-white bg-[#BF9874]">{{ __('Log in') }}</a>
+                        <a href="{{ route('register') }}"
+                            class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] underline">{{ __('Register') }}</a>
+                    @else
+                        <a href="{{ route('dashboard') }}"
+                            class="block px-3 py-2 rounded-md text-base font-medium text-white bg-[#BF9874]">{{ __('Dashboard') }}</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit">
+                                <a
+                                    class="block px-3 py-2 rounded-md text-base font-medium text-[#BF9874] underline">{{ __('Log Out') }}</a>
+                            </button>
+                        </form>
+                    @endguest
                 </div>
             </div>
         </nav>
@@ -122,7 +136,7 @@
                     class="text-[#AAAAAA] text-base md:text-lg font-bold w-full sm:w-3/4 md:w-2/3 lg:w-full my-2 md:my-3">
                     قم بأتمتة شركتك وإنجاز المزيد من المهام في وقت أقل بإستخدام ADEL</p>
                 <button
-                    class="text-white bg-[#BF9874] px-2 py-2 mt-3 font-bold rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 transition ease-in-out duration-150">معرفة
+                    class="text-white bg-[#BF9874] px-2 py-2 mt-3 font-bold rounded hover:bg-[#433529] focus:outline-none focus:ring-2 focus:bg-[#433529] focus:ring-opacity-50 transition ease-in-out duration-150">معرفة
                     المزيد</button>
             </div>
         </div>
@@ -464,29 +478,6 @@
     </button>
 
     <script src="{{ asset('js/app.js') }}"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const scrollTopBtn = document.getElementById("scrollTopBtn");
-
-            // Show button when page is scrolled more than 500px
-            window.onscroll = function() {
-                if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                    scrollTopBtn.classList.remove("hidden");
-                } else {
-                    scrollTopBtn.classList.add("hidden");
-                }
-            };
-
-            // Scroll to top when button is clicked
-            scrollTopBtn.addEventListener("click", function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
-            });
-        });
-    </script>
 
 </body>
 

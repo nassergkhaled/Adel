@@ -1,3 +1,5 @@
+@section('title','Login | ')
+
 <x-guest-layout>
     <!-- Right Pane -->
     <div class="w-full bg-white lg:w-1/2 flex items-center justify-center font-Almarai">
@@ -47,9 +49,9 @@
                     <div class="end-0">
                         <label for="remember_me" class="inline-flex items-center">
                             <input id="remember_me" type="checkbox"
-                                class="rounded border-gray-300 dark:border-gray-700 text-[#BF9874] shadow-sm focus:ring-[#BF9874]"
+                                class="rounded border-gray-300 dark:border-[#433529] text-[#BF9874] shadow-sm focus:ring-[#BF9874]"
                                 name="remember">
-                            <span class="ms-2 text-sm text-gray-600 ">{{ __('Remember me') }}</span>
+                            <span class="ms-2 text-sm text-[#433529] ">{{ __('Remember me') }}</span>
                         </label>
                     </div>
                 </div>
@@ -57,7 +59,7 @@
                         class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Log in') }}</button>
                 
             </form>
-            <div class="mt-4 text-sm text-gray-600 text-center">
+            <div class="mt-4 text-sm text-[#433529] text-center">
                 <p>ليس لديك حساب ؟ <a href="{{ route('register') }}" class="text-[#BF9874] hover:underline">{{ __('Register') }} </a>
                 </p>
             </div>

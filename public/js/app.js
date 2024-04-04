@@ -3,7 +3,7 @@
 
 
 
-//landing page <a> scroll Script
+//landing page <a> scroll Script (with alittle pixels above the slelected div)
 function scrollToDiv(event, id) {
     event.preventDefault(); // Prevent the default anchor behavior
     const element = document.getElementById(id);
@@ -29,4 +29,29 @@ const mobileMenu = document.getElementById('mobile-menu');
 toggleButton.addEventListener('click', () => {
     // Toggle the 'hidden' class to show/hide the mobile menu
     mobileMenu.classList.toggle('hidden');
+});
+
+
+
+
+//Landing Page scroll Up Button
+document.addEventListener("DOMContentLoaded", function() {
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    // Show button when page is scrolled more than 500px
+    window.onscroll = function() {
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            scrollTopBtn.classList.remove("hidden");
+        } else {
+            scrollTopBtn.classList.add("hidden");
+        }
+    };
+
+    // Scroll to top when button is clicked
+    scrollTopBtn.addEventListener("click", function() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
 });

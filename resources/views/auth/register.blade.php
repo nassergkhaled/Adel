@@ -1,3 +1,6 @@
+@section('title','Register | ')
+
+
 <x-guest-layout>
 
     <!-- Right Pane -->
@@ -11,7 +14,7 @@
             <h1 class="text-2xl font-bold font-Almarai mb-6 text-black text-center">{{ __('Register') }}</h1>
             <h1 class=" mb-10 text-[#B4B4B4] text-center">أدخل المعلومات التالية لانشاء حساب خاص بك</h1>
 
-            {{-- @error('first_name')
+            @error('first_name')
                 {{ $message }}
             @enderror
             @error('last_name')
@@ -22,8 +25,8 @@
             @enderror
             @error('password')
                 {{ $message }}
-            @enderror --}}
-            <form form method="POST" action="{{ route('register') }}" class="space-y-4"
+            @enderror
+            <form form method="POST" action="{{ route('register') }}" class="space-y-4 max"
                 dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
                 @csrf
                 <div>
@@ -46,17 +49,18 @@
                     <label for="password" class="block text-sm font-medium text-gray-700">{{ __('Password') }}</label>
                     <input type="password" id="password" name="password" placeholder="{{ __('Password') }}"
                         class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                        
                 </div>
                 <div class="flex items-center">
                     <input type="checkbox" id="agree" name="agree"
-                        class="h-4 w-4 text-gray-700 focus:ring-gray-300 border-gray-300 rounded transition duration-300">
+                        class="rounded border-gray-300 dark:border-[#433529] text-[#BF9874] shadow-sm focus:ring-[#BF9874]">
                     <label for="agree" class="ml-2 block text-sm text-gray-900"> &nbsp
-                        {{ __('I agree to the terms and conditions') }}</label>
+                        {{ __('I agree to') }} <a href="#" class="text-[#BF9874] hover:underline">{{ __('The terms and conditions') }}</a></label>
                 </div>
 
                 <div>
                     <button type="button" onclick="my_modal_5.showModal()"
-                        class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Register') }}</button>
+                        class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Register') }}</button>
                 </div>
                 <!-- Open the modal using ID.showModal() method -->
                 <dialog id="my_modal_5" class="modal modal-middle sm:modal-middle">
@@ -73,7 +77,7 @@
                         </div>
                         <div class="modal-action">
                             
-                                <button type="submit" class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Register') }}</button>
+                                <button type="submit" class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Register') }}</button>
                             
                         </div>
                     </div>
