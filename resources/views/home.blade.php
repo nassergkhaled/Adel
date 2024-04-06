@@ -473,7 +473,7 @@
     </footer>
 
     <button id="scrollTopBtn"
-        class="hidden fixed bottom-5 border border-[#C0C2C9] right-5 bg-[#433529] hover:bg-[#BF9874] text-white font-bold py-3 px-4 rounded-full z-50 duration-300 ease-in-out transform hover:scale-110">
+        class="hidden fixed bottom-5 border border-[#C0C2C9] right-5 bg-[#433529] hover:bg-[#BF9874] text-white font-bold px-2 py-1 md:py-3 md:px-4 rounded-full z-50 duration-300 ease-in-out transform hover:scale-110">
         <i class="fas fa-chevron-up"></i>
     </button>
 
