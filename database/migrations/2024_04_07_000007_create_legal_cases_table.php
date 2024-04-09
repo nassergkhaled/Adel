@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id('task_id');
-            $table->foreignId('case_id')->constrained('legal_cases');
-            $table->text('description');
-            $table->unsignedBigInteger('assigned_to');
-            $table->date('due_date');
+        Schema::create('legal_cases', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('case_type');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->string('status');
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('legal_cases');
     }
 };

@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('client_details', function (Blueprint $table) {
-            $table->foreignId('user_id')->primary()->constrained('users')->onDelete('cascade');
-            $table->text('address');
-            $table->date('date_of_birth');
-            $table->timestamps();
+        Schema::table('offices', function (Blueprint $table) {
+            
+            $table->foreign( 'manager_id' )->references('user_id')->on('managers'); // cant be null , change the manager not delete it
         });
-        
     }
 
     /**
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        //
     }
 };

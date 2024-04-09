@@ -12,18 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('witnesses', function (Blueprint $table) {
-            $table->id('witness_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('phone');
+            $table->id();
+            $table->string('full_name');
+            $table->string('ID_no', 15)->unique();
+            $table->json('contact_info'); // Phone, Email
+            $table->string('relationship'); // between  witness()->case()->client()->get();
+
+            
+
+            // $table->string('email')->unique();
+            // $table->string('phone');
+
+            $table->boolean('oath_availability')->default('0');
             $table->text('testimony')->nullable();
             $table->timestamps();
         });
-        
     }
 
-    /**
+    /*
+     *
      * Reverse the migrations.
      */
     public function down(): void
