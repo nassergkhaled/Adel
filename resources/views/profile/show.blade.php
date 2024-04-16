@@ -1,5 +1,8 @@
-@extends('test')
-@section('content')
+@section('page_name','الملف الشخصي')
+@section('title','الملف الشخصي | ')
+
+<x-app-layout>
+
     <div class="w-full p-3 space-y-5">
         <div class="flex justify-end w-full">
             <button type="button"
@@ -74,4 +77,4 @@
 
 
     </div>
-@endsection
+</x-app-layout>
