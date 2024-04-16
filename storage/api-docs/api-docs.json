@@ -1,0 +1,90 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Adel API",
+        "description": "This is the First Swagger API try.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/test": {
+            "get": {
+                "tags": [
+                    "Testing"
+                ],
+                "summary": "Retrieve hello world message",
+                "description": "This endpoint returns a simple hello world message.",
+                "operationId": "c76b4f9d8b582998526ec32c0b718047",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Hello World"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/r": {
+            "post": {
+                "tags": [
+                    "Testing_Request"
+                ],
+                "summary": "Retrieve hello world message",
+                "description": "This endpoint returns a simple hello world message.",
+                "operationId": "2f47b6cb7785fb0068e395a81a0ee525",
+                "parameters": [
+                    {
+                        "name": "String1",
+                        "in": "query",
+                        "description": "An example query parameter",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "String2",
+                        "in": "query",
+                        "description": "An example query parameter",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "R": {
+                                            "description": "The entire request object as received",
+                                            "type": "object",
+                                            "example": {
+                                                "exampleParam": "value",
+                                                "anotherParam": "value"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -7,8 +7,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/test', function (Request $request) {
-    return response()->json([
-        'message' => 'Hello World'
-    ]);
-});
+use App\Http\Controllers\api\TestController;
+
+Route::get('/test', [TestController::class, 'test']);
+Route::post('/r', [TestController::class, 'returnRequest']);
