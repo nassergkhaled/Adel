@@ -34,9 +34,9 @@
                             </a>
                         </div>
 
-                        <div class="block lg:hidden">
+                        {{-- <div class="block lg:hidden">
                             <h1 class="text-[#7C8893] font-bold">عـــادل</h1>
-                        </div>
+                        </div> --}}
 
                         <!-- Toggle button for mobile -->
                         <div class="block lg:hidden">
