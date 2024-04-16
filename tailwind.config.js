@@ -11,6 +11,8 @@ export default {
 
     theme: {
         extend: {
+            backgroundColor: ['active', 'responsive', 'hover'],
+
             fontFamily: {
                 'Almarai': ['Almarai', 'sans-serif'],
                 'Inter': ['Inter', 'sans-serif']
