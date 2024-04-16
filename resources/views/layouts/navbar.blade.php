@@ -1,4 +1,4 @@
-<nav class="bg-white shadow-lg py-2">
+<nav class="bg-white shadow-md py-2 w-full">
     <div class="px-5 mx-auto">
         <div class="flex justify-between">
             <!-- Logo and profile on the left -->
@@ -15,58 +15,114 @@
                 <div class=" flex items-center justify-start text-xl text-black">
                     الرئيسية
                 </div>
-                <div class="flex items-center">
+                <div class=" relative flex items-center">
                     <!-- Search bar -->
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
                     <div class="justify-center items-center me-8">
                         <div class="flex rounded-xl items-center">
-                            <input type="text" class="bg-gray-100 px-4 py-2 w-60 rounded-xl border-none"
+                            <input type="text" class="bg-gray-100 px-10 py-2 w-60 rounded-xl border-none"
                                 placeholder="ابحث">
                         </div>
                     </div>
 
 
 
-                    <div class="flex">
-                        <div class="dropdown dropdown-end">
-                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                                <div class="w-20 mt-1 rounded-full">
-                                    <img alt="Tailwind CSS Navbar component"
-                                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                </div>
-                            </div>
-                            <ul tabindex="0"
-                                class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                <li>
-                                    <a class="justify-between">
-                                        {{ __('Profile') }}
-                                        <span class="badge">جديد</span>
-                                    </a>
-                                </li>
-                                <li><a>{{ __('Settings') }}</a></li>
-                                <li><a>{{ __('Logout') }}</a></li>
-                            </ul>
-                        </div>
 
-                        <div class="flex flex-col items-center text-start ms-2">
-                            <p class="text-start w-full text-[#151D48] font-Almarai">علا ابو خضر</p>
-                            <p class="text-start w-full text-[#737791]">ادمن</p>
+
+
+                    <div class="flex items-center">
+
+                        <div class="avatar w-12">
+                            <div class="rounded-full">
+                                <img alt="Tailwind CSS Navbar component"
+                                    src="{{ asset('/images/profile_avatar.png') }}" />
+                            </div>
                         </div>
 
                     </div>
 
+                    <div class="flex flex-col items-center text-start mb-2 ms-2">
+                        <p class="text-start w-full text-[#151D48] font-Almarai">
+                            {{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</p>
+                        <p class="text-start w-full text-[#737791]">ادمن</p>
+                    </div>
+
+                    <div class="flex items-start top-0 ms-2 justify-start text-start">
+
+
+
+
+                        <div class="dropdown dropdown-hover dropdown-end">
+                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                                <div class="w-20 mt-2 rounded-full">
+                                    <i class="fa-solid fa-caret-down"></i>
+                                </div>
+                            </div>
+                            <ul tabindex="0"
+                                class="mt-0 z-[1] p-2 shadow-lg transition ease-in-out duration-200 menu menu-sm dropdown-content border bg-slate-50 text-black rounded-box w-52 ">
+                                <li class=" hover:bg-gray-200 rounded-lg">
+                                    <a class="justify-between" href="{{ route('profile') }}">
+                                        {{ __('Profile') }}
+                                        {{-- <span class="badge">جديد</span> --}}
+                                    </a>
+                                </li>
+                                <li class=" hover:bg-gray-200 rounded-lg"><a>{{ __('Settings') }}</a></li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <li class="hover:bg-gray-200 rounded-lg">
+                                        <button type="submit">
+                                            <a class="">{{ __('Log Out') }}</a>
+                                        </button>
+                                    </li>
+                                </form>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="ms-5 size-12 bg-[#FFFAF1] rounded-lg flex justify-center items-center">
+                        <div class="absolute flex text-red-600 text-7xl me-4 mb-6">∙</div>
+
+                        <i class="text-[#FFA412]  text-3xl fa-regular fa-bell"></i>
+
+                    </div>
+
+
                 </div>
+
+
             </div>
         </div>
+    </div>
     </div>
     <!-- mobile menu -->
     <div class="hidden mobile-menu">
         <ul class="">
-            <li><a href="#" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</a></li>
-            <li><a href="#services"
+            <li class=" hover:bg-gray-200 rounded-lg"><a href="#"
+                    class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</a></li>
+            <li class=" hover:bg-gray-200 rounded-lg"><a href="#services"
                     class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Services</a></li>
-            <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">About</a>
+            <li class=" hover:bg-gray-200 rounded-lg"><a href="#about"
+                    class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">About</a>
             </li>
-            <li><a href="#contact" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Contact
+            <li class=" hover:bg-gray-200 rounded-lg"><a href="#contact"
+                    class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Contact
                     Us</a></li>
         </ul>
     </div>

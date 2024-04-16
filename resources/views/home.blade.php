@@ -83,6 +83,7 @@
                                         <a
                                             class="text-[#BF9874] px-3 py-2 rounded-md text-sm font-medium hover:underline hover:text-[#433529]">{{ __('Log Out') }}</a>
                                     </button>
+                                </form>
                             @endauth
                         </div>
                     </div>

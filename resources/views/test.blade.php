@@ -14,13 +14,22 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    <script src="https://kit.fontawesome.com/a9938c3b92.js" crossorigin="anonymous"></script>
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-white font-Almarai">
+<body class="bg-adel-bg font-Almarai">
     @include('layouts.navbar')
-    @include('layouts.sidebar')
+    <div class="flex">
+        <div class="w-[15%]">
+            @include('layouts.sidebar')
+        </div>
+        <div class="w-[85%]">
+            @yield('content')
+        </div>
+    </div>
 </body>
 
 </html>
