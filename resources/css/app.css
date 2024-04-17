@@ -6,4 +6,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :where([dir="rtl"]) select {
+      background-position: left theme('spacing.2') center;
+      padding-left: theme('spacing.10');
+      padding-right: theme('spacing.3');
+    }
+
+    [dir="rtl"] input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0) brightness(0%) contrast(0%);
+    }
+
+
+  }
 

@@ -25,7 +25,7 @@
             </x-nav-link>
 
 
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="p-[0.60rem] flex items-center">
+            <x-nav-link :href="route('legalCases.index')" :active="request()->routeIs('legalCases.index')" class="p-[0.60rem] flex items-center">
 
                 <svg width="22" height="20" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="inline-block mr-5">
