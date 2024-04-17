@@ -49,7 +49,7 @@
                     <label for="password" class="block text-sm font-medium text-gray-700">{{ __('Password') }}</label>
                     <input type="password" id="password" name="password" placeholder="{{ __('Password') }}"
                         class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        
+
                 </div>
                 <div class="flex items-center">
                     <input type="checkbox" id="agree" name="agree"
@@ -67,7 +67,7 @@
                     <div class="modal-box bg-white" dir="rtl">
                         <form method="dialog" dir="rtl">
                             <button type="submit" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
-                          </form>
+                        </form>
                         <h3 class="font-bold text-lg ms-5">{{ __('Confirm Password') }}</h3>
                         <p class="py-4">يرجى تأكيد كلمة المرور لتسجيل مستخدم جديد</p>
                         <div>
@@ -76,15 +76,15 @@
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                         </div>
                         <div class="modal-action">
-                            
+
                                 <button type="submit" class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Register') }}</button>
-                            
+
                         </div>
                     </div>
                 </dialog>
 
 
-                
+
             </form>
             <div class="mt-4 text-sm text-gray-600 text-center">
                 <p>{{ __('Already registered?') }} <a href="{{ route('login') }}"
