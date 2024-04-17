@@ -1,41 +1,42 @@
 {{-- <img src="{{ asset('images/partners.png') }}" alt="Partners Photo Here"> --}}
 <div class="flex flex-col h-screen bg-white justify-between">
     <div>
-        <ul id="ull" class=" mt-3 text-[#9F9E9E] text-sm font-Almarai space-y-4">
+        <ul id="ull" class="  text-[#9F9E9E] font-bold text-sm font-Almarai space-y-4">
 
 
-            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="py-[0.57rem] flex">
-                <svg width="25" height="25" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="inline-block mr-5">
+            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
+                class="p-[0.60rem] flex items-center {{ request()->routeIs('dashboard') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+                <svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="inline-block mr-5 fill-current">
                     <path
                         d="M6 14H4V7H6V14ZM10 14H8V4H10V14ZM14 14H12V10H14V14ZM16 16H2V2H16V16.1M16 0H2C0.9 0 0 0.9 0 2V16C0 17.1 0.9 18 2 18H16C17.1 18 18 17.1 18 16V2C18 0.9 17.1 0 16 0Z"
-                        fill="#9F9E9E" />
+                        />
                 </svg>
-                <span class="ms-2">الرئيسـية</span>
+                <span class="ms-3">الرئيسـية</span>
             </x-nav-link>
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="py-[0.57rem] flex">
-                <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="p-[0.60rem] flex items-center">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="inline-block mr-5 ">
                     <path
                         d="M7 0V2H13V0H15V2H19C19.5523 2 20 2.44772 20 3V19C20 19.5523 19.5523 20 19 20H1C0.44772 20 0 19.5523 0 19V3C0 2.44772 0.44772 2 1 2H5V0H7ZM18 10H2V18H18V10ZM9 12V16H4V12H9ZM5 4H2V8H18V4H15V6H13V4H7V6H5V4Z"
                         fill="#9F9E9E" />
                 </svg>
-                <span class="ms-2" class="">التقويم</span>
+                <span class="ms-4" class="">التقويم</span>
             </x-nav-link>
 
 
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="py-[0.57rem] flex">
+            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="p-[0.60rem] flex items-center">
 
-                <svg width="22" height="19" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg"
+                <svg width="22" height="20" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="inline-block mr-5">
                     <path
                         d="M11.9985 0L11.9979 1.278L16.9985 2.94591L20.631 1.73509L21.2634 3.63246L18.2319 4.643L21.3272 13.1549C20.2353 14.2921 18.6996 15 16.9985 15C15.2975 15 13.7618 14.2921 12.6699 13.1549L15.7639 4.643L11.9979 3.387V17H15.9985V19H5.99854V17H9.9979V3.387L6.23192 4.643L9.3272 13.1549C8.23528 14.2921 6.69957 15 4.99854 15C3.2975 15 1.76179 14.2921 0.669922 13.1549L3.76392 4.643L0.733632 3.63246L1.36608 1.73509L4.99854 2.94591L9.9979 1.278L9.9985 0H11.9985ZM16.9985 7.10267L15.5809 11H18.4159L16.9985 7.10267ZM4.99854 7.10267L3.58092 11H6.41592L4.99854 7.10267Z"
                         fill="#9F9E9E" />
                 </svg>
-                <span class="ms-2">القضايا</span>
+                <span class="ms-4">القضايا</span>
 
             </x-nav-link>
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="py-[0.57rem] flex">
+            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="p-[0.60rem] flex items-center">
 
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="inline-block mr-5">
@@ -44,12 +45,12 @@
                         fill="#9F9E9E" />
                 </svg>
 
-                <span class="ms-2">الدردشة</span>
+                <span class="ms-4">الدردشة</span>
 
             </x-nav-link>
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="py-[0.57rem] flex">
+            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="p-3 flex items-center">
 
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="inline-block mr-5"
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="inline-block mr-4"
                     xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0_397_845" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                         width="24" height="24">
@@ -61,28 +62,28 @@
                             fill="#9F9E9E" />
                     </g>
                 </svg>
-                <span class="ms-2">المستخدمين</span>
+                <span class="ms-3">المستخدمين</span>
 
             </x-nav-link>
-            <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')" class="py-[0.57rem] flex">
+            <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')" class="p-[0.60rem] flex items-center {{ request()->routeIs('profile') ? 'text-yourActiveColor' : 'text-gray-400' }}">
 
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="inline-block mr-5"
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="inline-block mr-5 fill-current"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M0.999756 15C0.999756 13.9391 1.42118 12.9217 2.17133 12.1716C2.92147 11.4214 3.93889 11 4.99976 11H12.9998C14.0606 11 15.078 11.4214 15.8282 12.1716C16.5783 12.9217 16.9998 13.9391 16.9998 15C16.9998 15.5304 16.789 16.0391 16.414 16.4142C16.0389 16.7893 15.5302 17 14.9998 17H2.99976C2.46932 17 1.96062 16.7893 1.58554 16.4142C1.21047 16.0391 0.999756 15.5304 0.999756 15Z"
-                        stroke="#9F9E9E" stroke-width="2" stroke-linejoin="round" />
+                        style="stroke: {{ request()->routeIs('profile') ? config('app.activeColor', '#BF9874') : '#9F9E9E' }}; stroke-width: 2; stroke-linejoin: round;" />
                     <path
                         d="M8.99976 7C10.6566 7 11.9998 5.65685 11.9998 4C11.9998 2.34315 10.6566 1 8.99976 1C7.3429 1 5.99976 2.34315 5.99976 4C5.99976 5.65685 7.3429 7 8.99976 7Z"
-                        stroke="#9F9E9E" stroke-width="2" />
+                        style="stroke: {{ request()->routeIs('profile') ? config('app.activeColor', '#BF9874') : '#9F9E9E' }}; stroke-width: 2;"/>
                 </svg>
-                <span class="ms-2">الملف الشخصي</span>
+                <span class="ms-4">الملف الشخصي</span>
 
             </x-nav-link>
 
 
     </div>
-   
-    <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="py-[0.57rem] flex">
+
+    <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="p-[0.60rem] flex items-center">
 
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="inline-block mr-5"
                     xmlns="http://www.w3.org/2000/svg">
@@ -96,6 +97,6 @@
                             fill="#9F9E9E" />
                     </g>
                 </svg>
-                <span class="ms-2">تسجيل الخروج</span>
+                <span class="ms-4">تسجيل الخروج</span>
     </x-nav-link>
 </div>

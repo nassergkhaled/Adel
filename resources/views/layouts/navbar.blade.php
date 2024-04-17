@@ -5,14 +5,14 @@
             <div class="flex w-[15%]">
                 <!-- Logo -->
                 <div>
-                    <a href="#" class="flex items-start py-2">
+                    <a href="#" class="flex items-start py-2 mr-5">
                         <img src="{{ asset('images\Group.png') }}" alt="Adel Logo"
                             class="flex h-14 filter-none grayscale hover:filter transition duration-200">
                     </a>
                 </div>
             </div>
             <div class="flex justify-between w-[85%]">
-                <div class=" flex items-center justify-start text-xl text-black">
+                <div class=" flex items-center justify-start text-xl font-bold text-black">
                     @yield('page_name')
                 </div>
                 <div class=" relative flex items-center">
@@ -50,7 +50,7 @@
                     <div class="flex flex-col items-center text-start mb-2 ms-2">
                         <p class="text-start w-full text-[#151D48] font-Almarai">
                             {{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</p>
-                        <p class="text-start w-full text-[#737791]">ادمن</p>
+                        <p class="text-start w-full text-sm text-[#737791]">ادمن</p>
                     </div>
 
                     <div class="flex items-start top-0 ms-2 justify-start text-start">
@@ -66,18 +66,18 @@
                             </div>
                             <ul tabindex="0"
                                 class="mt-0 z-[1] p-2 shadow-lg transition ease-in-out duration-200 menu menu-sm dropdown-content border bg-slate-50 text-black rounded-box w-52 ">
-                                <li class=" hover:bg-gray-200 rounded-lg">
+                                <li class=" hover:bg-adel-Light-hover rounded-lg">
                                     <a class="justify-between" href="{{ route('profile') }}">
                                         {{ __('Profile') }}
                                         {{-- <span class="badge">جديد</span> --}}
                                     </a>
                                 </li>
-                                <li class=" hover:bg-gray-200 rounded-lg"><a>{{ __('Settings') }}</a></li>
+                                <li class=" hover:bg-adel-Light-hover rounded-lg"><a>{{ __('Settings') }}</a></li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <li class="hover:bg-gray-200 rounded-lg">
+                                    <li class="hover:bg-adel-Light-hover rounded-lg">
                                         <button type="submit">
-                                            <a class="">{{ __('Log Out') }}</a>
+                                            <a class="font-bold">{{ __('Log Out') }}</a>
                                         </button>
                                     </li>
                                 </form>
