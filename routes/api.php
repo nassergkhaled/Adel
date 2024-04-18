@@ -11,3 +11,9 @@ use App\Http\Controllers\api\TestController;
 
 Route::get('/test', [TestController::class, 'test']);
 Route::post('/r', [TestController::class, 'returnRequest']);
+
+
+
+use App\Http\Controllers\api\ApiAuthController;
+Route::post('/register', [ApiAuthController::class, 'register']);
+Route::post('/login', [ApiAuthController::class, 'login']);

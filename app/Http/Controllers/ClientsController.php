@@ -31,22 +31,23 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        dd("dasd");
-        $request->validate([
-            'user_name' => 'required | max:50 | string ',
-            'client_id_num' => 'required | integer',
-            'phone' => 'required | max:13 | integer',
-        ]);
+        
+        // $request->validate([
+        //     'user_name' => 'required | max:50 | string ',
+        //     'client_id_num' => 'required | integer',
+        //     'phone' => 'required | max:13 | integer',
+        // ])
+        
 
         $client = new Client();
         $client->full_name = strip_tags($request->input('user_name'));
         $client->ID = strip_tags($request->input('client_id_num'));
-        $client->phone =  $request->input('phone');
-        $client->user_id = Auth()->id();
+        $client->contact_info =  $request->input('phone');
+        $client->user_id = 1;
 
         $client->save();
 
-        return redirect()->back();
+        return response()->json('sdfcasde');
 
     }
 
