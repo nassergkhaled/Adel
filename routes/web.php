@@ -15,7 +15,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/test', function () {
-    return view('test');
+    return view('completeRegister');
 })->name('test');
 
 /* Route::get('/clients', function () {
@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile',[MainController::class,'profile'])->name('profile');
     Route::get('/dashboard',[MainController::class,'dashboard'])->name('dashboard');
+    Route::post('/newOffice',[MainController::class,'newOffice'])->name('newOffice');
+
     Route::resource('/legalCases', LegalCasesController::class);
 
 });

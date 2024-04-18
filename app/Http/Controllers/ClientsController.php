@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 
 class ClientsController extends Controller
@@ -13,9 +16,9 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Client::where("user_id", Auth()->id())->get();
+        $clients = Auth::user()->clients;
 
-        return view('clients.index',compact('clients'));
+        return view('clients.index', compact('clients'));
     }
 
     /**
@@ -31,24 +34,30 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         // $request->validate([
         //     'user_name' => 'required | max:50 | string ',
         //     'client_id_num' => 'required | integer',
         //     'phone' => 'required | max:13 | integer',
         // ])
-        
+
+        $role = new Role();
+        $role->role = 'client';
+        $role->office_id = Auth::user()->roles->first()->office_id;
+        $role->user_id = Auth::id(); // TEMP SOLUTION -- WE SHOULD REPLACE IT BEFORE DEPLOY
+        $role->save();
+
+        $signupToken = str::random(40); // Generates a 40-character random string for user to link him with system if he want to create new account
+
 
         $client = new Client();
         $client->full_name = strip_tags($request->input('user_name'));
-        $client->ID = strip_tags($request->input('client_id_num'));
+        $client->ID_number = strip_tags($request->input('client_id_num'));
         $client->contact_info =  $request->input('phone');
-        $client->user_id = 1;
-
+        $client->signupToken = $signupToken;
         $client->save();
 
         return response()->json('sdfcasde');
-
     }
 
     /**
@@ -59,9 +68,6 @@ class ClientsController extends Controller
         return view('client.show', [
             'client' => Client::find($id)
         ]);
-
-
-
     }
 
     /**

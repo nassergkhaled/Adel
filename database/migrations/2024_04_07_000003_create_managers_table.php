@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->string('full_name', 255);
             $table->string('phone_number', 15)->unique();
-            $table->unsignedInteger('ID')->unique();
+            $table->unsignedbigInteger('ID')->unique();
             $table->date('hiring_date');
             $table->timestamps();
         });

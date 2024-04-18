@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Manager extends Model
 {
     use HasFactory;
-    public function users()
+    public function office()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(Office::class);
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
 }

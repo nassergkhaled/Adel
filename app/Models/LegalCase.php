@@ -9,9 +9,9 @@ class LegalCase extends Model
 {
     use HasFactory;
 
-    public function users()
+    public function roles()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Role::class);
     }
     public function witnesses()
     {
@@ -20,10 +20,6 @@ class LegalCase extends Model
     public function tasks()
     {
         return $this->hasMany(Task::class);
-    }
-    public function documents()
-    {
-        return $this->hasMany(Document::class);
     }
     public function sessiones()
     {

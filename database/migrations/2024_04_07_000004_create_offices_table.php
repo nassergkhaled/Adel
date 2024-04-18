@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('phone_number')->nullable();
 
-            $table->unsignedBigInteger('manager_id');
+            $table->unsignedBigInteger('manager_id')->nullable();
             //$table->foreign( 'manager_id' )->references('user_id')->on('managers'); // cant be null , change the manager not delete it
 
 
