@@ -57,10 +57,11 @@
                                 </div>
                             </div>
 
+                            <div class="modal-action ">
 
                                 <button type="submit"
                                     class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">إضافة</button>
-
+                            </div>
                 </form>
             </div>
         </dialog>
