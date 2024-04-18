@@ -29,7 +29,7 @@
 
                                 <div class="grid-cols-6">
                                     <label for="user_name" class="block text-sm font-medium text-gray-700">اسم
-                                        المستخدم</label>
+                                        المستخدم<span class="text-red-600 mr-1 text-lg">*</span></label>
                                     <input type="text" id="user_name" name="user_name" required
                                         placeholder="ادخل اسم المستخدم"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
@@ -38,7 +38,7 @@
 
                                 <div class="grid-cols-6">
                                     <label for="client_id_num" class="block text-sm font-medium text-gray-700">رقم
-                                        الهوية</label>
+                                        الهوية<span class="text-red-600 mr-1 text-lg">*</span></label>
                                     <input type="text" id="client_id_num" name="client_id_num" required
                                         placeholder="ادخل رقم الهوية"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
@@ -50,7 +50,7 @@
 
                                 <div class="grid-cols-6">
                                     <label for="phone"
-                                        class="block text-sm font-medium text-gray-700">{{ __('Phone') }}</label>
+                                        class="block text-sm font-medium text-gray-700">{{ __('Phone') }}<span class="text-red-600 mr-1 text-lg">*</span></label>
                                     <input type="text" inputmode="tel" id="phone" name="phone" required
                                         placeholder="ادخل {{ __('Phone') }}"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
@@ -70,8 +70,8 @@
     <hr class=" mr-4 ml-4 w-auto">
 
     <div class="flex justify-center items-center w-[96%] mt-14 mr-6">
-        <table class=" w-full border-collapse">
-            <thead class="bg-[#DDDDDD] text-[#999999] ">
+        <table class=" w-full border-collapse shadow-md">
+            <thead class="border-[#E6E8EB] text-[#999999] text-[15px] bg-[#DDDDDDDD] ">
                 <tr>
                     <th class="w-1/5 py-2">اسم الموكل</th>
                     <th class="w-1/5 py-2">رقم الهوية</th>
