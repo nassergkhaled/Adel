@@ -57,11 +57,11 @@ class ClientsController extends Controller
         $client->role_id = $role->id;
         $client->full_name = strip_tags($request->input('user_name'));
         $client->ID_number = strip_tags($request->input('client_id_num'));
-        $client->contact_info =  $request->input('phone');
+        $client->contact_info = json_encode(['phone' => $request->input('phone')]);
         $client->signupToken = $signupToken;
         $client->save();
 
-        return response()->json('done');
+        return back();
     }
 
     /**

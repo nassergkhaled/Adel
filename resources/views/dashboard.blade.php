@@ -75,11 +75,6 @@
 
 
 
-
-
-
-
-
     <div class="grid grid-cols-3 gap-4 mx-4">
         <!-- First Card -->
         <div class="col-span-1 bg-white rounded-lg ">
@@ -198,14 +193,14 @@
             </ul>
 
         </div>
-
+        {{-- must be modified only for test and design !! --}}
         <!-- Second Card (Pie Chart) -->
         <div class="col-span-1 bg-white rounded-lg ">
             <div class="rounded-lg overflow-hidden">
-                <div class="flex justify-between items-center mx-4 my-2 pb-1">
+                <div class="flex justify-between items-center mx-4 my-2 pb-0">
                     <div class="text-black font-bold">أنواع القضايا</div>
                     <select type=" " id="case_status" name="case_status"
-                        class=" w-28 h-9 border text-center  lg:text-[90%] font-bold text-[#9F9E9E] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                        class=" w-28 border text-center  lg:text-[90%] font-bold text-[#9F9E9E] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                         <option value="1">شهري</option>
                         <option value="2">سنوي</option>
                         <option value="2">يومي</option>
@@ -214,10 +209,8 @@
                 <hr>
             </div>
             <canvas class="p-4 ml-24 mr-24" id="chartPie"></canvas>
-
             <!-- Required chart.js -->
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
             <!-- Chart pie -->
             <script>
                 const dataPie = {
@@ -233,7 +226,6 @@
                         hoverOffset: 4
                     }]
                 };
-
                 const configPie = {
                     type: "pie",
                     data: dataPie,
@@ -245,7 +237,6 @@
                         }
                     }
                 };
-
                 var chartBar = new Chart(document.getElementById("chartPie"), configPie);
             </script>
 
@@ -271,7 +262,6 @@
                     </div>
                     <div class="text-[#9F9E9E] font-bold text-sm">May 17, 2024</div>
                 </li>
-
 
                 <!-- Row 2 -->
                 <li class="flex justify-between items-center px-2 py-1">
