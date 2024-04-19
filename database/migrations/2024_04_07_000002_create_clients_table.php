@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('user_id')->on('roles')->onDelete('cascade');
+            //$table->id();
+            $table->unsignedBigInteger('role_id')->primary();
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
 
-            $table->string('signupToken');
+            $table->string('signupToken'); // to link the client to the user if he make a signup
 
             $table->string('full_name');
             $table->unsignedInteger('ID_number')->unique();

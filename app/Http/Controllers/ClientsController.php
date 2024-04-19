@@ -44,20 +44,21 @@ class ClientsController extends Controller
         $role = new Role();
         $role->role = 'client';
         $role->office_id = Auth::user()->roles->first()->office_id;
-        $role->user_id = Auth::id(); // TEMP SOLUTION -- WE SHOULD REPLACE IT BEFORE DEPLOY
+        $role->user_id = null;
         $role->save();
 
         $signupToken = str::random(40); // Generates a 40-character random string for user to link him with system if he want to create new account
 
 
         $client = new Client();
+        $client->role_id = $role->id;
         $client->full_name = strip_tags($request->input('user_name'));
         $client->ID_number = strip_tags($request->input('client_id_num'));
         $client->contact_info =  $request->input('phone');
         $client->signupToken = $signupToken;
         $client->save();
 
-        return response()->json('sdfcasde');
+        return response()->json('done');
     }
 
     /**
