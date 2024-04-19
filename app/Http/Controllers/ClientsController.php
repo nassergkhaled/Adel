@@ -16,7 +16,10 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Auth::user()->clients;
+/*         $clients = Auth::user()->roles->first()->office->roles->getQuery()->where('role','client')->get();
+ */        $clients = Auth::user()->roles->first()->office->roles;
+
+       // dd($clients);
 
         return view('clients.index', compact('clients'));
     }
