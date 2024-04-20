@@ -36,7 +36,7 @@
                 <span class="ms-4">القضايا</span>
 
             </x-nav-link>
-            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="p-[0.60rem] flex items-center">
+            <x-nav-link :href="route('chating.index')" :active="request()->routeIs('chating.index')" class="p-[0.60rem] flex items-center">
 
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="inline-block mr-5">
