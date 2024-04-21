@@ -5,7 +5,7 @@
 
 
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
-                class="p-[0.60rem] flex items-center py-4 {{ request()->routeIs('dashboard') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+                class="p-[0.60rem] flex items-center  {{ request()->routeIs('dashboard') ? 'text-yourActiveColor' : 'text-gray-400' }}">
                 <svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="inline-block mr-5 fill-current">
                     <path
@@ -36,19 +36,19 @@
                 <span class="ms-4">القضايا</span>
 
             </x-nav-link>
-            <x-nav-link :href="route('chating.index')" :active="request()->routeIs('chating.index')" class="p-[0.60rem] flex items-center">
+            <x-nav-link :href="route('chating.index')" :active="request()->routeIs('chating.index')" class="p-[0.60rem] flex items-center {{ request()->routeIs('chating.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
 
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    class="inline-block mr-5">
+                    class="inline-block mr-5 fill-current">
                     <path
                         d="M6 9C6.28333 9 6.52083 8.90417 6.7125 8.7125C6.90417 8.52083 7 8.28333 7 8C7 7.71667 6.90417 7.47917 6.7125 7.2875C6.52083 7.09583 6.28333 7 6 7C5.71667 7 5.47917 7.09583 5.2875 7.2875C5.09583 7.47917 5 7.71667 5 8C5 8.28333 5.09583 8.52083 5.2875 8.7125C5.47917 8.90417 5.71667 9 6 9ZM10 9C10.2833 9 10.5208 8.90417 10.7125 8.7125C10.9042 8.52083 11 8.28333 11 8C11 7.71667 10.9042 7.47917 10.7125 7.2875C10.5208 7.09583 10.2833 7 10 7C9.71667 7 9.47917 7.09583 9.2875 7.2875C9.09583 7.47917 9 7.71667 9 8C9 8.28333 9.09583 8.52083 9.2875 8.7125C9.47917 8.90417 9.71667 9 10 9ZM14 9C14.2833 9 14.5208 8.90417 14.7125 8.7125C14.9042 8.52083 15 8.28333 15 8C15 7.71667 14.9042 7.47917 14.7125 7.2875C14.5208 7.09583 14.2833 7 14 7C13.7167 7 13.4792 7.09583 13.2875 7.2875C13.0958 7.47917 13 7.71667 13 8C13 8.28333 13.0958 8.52083 13.2875 8.7125C13.4792 8.90417 13.7167 9 14 9ZM0 20V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H4L0 20ZM3.15 14H18V2H2V15.125L3.15 14Z"
-                        fill="#9F9E9E" />
+                         />
                 </svg>
 
                 <span class="ms-4">الدردشة</span>
 
             </x-nav-link>
-            <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')" class="p-3 flex items-center {{ request()->routeIs('clients.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+            <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')" class="px-3 py-2 flex items-center {{ request()->routeIs('clients.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
 
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="inline-block mr-4 fill-current"
                     xmlns="http://www.w3.org/2000/svg">
@@ -63,7 +63,7 @@
                 <span class="ms-3">الموكلين</span>
 
             </x-nav-link>
-            <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')" class="p-[0.60rem] py-4 flex items-center {{ request()->routeIs('profile') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+            <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')" class="p-[0.60rem] flex items-center {{ request()->routeIs('profile') ? 'text-yourActiveColor' : 'text-gray-400' }}">
 
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="inline-block mr-5 fill-current"
                     xmlns="http://www.w3.org/2000/svg">
