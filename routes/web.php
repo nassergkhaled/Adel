@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\CommunicationController;
+use App\Http\Controllers\CalenderController;
 
 /* Route::get('/', function () {
     return view('welcome');
@@ -27,8 +28,12 @@ Route::get('/chating', function () {
     return view('chating.index');
 })->name('chating.index');
 
-/* Route::resource('chating',CommunicationController::class);
- */Route::resource('clients',ClientsController::class);
+
+Route::resource('clients',ClientsController::class);
+    Route::resource('calender',CalenderController::class);
+
+
+/* Route::resource('chating',CommunicationController::class);*/
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
