@@ -29,8 +29,8 @@ Route::get('/chating', function () {
 })->name('chating.index');
 
 
-Route::resource('clients',ClientsController::class);
-    Route::resource('calender',CalenderController::class);
+
+
 
 
 /* Route::resource('chating',CommunicationController::class);*/
@@ -48,7 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard',[MainController::class,'dashboard'])->name('dashboard');
     Route::post('/newOffice',[MainController::class,'newOffice'])->name('newOffice');
     Route::resource('/legalCases', LegalCasesController::class);
-
+    Route::resource('calender',CalenderController::class);
+    Route::resource('clients',ClientsController::class);
 });
 
 
