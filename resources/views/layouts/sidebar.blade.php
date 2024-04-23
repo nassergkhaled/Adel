@@ -13,7 +13,7 @@
                 </svg>
                 <span class="ms-3">الرئيسـية</span>
             </x-nav-link>
-            <x-nav-link :href="route('calender.index')" :active="request()->routeIs('calender.index')"
+            <x-nav-link :href="route('calender')" :active="request()->routeIs('calender')"
                 class="p-[0.60rem] flex items-center {{ request()->routeIs('calender.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="inline-block mr-5 fill-current">

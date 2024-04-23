@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CalenderController extends Controller
+class TasksController extends Controller
 {
     /**
      * Display a listing of the resource.
