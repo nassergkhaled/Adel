@@ -78,7 +78,7 @@
                     <th class="w-1/5 py-2">رقم الهاتف</th>
                     <th class="w-1/5 py-2">عدد القضايا</th>
                     <th class="text-center w-[5%] py-2"><input type="checkbox"
-                            class="focus:ring-transparent transition ease-in-out duration-100 text-adel-Normal-active hover:bg-adel-Light-active">
+                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
                     </th>
                 </tr>
             </thead>
@@ -90,7 +90,7 @@
                     <td class="text-center py-2 text-black border-b" dir="ltr">+201140033128</td>
                     <td class="text-center py-2 text-black border-b">03</td>
                     <td class="text-center py-2 text-black border-b"><input type="checkbox"
-                            class="focus:ring-transparent transition ease-in-out duration-100 text-adel-Normal-active hover:bg-adel-Light-active">
+                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">
                     </td>
                 </tr>
 
@@ -100,7 +100,7 @@
                     <td class="text-center py-2 text-black border-b" dir="ltr">+201140045239</td>
                     <td class="text-center py-2 text-black border-b">02</td>
                     <td class="text-center py-2 text-black border-b"><input type="checkbox"
-                            class="focus:ring-transparent transition ease-in-out duration-100 text-adel-Normal-active hover:bg-adel-Light-active">
+                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">
                     </td>
                 </tr>
 
@@ -110,7 +110,7 @@
                     <td class="text-center py-2 text-black border-b" dir="ltr">+201007960235</td>
                     <td class="text-center py-2 text-black border-b">01</td>
                     <td class="text-center py-2 text-black border-b"><input type="checkbox"
-                            class="focus:ring-transparent transition ease-in-out duration-100 text-adel-Normal-active hover:bg-adel-Light-active">
+                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
                     </td>
                 </tr>
 
@@ -120,7 +120,7 @@
                     <td class="text-center py-2 text-black border-b" dir="ltr">+201140563239</td>
                     <td class="text-center py-2 text-black border-b">02</td>
                     <td class="text-center py-2  text-blackborder"><input type="checkbox"
-                            class="focus:ring-transparent transition ease-in-out duration-100 text-adel-Normal-active hover:bg-adel-Light-active">
+                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
                     </td>
                 </tr>
 

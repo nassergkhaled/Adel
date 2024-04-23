@@ -7,6 +7,7 @@ use App\Http\Middleware\CompleteRegistration;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\CommunicationController;
+use App\Http\Controllers\CalenderController;
 
 /* Route::get('/', function () {
     return view('welcome');
@@ -29,9 +30,12 @@ Route::get('/chating', function () {
     return view('chating.index');
 })->name('chating.index');
 
-/* Route::resource('chating',CommunicationController::class);
- */
-Route::resource('clients', ClientsController::class);
+
+
+
+
+
+/* Route::resource('chating',CommunicationController::class);*/
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -45,7 +49,8 @@ Route::middleware(['auth', CompleteRegistration::class])->group(function () {
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/calender', [MainController::class, 'calender'])->name('calender');
     Route::resource('/legalCases', LegalCasesController::class);
-    Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');
+    Route::resource('calender',CalenderController::class);
+    Route::resource('clients',ClientsController::class);    Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');
     Route::post('/Update_Avatar_Email', [ProfileController::class, 'Update_Avatar_Email'])->name('UpdateAvatarEmail');
 
 });
