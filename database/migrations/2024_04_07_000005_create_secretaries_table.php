@@ -21,8 +21,8 @@ return new class extends Migration
             $table->boolean('gender')->default(null);
             $table->unsignedInteger('ID');
 
-            $table->json('contact_info');
-            $table->json('address'); // city, streat, appartment, floor,
+            // $table->json('contact_info');
+            // $table->string('address')->nullable();
 
 
             $table->timestamps();

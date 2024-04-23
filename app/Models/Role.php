@@ -32,6 +32,10 @@ class Role extends Model
     {
         return $this->belongsTo(Secretary::class);
     }
+    public function manager()
+    {
+        return $this->belongsTo(Manager::class);
+    }
 
     public function tasks()
     {

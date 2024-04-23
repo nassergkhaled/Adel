@@ -32,17 +32,17 @@
                 <div>
                     <label for="first_name"
                         class="block text-sm font-medium text-gray-700">{{ __('First name') }}</label>
-                    <input type="text" id="first_name" name="first_name" placeholder="{{ __('First name') }}"
+                    <input type="text" id="first_name" name="first_name" placeholder="{{ __('First name') }}" value="{{old('first_name')}}"
                         class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-gray-700">{{ __('Last name') }}</label>
-                    <input type="text" id="last_name" name="last_name" placeholder="{{ __('Last name') }}"
+                    <input type="text" id="last_name" name="last_name" placeholder="{{ __('Last name') }}" value="{{old('last_name')}}"
                         class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">{{ __('Email') }}</label>
-                    <input type="text" id="email" name="email" placeholder="{{ __('Email') }}"
+                    <input type="text" id="email" name="email" placeholder="{{ __('Email') }}" value="{{old('email')}}"
                         class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <div>

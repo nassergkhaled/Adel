@@ -5,7 +5,7 @@
             <div class="flex w-[15%]">
                 <!-- Logo -->
                 <div>
-                    <a href="#" class="flex items-start py-2 mr-5">
+                    <a href="{{ route('dashboard') }}" class="flex items-start py-2 mr-5">
                         <img src="{{ asset('images\Group.png') }}" alt="Adel Logo"
                             class="flex h-14 filter-none grayscale hover:filter transition duration-200">
                     </a>
@@ -36,12 +36,31 @@
 
 
 
+                    @php
+                        $role = auth()->user()->roles->first();
+                        if ($role === null) {
+                            $role = 'New  User';
+                        } else {
+                            $role = $role->role;
+                        }
+
+                        $avatar = Auth::user()->avatar;
+                        if ($avatar) {
+                            $avatar = '/images/avatars/' . $avatar;
+                            if (!file_exists($avatar)) {
+                                $avatar = '/images/profile_avatar.png';
+                            }
+                        } else {
+                            $avatar = '/images/profile_avatar.png';
+                        }
+
+                    @endphp
+
                     <div class="flex items-center">
 
                         <div class="avatar w-12">
                             <div class="rounded-full">
-                                <img alt="Tailwind CSS Navbar component"
-                                    src="{{ asset('/images/profile_avatar.png') }}" />
+                                <img alt="Tailwind CSS Navbar component" src="{{ $avatar }}" />
                             </div>
                         </div>
 
@@ -50,7 +69,8 @@
                     <div class="flex flex-col items-center text-start mb-2 ms-2">
                         <p class="text-start w-full text-[#151D48] font-Almarai">
                             {{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</p>
-                        <p class="text-start w-full text-sm text-[#737791]">ادمن</p>
+
+                        <p class="text-start w-full text-sm text-[#737791]">{{ __($role) }}</p>
                     </div>
 
                     <div class="flex items-start top-0 ms-2 justify-start text-start">
@@ -73,14 +93,16 @@
                                     </a>
                                 </li>
                                 <li class=" hover:bg-adel-Light-hover rounded-lg"><a>{{ __('Settings') }}</a></li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <li class="hover:bg-adel-Light-hover rounded-lg">
+
+
+                                <li class="hover:bg-adel-Light-hover rounded-lg">
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
                                         <button type="submit">
-                                            <a class="font-bold">{{ __('Log Out') }}</a>
+                                            <a class="">{{ __('Log Out') }}</a>
                                         </button>
-                                    </li>
-                                </form>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>

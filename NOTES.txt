@@ -1,0 +1,1 @@
+1. the contact info & address should be in user table to avoid complex queries to retrieve this data

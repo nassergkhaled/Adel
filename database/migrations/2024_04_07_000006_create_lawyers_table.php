@@ -25,8 +25,8 @@ return new class extends Migration
 
             // id, reg_licenseو CV scan will be in S3 Bucket
 
-            $table->json('contact_info'); // phone, Email
-            $table->json('address'); // city, streat, appartment, floor,
+            // $table->json('contact_info'); // phone, Email
+            // $table->string('address')->nullable();
 
 
             $table->string('specialization');

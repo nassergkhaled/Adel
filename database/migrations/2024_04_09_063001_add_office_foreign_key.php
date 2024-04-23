@@ -15,8 +15,12 @@ return new class extends Migration
             
             $table->foreign( 'manager_id' )->references('user_id')->on('managers'); // cant be null , change the manager not delete it
         });
+        // Schema::table('managers', function (Blueprint $table) {
+            
+        //     $table->foreign( 'office_id' )->references('id')->on('offices'); // cant be null , change the manager not delete it
+        // });
     }
-
+   
     /**
      * Reverse the migrations.
      */

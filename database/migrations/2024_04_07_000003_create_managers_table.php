@@ -16,9 +16,11 @@ return new class extends Migration
             $table->foreign( 'user_id' )->references('user_id')->on('roles') ->onDelete('cascade');
 
             $table->string('full_name', 255);
-            $table->string('phone_number', 15)->unique();
+            // $table->string('phone_number', 15)->unique();
             $table->unsignedbigInteger('ID')->unique();
             $table->date('hiring_date');
+            // $table->string('address')->nullable();
+
             $table->timestamps();
         });
         

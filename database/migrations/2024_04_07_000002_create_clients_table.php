@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('full_name');
             $table->unsignedInteger('ID_number')->unique();
 
-            $table->json('contact_info'); // Phone, Email
+            // $table->json('contact_info'); // Phone, Email
 
             $table->string('nationality')->nullable();
-            $table->text('address')->nullable();
+            // $table->string('address')->nullable();
             $table->date('date_of_birth')->nullable();
 
 

@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             //$table->json('name'); // Multi-value attribute stored as JSON
+            $table->boolean('completeRegistration')->default(0);
+            $table->string('phone_number', 15)->unique()->nullable();
+            $table->string('address')->nullable();
+            $table->string('avatar')->nullable();
+
 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

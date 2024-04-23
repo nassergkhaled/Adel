@@ -30,6 +30,7 @@ class CustomMigrateCommand extends Command
             'database/migrations/2024_04_07_000012_create_tasks_table.php',
             'database/migrations/2024_04_07_000013_create_role_task_table.php',
             'database/migrations/2024_04_09_063001_add_office_foreign_key.php',
+            'database/migrations/2024_04_21_185722_add_manager_foreign_key.php',
         ];
 
         foreach ($migrations as $migration) {

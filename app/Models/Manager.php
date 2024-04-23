@@ -14,7 +14,7 @@ class Manager extends Model
     }
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(Role::class);
     }
 
 }
