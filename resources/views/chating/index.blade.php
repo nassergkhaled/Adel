@@ -308,10 +308,11 @@
                                 </svg>
                             </button>
                         </div>
+
                         <div class="flex-grow ml-4">
                             <div class="relative w-full">
-                                <input type="text"
-                                    class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10" />
+                                <input type="text" placeholder="اكتب الرسالة"
+                                    class="flex w-full border rounded-xl bg-[#F9FAFB] focus:outline-none focus:border-indigo-300 pl-4 h-10" />
                                 <button
                                     class="absolute flex items-center justify-center h-full w-12 top-0 left-0 text-gray-400 hover:text-gray-600">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"

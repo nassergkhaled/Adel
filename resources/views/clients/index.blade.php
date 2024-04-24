@@ -9,8 +9,8 @@
             <button type="button" onclick="my_modal_add_client.showModal()"
                 class="text-white bg-[#BF9874] px-10 py-2 rounded-md hover:bg-[#433529] focus:outline-none focus:ring-2 focus:bg-[#433529] focus:ring-opacity-50 transition ease-in-out duration-150">إضافة</button>
         </div>
-{{--         @dd($clients);
- --}}        <dialog id="my_modal_add_client" class="modal modal-middle sm:modal-middle">
+
+        <dialog id="my_modal_add_client" class="modal modal-middle sm:modal-middle">
             <div class="modal-box bg-white" dir="rtl">
 
                 <form method="dialog" dir="rtl">
@@ -20,7 +20,7 @@
 
                 <h3 class="font-bold text-center text-black text-lg ms-5">إضافة مستخدم جديد</h3>
                 <hr class="mt-5">
-                <form action="{{route('clients.store')}}" method="POST">
+                <form action="{{ route('clients.store') }}" method="POST">
                     @csrf
 
                     <div class="w-full bg-white rounded-lg h-auto flex flex-col justify-start">
@@ -33,6 +33,11 @@
                                     <input type="text" id="user_name" name="user_name" required
                                         placeholder="ادخل اسم المستخدم"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
+                                    @error('user_name')
+                                        <p class="text-sm text-red-500">
+                                            * {{ __($message) }}
+                                        </p>
+                                    @enderror
                                 </div>
 
 
@@ -42,6 +47,11 @@
                                     <input type="text" id="client_id_num" name="client_id_num" required
                                         placeholder="ادخل رقم الهوية"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
+                                    @error('client_id_num')
+                                        <p class="text-sm text-red-500">
+                                            * {{ __($message) }}
+                                        </p>
+                                    @enderror
                                 </div>
 
                             </div>
@@ -50,15 +60,20 @@
 
                                 <div class="grid-cols-6">
                                     <label for="phone"
-                                        class="block text-sm font-medium text-gray-700">{{ __('Phone') }}<span class="text-red-600 mr-1 text-lg">*</span></label>
+                                        class="block text-sm font-medium text-gray-700">{{ __('Phone') }}<span
+                                            class="text-red-600 mr-1 text-lg">*</span></label>
                                     <input type="text" inputmode="tel" id="phone" name="phone" required
                                         placeholder="ادخل {{ __('Phone') }}"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
+                                    @error('phone')
+                                        <p class="text-sm text-red-500">
+                                            * {{ __($message) }}
+                                        </p>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="modal-action ">
-
                                 <button type="submit"
                                     class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">إضافة</button>
                             </div>
@@ -84,46 +99,17 @@
             </thead>
 
             <tbody class="bg-white text-md ">
+                @foreach ($data['clients'] as $client)
                 <tr>
-                    <td class="text-center py-2 text-black border-b">رؤى منعم</td>
-                    <td class="text-center py-2 text-black border-b">123</td>
-                    <td class="text-center py-2 text-black border-b" dir="ltr">+201140033128</td>
-                    <td class="text-center py-2 text-black border-b">03</td>
+                    <td class="text-center py-2 text-black border-b">{{$client->full_name}}</td>
+                    <td class="text-center py-2 text-black border-b">{{$client->ID_number}}</td>
+                    <td class="text-center py-2 text-black border-b" dir="ltr">{{$client->phone_number}}</td>
+                    <td class="text-center py-2 text-black border-b">{{$client->role->legalCases->count()}}</td>
                     <td class="text-center py-2 text-black border-b"><input type="checkbox"
                             class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">
                     </td>
                 </tr>
-
-                <tr>
-                    <td class="text-center py-2 text-black border-b">بسمه حافظ</td>
-                    <td class="text-center py-2 text-black border-b">456</td>
-                    <td class="text-center py-2 text-black border-b" dir="ltr">+201140045239</td>
-                    <td class="text-center py-2 text-black border-b">02</td>
-                    <td class="text-center py-2 text-black border-b"><input type="checkbox"
-                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="text-center py-2 text-black border-b">رحمة شعبان</td>
-                    <td class="text-center py-2 text-black border-b">789</td>
-                    <td class="text-center py-2 text-black border-b" dir="ltr">+201007960235</td>
-                    <td class="text-center py-2 text-black border-b">01</td>
-                    <td class="text-center py-2 text-black border-b"><input type="checkbox"
-                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="text-center py-2 text-black border-b">هادي ياسين</td>
-                    <td class="text-center py-2 text-black border-b">908</td>
-                    <td class="text-center py-2 text-black border-b" dir="ltr">+201140563239</td>
-                    <td class="text-center py-2 text-black border-b">02</td>
-                    <td class="text-center py-2  text-blackborder"><input type="checkbox"
-                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
-                    </td>
-                </tr>
-
+                @endforeach
             </tbody>
         </table>
     </div>

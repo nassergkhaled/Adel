@@ -16,12 +16,22 @@ class ClientsController extends Controller
      */
     public function index()
     {
-/*         $clients = Auth::user()->roles->first()->office->roles->getQuery()->where('role','client')->get();
- */        $clients = Auth::user()->roles->first()->office->roles;
+        /* $clients = Auth::user()->roles->first()->office->roles->getQuery()->where('role','client')->get();*/
+        /* $clients = Auth::user()->roles->first()->office->roles;*/
+        /* dd($clients); */
 
-       // dd($clients);
+        $officeId = Auth::user()->roles->first()->office_id;
 
-        return view('clients.index', compact('clients'));
+        //return All clients in my office
+        $clients = Client::whereHas('role', function ($query) use ($officeId) {
+            $query->where('office_id', $officeId);
+        })->get();
+
+        $data=[
+            'clients'=> $clients,
+
+        ];
+        return view('clients.index', compact('data'));
     }
 
     /**
@@ -38,11 +48,11 @@ class ClientsController extends Controller
     public function store(Request $request)
     {
 
-        // $request->validate([
-        //     'user_name' => 'required | max:50 | string ',
-        //     'client_id_num' => 'required | integer',
-        //     'phone' => 'required | max:13 | integer',
-        // ])
+        $request->validate([
+            'user_name' => 'required | max:50 | string ',
+            'client_id_num' => 'required | integer | unique:clients,ID_number',
+            'phone' => 'required | max:14 | string',
+        ]);
 
         $role = new Role();
         $role->role = 'client';
