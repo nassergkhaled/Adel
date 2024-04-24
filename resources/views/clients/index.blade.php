@@ -1,6 +1,42 @@
 @section('page_name', 'الموكلين')
 @section('title', 'الموكلين | ')
 <x-app-layout>
+
+    <div class="mt-2">
+        @if (session()->has('msg'))
+            <div role="alert"
+                class="alert alert-success w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ __(session()->get('msg')) }}</span>
+            </div>
+        @elseif (session()->has('ValError'))
+            <div role="alert"
+                class="alert alert-warning w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>{{ __(session()->get('ValError')) }}</span>
+            </div>
+        @elseif (session()->has('errMsg'))
+            <div role="alert"
+                class="alert alert-error w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ __(session()->get('errMsg')) }}</span>
+            </div>
+        @endif
+    </div>
+
+
     <div class="mt-4 mb-3 grid grid-cols-2 items-center">
         <div class="font-bold text-black text-2xl mr-5 ">
             <h1>جميع المـوكلين</h1>
@@ -100,15 +136,16 @@
 
             <tbody class="bg-white text-md ">
                 @foreach ($data['clients'] as $client)
-                <tr>
-                    <td class="text-center py-2 text-black border-b">{{$client->full_name}}</td>
-                    <td class="text-center py-2 text-black border-b">{{$client->ID_number}}</td>
-                    <td class="text-center py-2 text-black border-b" dir="ltr">{{$client->phone_number}}</td>
-                    <td class="text-center py-2 text-black border-b">{{$client->role->legalCases->count()}}</td>
-                    <td class="text-center py-2 text-black border-b"><input type="checkbox"
-                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="text-center py-2 text-black border-b">{{ $client->full_name }}</td>
+                        <td class="text-center py-2 text-black border-b">{{ $client->ID_number }}</td>
+                        <td class="text-center py-2 text-black border-b" dir="ltr">{{ $client->phone_number }}
+                        </td>
+                        <td class="text-center py-2 text-black border-b">{{ $client->role->legalCases->count() }}</td>
+                        <td class="text-center py-2 text-black border-b"><input type="checkbox"
+                                class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

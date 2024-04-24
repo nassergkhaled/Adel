@@ -7,6 +7,8 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class ClientsController extends Controller
@@ -27,8 +29,8 @@ class ClientsController extends Controller
             $query->where('office_id', $officeId);
         })->get();
 
-        $data=[
-            'clients'=> $clients,
+        $data = [
+            'clients' => $clients,
 
         ];
         return view('clients.index', compact('data'));
@@ -48,11 +50,25 @@ class ClientsController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
+        $validated = Validator::make($request->all(),[
             'user_name' => 'required | max:50 | string ',
             'client_id_num' => 'required | integer | unique:clients,ID_number',
-            'phone' => 'required | max:14 | string',
+            'phone' => 'required | max:14 | numeric',
+        ], [
+            'user_name.required' => 'The client name is required.',
+            'user_name.max' => 'The client name must not be greater than 50 characters.',
+            'user_name.string' => 'The client name must be a string.',
+            'client_id_num.required' => 'The client ID number is required.',
+            'client_id_num.integer' => 'The client ID number must be an integer.',
+            'client_id_num.unique' => 'The client ID number has already been taken.',
+            'phone.required' => 'The phone number is required.',
+            'phone.max' => 'The phone number must not be longer than 14 characters.',
+            'phone.numeric' => 'The phone field must be a number.',
         ]);
+
+        if ($validated->fails()) {
+            return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
+        }
 
         $role = new Role();
         $role->role = 'client';
@@ -71,7 +87,7 @@ class ClientsController extends Controller
         $client->signupToken = $signupToken;
         $client->save();
 
-        return back();
+        return back()->with('msg', "Client added successfully");
     }
 
     /**

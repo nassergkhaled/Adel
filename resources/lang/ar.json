@@ -60,5 +60,17 @@
     "Case added successfully!" : "تم اضافة القضية بنجاح",
     "Verify the entered data!": "تحقق من البيانات المدخلة !",
     "The selected client id is invalid." : "معرف العميل المحدد غير صالح.",
-    "Please do not tamper with the system.":"الرجاء عدم العبث في النظام ."
+    "Please do not tamper with the system.":"الرجاء عدم العبث في النظام .",
+    "There's no upcomming case yet." : "لا يوجد قضايا قادمة حتى الآن .",
+    "Client added successfully": "تم اضافة الموكل بنجاح",
+    "The client name is required.": "اسم الموكل مطلوب.",
+    "The client name must not be greater than 50 characters.": "اسم الموكل يجب أن يكون أقل من 50 حرفًا.",
+    "The client name must be a string.": "اسم الموكل  يجب أن يكون نصا.",
+    "The client ID number is required.": "رقم الهوية مطلوب .",
+    "The client ID number must be an integer.": "رقم الهوية  يجب أن يكون رقماً .",
+    "The client ID number has already been taken.": "رقم الهوية  موجود مسبقا .",
+    "The phone number is required.": "رقم الهاتف مطلوب .",
+    "The phone number must not be longer than 14 characters.": "رقم الهاتف يجب أن لا يزيد عن 14 حرف .",
+    "The phone field must be a number.": "رقم الهاتف  يجب أن يكون رقماً ."
+
 }

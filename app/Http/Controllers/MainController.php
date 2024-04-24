@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\LegalCase;
 use App\Models\Office;
 use App\Models\Role;
 use App\Models\User;
@@ -13,7 +15,34 @@ class MainController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard');
+        $roleId = Auth::user()->roles->first()->id;
+
+        //return All cases connected with me
+        $legalCases = LegalCase::whereHas('roles', function ($query) use ($roleId) {
+            $query->where('id', $roleId);
+        });
+
+        // Get legal cases associated with the user's role
+        $legalCaseIds= $legalCases->pluck('id');
+
+        // Get roles that are associated with these legal cases
+        $roleIds = Role::whereHas('legalCases', function ($query) use ($legalCaseIds) {
+            $query->whereIn('legal_cases.id', $legalCaseIds);
+        })->pluck('id');
+
+        // Get clients linked to the roles associated with legal cases
+        $clients = Client::whereHas('role', function ($query) use ($roleIds) {
+            $query->whereIn('role_id', $roleIds);
+        })->get();
+
+        $legalCases = $legalCases->get();
+
+        $data =[
+            'clients'=>$clients,
+            'cases'=>$legalCases,
+        ];
+
+        return view('dashboard', compact('data'));
     }
     public function profile()
     {
@@ -39,7 +68,7 @@ class MainController extends Controller
             'ID' => 'required|integer|unique:managers',
             'hiring_date' => 'required|date'
         ]);
-        
+
         //we should check if there is a record connected with this user by error (delete it before create a new one)
 
         $office = new OfficesController();
@@ -55,7 +84,7 @@ class MainController extends Controller
 
 
         $manager = new ManagersController();
-        $manager->store($request,$office_id);
+        $manager->store($request, $office_id);
 
         $updateOffice = Office::find($office_id);
         if ($updateOffice) {
@@ -65,7 +94,6 @@ class MainController extends Controller
             // Handle the case where the office isn't found
             // return response()->json(['error' => 'Office not found'], 404);
             return abort(403, 'Office Not Found');
-
         }
 
         $user = User::findOrFail(Auth::id());
