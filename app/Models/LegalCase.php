@@ -11,7 +11,7 @@ class LegalCase extends Model
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'case_role', 'case_id', 'role_id');
     }
     public function witnesses()
     {

@@ -50,14 +50,14 @@ class ClientsController extends Controller
         $role->user_id = null;
         $role->save();
 
-        $signupToken = str::random(40); // Generates a 40-character random string for user to link him with system if he want to create new account
+        $signupToken = str::random(20); // Generates a 20-character random string for user to link him with system if he want to create new account
 
 
         $client = new Client();
         $client->role_id = $role->id;
         $client->full_name = strip_tags($request->input('user_name'));
         $client->ID_number = strip_tags($request->input('client_id_num'));
-        $client->contact_info = json_encode(['phone' => $request->input('phone')]);
+        $client->phone_number = strip_tags($request->input('phone'));
         $client->signupToken = $signupToken;
         $client->save();
 

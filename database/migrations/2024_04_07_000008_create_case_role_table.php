@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('case_role', function (Blueprint $table) {
 
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('user_id')->on('roles')->onDelete('cascade');
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->unsignedBigInteger('case_id');
             $table->foreign('case_id')->references('id')->on('legal_cases')->onDelete('cascade');
 
-            $table->primary(['user_id','case_id']);
+            $table->primary(['role_id','case_id']);
             $table->timestamps();
         });
     }

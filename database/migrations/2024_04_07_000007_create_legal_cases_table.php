@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('legal_cases', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('case_type');
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
             $table->string('status');
+            $table->string('type');
+            $table->date('open_date');
+            $table->date('close_date')->nullable();
+            $table->text('description')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
         

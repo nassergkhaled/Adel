@@ -24,9 +24,9 @@ class Role extends Model
     {
         return $this->belongsTo(Client::class);
     }
-    public function cases()
+    public function legalCases()
     {
-        return $this->belongsToMany(LegalCase::class);
+        return $this->belongsToMany(LegalCase::class, 'case_role', 'role_id', 'case_id');
     }
     public function secretary()
     {
