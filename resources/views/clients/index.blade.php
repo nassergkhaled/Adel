@@ -67,7 +67,7 @@
                                     <label for="user_name" class="block text-sm font-medium text-gray-700">اسم
                                         المستخدم<span class="text-red-600 mr-1 text-lg">*</span></label>
                                     <input type="text" id="user_name" name="user_name" required
-                                        placeholder="ادخل اسم المستخدم"
+                                        placeholder="ادخل اسم المستخدم" value="{{ old('user_name') }}"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
                                     @error('user_name')
                                         <p class="text-sm text-red-500">
@@ -81,7 +81,7 @@
                                     <label for="client_id_num" class="block text-sm font-medium text-gray-700">رقم
                                         الهوية<span class="text-red-600 mr-1 text-lg">*</span></label>
                                     <input type="text" id="client_id_num" name="client_id_num" required
-                                        placeholder="ادخل رقم الهوية"
+                                        placeholder="ادخل رقم الهوية" value="{{ old('client_id_num') }}"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
                                     @error('client_id_num')
                                         <p class="text-sm text-red-500">
@@ -99,7 +99,7 @@
                                         class="block text-sm font-medium text-gray-700">{{ __('Phone') }}<span
                                             class="text-red-600 mr-1 text-lg">*</span></label>
                                     <input type="text" inputmode="tel" id="phone" name="phone" required
-                                        placeholder="ادخل {{ __('Phone') }}"
+                                        placeholder="ادخل {{ __('Phone') }}" value="{{ old('phone') }}"
                                         class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
                                     @error('phone')
                                         <p class="text-sm text-red-500">

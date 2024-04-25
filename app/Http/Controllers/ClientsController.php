@@ -79,7 +79,7 @@ class ClientsController extends Controller
         $validated = Validator::make($request->all(), [
             'user_name' => 'required | max:50 | string ',
             'client_id_num' => 'required | integer | unique:clients,ID_number',
-            'phone' => 'required | max:14 | string',
+            'phone' => 'required|max:14|regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/',
         ], [
             'user_name.required' => 'The client name is required.',
             'user_name.max' => 'The client name must not be greater than 50 characters.',

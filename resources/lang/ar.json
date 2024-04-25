@@ -71,8 +71,12 @@
     "The client ID number has already been taken.": "رقم الهوية  موجود مسبقا .",
     "The phone number is required.": "رقم الهاتف مطلوب .",
     "The phone number must not be longer than 14 characters.": "رقم الهاتف يجب أن لا يزيد عن 14 حرف .",
-    "The phone field must be a number.": "رقم الهاتف  يجب أن يكون رقماً .",
+    "The phone field format is invalid.": "تنسيق حقل الهاتف غير صالح .",
     "This joining code is invalid or has been used.": "كود الانضمام هذا غير صالح او تم استخدامه .",
-    "You have been registered successfully.": "تم تسجيلك بنجاح ."
+    "You have been registered successfully.": "تم تسجيلك بنجاح .",
+    "The email field must be a valid email address." : "عنوان بريد الكتروني غير صالح .",
+    "These credentials do not match our records.":"خطأ في البيانات المدخلة .",
+    "The password field confirmation does not match.":"كلمة المرور المدخلة غير متطابقة مع حقل التأكيد .",
+    "* The email has already been taken.": "البريد الإلكتروني موجود مسبقا ."
 
 }

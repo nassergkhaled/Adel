@@ -84,11 +84,13 @@
                                 default:
                                     break;
                             }
+
+                            $name = $case->roles->where('role','Client')->first()->client->full_name;
                         @endphp
 
                         <tr class=" border-[#E6E8EB]">
                             <td>{{ $case->title }}</td>
-                            <td>{{ 'أي اشي مبدئياً' }}</td>
+                            <td>{{ $name }}</td>
                             <td><span class="{{ $class }}">{{ __($case->status) }}</span></td>
                             <td>{{ $case->open_date }}</td>
                             <td>{{ $case->close_date }}</td>
@@ -136,7 +138,7 @@
                             <label for="case_name"
                                 class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
                                 <span class="text-red-500">*</span></label>
-                            <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
+                            <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}" value="{{ old('case_name') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                             @error('case_name')
                                 <p class="text-sm text-red-500">
@@ -152,7 +154,7 @@
                                 placeholder="{{ __('صاحب القضية') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                              --}}
-                            <select type="text" id="client_id" name="client_id"
+                            <select type="text" id="client_id" name="client_id" 
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                                 <option disabled selected></option>
 
@@ -209,7 +211,7 @@
                             <label for="case_openDate"
                                 class="block text-sm font-medium text-gray-700">{{ __('تاريخ الفتح') }}
                                 <span class="text-red-500">*</span></label>
-                            <input type="date" id="case_openDate" name="case_openDate"
+                            <input type="date" id="case_openDate" name="case_openDate" value="{{ old('case_openDate') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                             @error('case_openDate')
                                 <p class="text-sm text-red-500">
@@ -221,7 +223,7 @@
                             <label for="case_closeDate"
                                 class="block text-sm font-medium text-gray-700">{{ __('تاريخ الاغلاق') }} <span
                                     class="text-red-500">*</span></label>
-                            <input type="date" id="case_closeDate" name="case_closeDate"
+                            <input type="date" id="case_closeDate" name="case_closeDate" value="{{ old('case_closeDate') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                             @error('case_closeDate')
                                 <p class="text-sm text-red-500">
@@ -235,7 +237,7 @@
                             <label for="case_description"
                                 class="block text-sm font-medium text-gray-700">{{ __('وصف') }}
                                 <span class="text-red-500">*</span></label>
-                            <textarea type="text" id="case_description" name="case_description" rows="3"
+                            <textarea type="text" id="case_description" name="case_description" rows="3" value="{{ old('case_description') }}"
                                 class="mt-1 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"></textarea>
                             @error('case_description')
                                 <p class="text-sm text-red-500">
@@ -246,7 +248,7 @@
                         <div>
                             <label for="case_notes"
                                 class="block text-sm font-medium text-gray-700">{{ __('ملاحظات') }}</label>
-                            <textarea type="text" id="case_notes" name="case_notes" rows="3"
+                            <textarea type="text" id="case_notes" name="case_notes" rows="3" value="{{ old('case_notes') }}"
                                 class="mt-1 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"></textarea>
                             @error('case_notes')
                                 <p class="text-sm text-red-500">

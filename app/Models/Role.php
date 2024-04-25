@@ -18,11 +18,11 @@ class Role extends Model
     }
     public function lowyer()
     {
-        return $this->belongsTo(Lawyer::class);
+        return $this->hasOne(Lawyer::class);
     }
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->hasOne(Client::class);
     }
     public function legalCases()
     {
@@ -30,11 +30,11 @@ class Role extends Model
     }
     public function secretary()
     {
-        return $this->belongsTo(Secretary::class);
+        return $this->hasOne(Secretary::class);
     }
     public function manager()
     {
-        return $this->belongsTo(Manager::class);
+        return $this->hasOne(Manager::class);
     }
 
     public function tasks()

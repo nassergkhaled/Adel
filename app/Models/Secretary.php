@@ -10,7 +10,7 @@ class Secretary extends Model
     use HasFactory;
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(Role::class);
     }
 
 }

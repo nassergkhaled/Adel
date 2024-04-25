@@ -10,7 +10,7 @@ class Client extends Model
     use HasFactory;
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(Role::class);
     }
 
 }

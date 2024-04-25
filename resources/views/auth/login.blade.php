@@ -1,4 +1,4 @@
-@section('title','Login | ')
+@section('title', 'Login | ')
 
 <x-guest-layout>
     <!-- Right Pane -->
@@ -6,7 +6,7 @@
         <div class="md:w-[80%] sm:w-full max-h-full lg:w-[60%] p-6">
             <div class="w-full justify-center items-center flex mb-10">
                 <a href="/">
-                    <x-application-logo/>
+                    <x-application-logo />
                 </a>
             </div>
             <h1 class="text-xl font-bold font-Almarai mb-6 text-black text-center">تسجيل الدخول الى حسابك</h1>
@@ -14,12 +14,6 @@
             </h1>
 
 
-            @error('email')
-            {{$message}}
-            @enderror 
-            @error('password')
-            {{$message}}
-            @enderror
             <form form method="POST" action="{{ route('login') }}" class="space-y-4"
                 dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
                 @csrf
@@ -29,12 +23,22 @@
                         class=" mb-2 block text-sm font-medium text-gray-700">{{ __('Email') }}</label>
                     <input type="text" id="email" name="email" placeholder="ادخل {{ __('Email') }}"
                         class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                    @error('email')
+                        <p class="text-sm text-red-500 mt-1">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
                 </div>
                 <div>
                     <label for="password"
                         class="mb-2 block text-sm font-medium text-gray-700">{{ __('Password') }}</label>
                     <input type="password" id="password" name="password" placeholder="{{ __('Password') }}"
                         class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                    @error('password')
+                        <p class="text-sm text-red-500 mt-1">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
                 </div>
                 <div class="flex justify-between">
                     @if (Route::has('password.request'))
@@ -55,12 +59,13 @@
                         </label>
                     </div>
                 </div>
-                    <button type="submit"
-                        class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Log in') }}</button>
-                
+                <button type="submit"
+                    class="w-full bg-[#BF9874] text-white p-2 rounded-md hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Log in') }}</button>
+
             </form>
             <div class="mt-4 text-sm text-[#433529] text-center">
-                <p>ليس لديك حساب ؟ <a href="{{ route('register') }}" class="text-[#BF9874] hover:underline">{{ __('Register') }} </a>
+                <p>ليس لديك حساب ؟ <a href="{{ route('register') }}"
+                        class="text-[#BF9874] hover:underline">{{ __('Register') }} </a>
                 </p>
             </div>
         </div>
