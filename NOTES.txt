@@ -1,1 +1,6 @@
 1. the contact info & address should be in user table to avoid complex queries to retrieve this data
+
+2.We should make intermiddiate table between offices and clients cause the client can be with many lawyers in defferent offices
+3.we should make intermiddiate table between lawyers and clients cause every lawyer should only see The clients who appointed this lawyer and avoid concurency at the same time
+
+4.fix displaying clients so I want to see only the clients I added and the clients in my cases

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Office;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class OfficesController extends Controller
 {
@@ -35,10 +37,14 @@ class OfficesController extends Controller
             'office_phone' => 'required|string|max:15',
         ]);
 
+        $subscription_code = str::random(30); // Generates a 30-character random string for office to link it with users when they create new account
+
+
         $office = new Office();
         $office->name = $validatedData['office_name'];
         $office->location = $validatedData['location'];
         $office->phone_number = $validatedData['office_phone'];
+        $office->subscription_code = 'office-'.$subscription_code;
         //$office->manager_id = Auth::id();
         $office->save();
         return $office->id;

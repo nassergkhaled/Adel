@@ -37,23 +37,25 @@
                             <div class="">
                                 <input type="text" name="office_name" class="mt-2 text-black rounded-lg"
                                     placeholder="اسم المكتب">
-                                <input type="text" name="location" class="mt-2 text-black  rounded-lg" placeholder="الموقع">
-                                <input type="text" inputmode="numeric" name="office_phone" class="mt-2 text-black  rounded-lg"
-                                    placeholder="رقم هاتف المكتب">
+                                <input type="text" name="location" class="mt-2 text-black  rounded-lg"
+                                    placeholder="الموقع">
+                                <input type="text" inputmode="numeric" name="office_phone"
+                                    class="mt-2 text-black  rounded-lg" placeholder="رقم هاتف المكتب">
                             </div>
 
                         </div>
-                        <div class="p-4 mt-5 border border-gray-200 rounded-lg relative flex flex-col space-y-3 mx-auto">
+                        <div
+                            class="p-4 mt-5 border border-gray-200 rounded-lg relative flex flex-col space-y-3 mx-auto">
                             <h2
                                 class="text-lg font-semibold bg-[#1d232a] rounded-md border border-white px-2 absolute -top-3 left-4">
                                 معلومات المدير</h2>
                             <div class="text-black">
                                 <input type="text" name="full_name" class="mt-2 text-black  rounded-lg"
                                     placeholder="الاسم الكامل">
-                                <input type="text" inputmode="numeric" name="phone" class="mt-2 text-black  rounded-lg"
-                                    placeholder="رقم الهاتف">
-                                <input type="text" inputmode="numeric" name="ID" class="mt-2 text-black  rounded-lg"
-                                    placeholder="رقم الهوية">
+                                <input type="text" inputmode="numeric" name="phone"
+                                    class="mt-2 text-black  rounded-lg" placeholder="رقم الهاتف">
+                                <input type="text" inputmode="numeric" name="ID"
+                                    class="mt-2 text-black  rounded-lg" placeholder="رقم الهوية">
                                 <input type="date" name="hiring_date" class="mt-2 text-black rounded-lg"
                                     placeholder="تاريخ التعيين">
                             </div>
@@ -67,72 +69,94 @@
 
                 </div>
             </div>
-            <div class="card w-96 bg-base-100 shadow-xl">
-                <div class="card-body mx-auto flex">
-                    <h2 class="card-title text-center mb-3">انضمام الى مكتب</h2>
-                    <form action="/" method="GET" class="flex flex-col space-y-3 mx-auto text-black">
-                        <input type="text" name="join_code" class=" rounded-lg" placeholder="كود الانضمام">
-                        <select name="role" id="roleSelect" class="rounded-lg">
-                            <option value="" disabled selected>الوضيفة</option>
-                            <option value="secretary">سكرتير</option>
-                            <option value="lawyer">محامي</option>
-                            <option value="client">موكل</option>
-                        </select>
-                        <input type="text" name="full_name" class="rounded-lg" placeholder="الاسم الكامل">
-                        <input type="text" inputmode="numeric" name="phone_number" class="rounded-lg"
-                            placeholder="رقم الهاتف">
-                        <input type="text" inputmode="numeric" name="id_number" class="rounded-lg"
-                            placeholder="رقم الهوية">
-                        <!-- Lawyer specific fields -->
-                        <input type="text" name="registration_no" id="registrationNo" class="rounded-lg"
-                            placeholder="رقم التسجيل" style="display:none;">
-                        <input type="text" name="exp_years" id="expYears" class="rounded-lg"
-                            placeholder="سنوات الخبرة" style="display:none;">
-                        <!-- Client specific fields -->
-                        <input type="text" name="nationality" id="nationality" class="rounded-lg"
-                            placeholder="الجنسية" style="display:none;">
-                        <input type="date" name="birth_date" id="birthDate" class="rounded-lg"
-                            placeholder="تاريخ الميلاد" style="display:none;">
-                        <button type="submit" id="submitButton" class="btn btn-primary">انضمام</button>
-                    </form>
+            <div class="flex flex-col space-y-5">
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <div class="card-body mx-auto flex">
+                        <h2 class="card-title text-center mb-3">انضمام الى مكتب</h2>
+                        <form action="/" method="GET" class="flex flex-col space-y-3 mx-auto text-black">
+                            <input type="text" name="join_code" class=" rounded-lg" placeholder="كود الانضمام">
+                            <select name="role" id="roleSelect" class="rounded-lg">
+                                <option value="" disabled selected>الوضيفة</option>
+                                <option value="secretary">سكرتير</option>
+                                <option value="lawyer">محامي</option>
+                                <option value="client">موكل</option>
+                            </select>
+                            <input type="text" name="full_name" class="rounded-lg" placeholder="الاسم الكامل">
+                            <input type="text" inputmode="numeric" name="phone_number" class="rounded-lg"
+                                placeholder="رقم الهاتف">
+                            <input type="text" inputmode="numeric" name="id_number" class="rounded-lg"
+                                placeholder="رقم الهوية">
+                            <!-- Lawyer specific fields -->
+                            <input type="text" name="registration_no" id="registrationNo" class="rounded-lg"
+                                placeholder="رقم التسجيل" style="display:none;">
+                            <input type="text" name="exp_years" id="expYears" class="rounded-lg"
+                                placeholder="سنوات الخبرة" style="display:none;">
+                            <!-- Client specific fields -->
+                            <input type="text" name="nationality" id="nationality" class="rounded-lg"
+                                placeholder="الجنسية" style="display:none;">
+                            <input type="date" name="birth_date" id="birthDate" class="rounded-lg"
+                                placeholder="تاريخ الميلاد" style="display:none;">
+                            <button type="submit" id="submitButton" class="btn btn-primary">انضمام</button>
+                        </form>
+                    </div>
+                </div>
+
+                <script>
+                    document.getElementById('roleSelect').addEventListener('change', function() {
+                        var role = this.value;
+                        var formFields = document.querySelectorAll('.rounded-lg'); // Select all inputs
+                        var submitButton = document.getElementById('submitButton');
+
+                        if (role === "") {
+                            // Hide all fields and disable the submit button if the default option is selected
+                            formFields.forEach(function(field) {
+                                field.style.display = 'none';
+                            });
+                            submitButton.disabled = true;
+                        } else {
+                            // Show all fields and enable the submit button
+                            formFields.forEach(function(field) {
+                                field.style.display = 'block';
+                            });
+                            submitButton.disabled = false;
+                            // Hide role-specific fields initially
+                            document.getElementById('registrationNo').style.display = 'none';
+                            document.getElementById('expYears').style.display = 'none';
+                            document.getElementById('nationality').style.display = 'none';
+                            document.getElementById('birthDate').style.display = 'none';
+
+                            // Then show fields based on selected role
+                            if (role === 'lawyer') {
+                                document.getElementById('registrationNo').style.display = 'block';
+                                document.getElementById('expYears').style.display = 'block';
+                            } else if (role === 'client') {
+                                document.getElementById('nationality').style.display = 'block';
+                                document.getElementById('birthDate').style.display = 'block';
+                            }
+                        }
+                    });
+                </script>
+
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <div class="card-body mx-auto flex">
+                        <h2 class="card-title text-center mb-3">تسجيل حساب كموكّل</h2>
+                        <form action="{{ route('newClientUser') }}" method="POST"
+                            class="flex flex-col space-y-3 mx-auto text-black">
+                            @csrf
+                            <input type="text" name="join_code" class=" rounded-lg" placeholder="كود الانضمام">
+                            @error('join_code')
+                                <p class="text-sm text-red-500">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
+                            <p class="text-sm mx-auto w-[88%] mt-2 flex items-center text-gray-400">
+                                * يرجى ادخال كود الانصمام المزود لك من قبل المكتب .
+                            </p>
+                            <button type="submit" id="submitButton" class="btn btn-primary">انضمام</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-            <script>
-                document.getElementById('roleSelect').addEventListener('change', function() {
-                    var role = this.value;
-                    var formFields = document.querySelectorAll('.rounded-lg'); // Select all inputs
-                    var submitButton = document.getElementById('submitButton');
-
-                    if (role === "") {
-                        // Hide all fields and disable the submit button if the default option is selected
-                        formFields.forEach(function(field) {
-                            field.style.display = 'none';
-                        });
-                        submitButton.disabled = true;
-                    } else {
-                        // Show all fields and enable the submit button
-                        formFields.forEach(function(field) {
-                            field.style.display = 'block';
-                        });
-                        submitButton.disabled = false;
-                        // Hide role-specific fields initially
-                        document.getElementById('registrationNo').style.display = 'none';
-                        document.getElementById('expYears').style.display = 'none';
-                        document.getElementById('nationality').style.display = 'none';
-                        document.getElementById('birthDate').style.display = 'none';
-
-                        // Then show fields based on selected role
-                        if (role === 'lawyer') {
-                            document.getElementById('registrationNo').style.display = 'block';
-                            document.getElementById('expYears').style.display = 'block';
-                        } else if (role === 'client') {
-                            document.getElementById('nationality').style.display = 'block';
-                            document.getElementById('birthDate').style.display = 'block';
-                        }
-                    }
-                });
-            </script>
 
         </div>
 

@@ -7,8 +7,11 @@ use App\Models\LegalCase;
 use App\Models\Office;
 use App\Models\Role;
 use App\Models\User;
+use App\Rules\ckeckSignupTokens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class MainController extends Controller
 {
@@ -23,7 +26,7 @@ class MainController extends Controller
         });
 
         // Get legal cases associated with the user's role
-        $legalCaseIds= $legalCases->pluck('id');
+        $legalCaseIds = $legalCases->pluck('id');
 
         // Get roles that are associated with these legal cases
         $roleIds = Role::whereHas('legalCases', function ($query) use ($legalCaseIds) {
@@ -37,9 +40,9 @@ class MainController extends Controller
 
         $legalCases = $legalCases->get();
 
-        $data =[
-            'clients'=>$clients,
-            'cases'=>$legalCases,
+        $data = [
+            'clients' => $clients,
+            'cases' => $legalCases,
         ];
 
         return view('dashboard', compact('data'));
@@ -103,5 +106,29 @@ class MainController extends Controller
         return redirect('dashboard');
 
         // return response()->json('done', 200);
+    }
+    public function newClientUser(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            // 'join_code' => ['required','string','max:40',new ckeckSignupTokens('join_code')],            
+            'join_code' => ['required','string','max:25','exists:clients,signupToken'],            
+        ], [
+            'join_code.exists' => 'This joining code is invalid or has been used.',
+        ]);
+
+        if ($validated->fails()) {
+            return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
+        }
+
+        $client = Client::where('signupToken',$request->join_code)->first();
+
+        Role::where('id', $client->role_id)->update(['user_id' => Auth::id()]);
+        User::where('id', Auth::id())->update(['completeRegistration' => true]);
+
+        $client->signupToken = null;
+        $client->save();
+
+        return redirect('dashboard')->with('msg','You have been registered successfully.');     
+        
     }
 }
