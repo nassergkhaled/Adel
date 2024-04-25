@@ -94,7 +94,8 @@
             </div>
             <hr>
             <ul class="list-none p-3">
-                <!-- Row 1 -->
+
+                @if($data['clients']->count())
                 @foreach ($data['clients'] as $client)
                     @php
                         //to print one case tite + number of other cases
@@ -138,6 +139,14 @@
                         </div>
                     </li>
                 @endforeach
+                @else
+                    <li class="flex justify-between items-center px-2 py-1 ">
+                        <div class="flex items-center mx-auto">
+                            <span class="text-black mr-2 ">{{ __("There are no clients yet.") }}</span>
+                        </div>
+                    </li>
+
+                @endif
 
             </ul>
 

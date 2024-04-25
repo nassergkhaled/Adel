@@ -77,6 +77,7 @@
     "The email field must be a valid email address." : "عنوان بريد الكتروني غير صالح .",
     "These credentials do not match our records.":"خطأ في البيانات المدخلة .",
     "The password field confirmation does not match.":"كلمة المرور المدخلة غير متطابقة مع حقل التأكيد .",
-    "* The email has already been taken.": "البريد الإلكتروني موجود مسبقا ."
+    "* The email has already been taken.": "البريد الإلكتروني موجود مسبقا .",
+    "There are no clients yet.":"لا يوجد موكلين حتى الآن ."
 
 }
