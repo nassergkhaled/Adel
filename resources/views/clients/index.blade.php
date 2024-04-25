@@ -121,34 +121,42 @@
     <hr class=" mr-4 ml-4 w-auto">
 
     <div class="flex justify-center items-center w-[96%] mt-14 mr-6">
-        <table class=" w-full border-collapse shadow-md">
-            <thead class="border-[#E6E8EB] text-[#999999] text-[15px] bg-[#DDDDDDDD] ">
-                <tr>
-                    <th class="w-1/5 py-2">اسم الموكل</th>
-                    <th class="w-1/5 py-2">رقم الهوية</th>
-                    <th class="w-1/5 py-2">رقم الهاتف</th>
-                    <th class="w-1/5 py-2">عدد القضايا</th>
-                    <th class="text-center w-[5%] py-2"><input type="checkbox"
-                            class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
-                    </th>
-                </tr>
-            </thead>
+        @if ($data['clients']->count() > 0)
 
-            <tbody class="bg-white text-md ">
-                @foreach ($data['clients'] as $client)
+            <table class=" w-full border-collapse shadow-md">
+                <thead class="border-[#E6E8EB] text-[#999999] text-[15px] bg-[#DDDDDDDD] ">
                     <tr>
-                        <td class="text-center py-2 text-black border-b">{{ $client->full_name }}</td>
-                        <td class="text-center py-2 text-black border-b">{{ $client->ID_number }}</td>
-                        <td class="text-center py-2 text-black border-b" dir="ltr">{{ $client->phone_number }}
-                        </td>
-                        <td class="text-center py-2 text-black border-b">{{ $client->role->legalCases->count() }}</td>
-                        <td class="text-center py-2 text-black border-b"><input type="checkbox"
-                                class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">
-                        </td>
+                        <th class="w-1/5 py-2">اسم الموكل</th>
+                        <th class="w-1/5 py-2">رقم الهوية</th>
+                        <th class="w-1/5 py-2">رقم الهاتف</th>
+                        <th class="w-1/5 py-2">عدد القضايا</th>
+                        <th class="text-center w-[5%] py-2"><input type="checkbox"
+                                class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
+                        </th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody class="bg-white text-md ">
+                    @foreach ($data['clients'] as $client)
+                        <tr>
+                            <td class="text-center py-2 text-black border-b">{{ $client->full_name }}</td>
+                            <td class="text-center py-2 text-black border-b">{{ $client->ID_number }}</td>
+                            <td class="text-center py-2 text-black border-b" dir="ltr">
+                                {{ $client->phone_number }}
+                            </td>
+                            <td class="text-center py-2 text-black border-b">{{ $client->role->legalCases->count() }}
+                            </td>
+                            <td class="text-center py-2 text-black border-b"><input type="checkbox"
+                                    class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <div class=" p-5 pt-10 text-center text-black text-lg">{{ __('There are no registered clients yet.') }}
+            </div>
+        @endif
     </div>
 
 

@@ -39,7 +39,7 @@
 
         <div class="flex justify-between">
             <h1 class="text-xl flex items-center font-bold text-black">جميع القضايا</h1>
-            <button type="button" onclick="my_modal_5.showModal()"
+            <button type="button" onclick="addCase.showModal()"
                 class=" flex my-auto bg-[#BF9874] text-white px-8 py-2 rounded-md text-sm hover:bg-adel-Dark-hover">
                 {{ __('Add') }}
             </button>
@@ -47,61 +47,64 @@
 
 
         <hr>
+        @if ($data['cases']->count() > 0)
+            <button type="button"
+                class=" flex my-auto bg-transparent border text-[#999999] px-7 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#E6E8EB] transition ease-in-out duration-150">
+                <i class="fa-solid fa-filter mt-1 me-1"></i> {{ __('Filter') }}
+            </button>
 
-        <button type="button"
-            class=" flex my-auto bg-transparent border text-[#999999] px-7 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#E6E8EB] transition ease-in-out duration-150">
-            <i class="fa-solid fa-filter mt-1 me-1"></i> {{ __('Filter') }}
-        </button>
-
-        <div class="w-full">
-            <table class="table  border-[#E6E8EB] text-black shadow-md rounded-sm bg-white">
-                <thead>
-                    <tr class=" border-[#E6E8EB] text-[#999999] text-[15px] bg-[#DDDDDDDD]">
-                        <th>اسم القضية</th>
-                        <th>صاحب القضية</th>
-                        <th>الحالة</th>
-                        <th>تاريخ الفتح</th>
-                        <th>تاريخ الاغلاق</th>
-                        <th class="text-end"><input type="checkbox" id="" name=""
-                                class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="text-start">
-                    @foreach ($data['cases'] as $case)
-                        @php
-                            $class;
-                            switch ($case->status) {
-                                case 'Open':
-                                    $class = 'bg-[#c1ebd7] px-2 py-1 rounded-md text-[#06A759]';
-                                    break;
-                                case 'Closed':
-                                    $class = 'bg-[#f9c6c6] px-2 py-1 rounded-md text-[#EA1B1B]';
-                                    break;
-                                case 'Pending':
-                                    $class = 'bg-[#e9e2c0] px-2 py-1 rounded-md text-[#A78D06]';
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                            $name = $case->roles->where('role','Client')->first()->client->full_name;
-                        @endphp
-
-                        <tr class=" border-[#E6E8EB]">
-                            <td>{{ $case->title }}</td>
-                            <td>{{ $name }}</td>
-                            <td><span class="{{ $class }}">{{ __($case->status) }}</span></td>
-                            <td>{{ $case->open_date }}</td>
-                            <td>{{ $case->close_date }}</td>
-                            <td class="text-end"><input type="checkbox" id="" name=""
+            <div class="w-full">
+                <table class="table  border-[#E6E8EB] text-black shadow-md rounded-sm bg-white">
+                    <thead>
+                        <tr class=" border-[#E6E8EB] text-[#999999] text-[15px] bg-[#DDDDDDDD]">
+                            <th>اسم القضية</th>
+                            <th>صاحب القضية</th>
+                            <th>الحالة</th>
+                            <th>تاريخ الفتح</th>
+                            <th>تاريخ الاغلاق</th>
+                            <th class="text-end"><input type="checkbox" id="" name=""
                                     class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
-                            </td>
+                            </th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody class="text-start">
+                        @foreach ($data['cases'] as $case)
+                            @php
+                                $class;
+                                switch ($case->status) {
+                                    case 'Open':
+                                        $class = 'bg-[#c1ebd7] px-2 py-1 rounded-md text-[#06A759]';
+                                        break;
+                                    case 'Closed':
+                                        $class = 'bg-[#f9c6c6] px-2 py-1 rounded-md text-[#EA1B1B]';
+                                        break;
+                                    case 'Pending':
+                                        $class = 'bg-[#e9e2c0] px-2 py-1 rounded-md text-[#A78D06]';
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                $name = $case->roles->where('role', 'Client')->first()->client->full_name;
+                            @endphp
+
+                            <tr class=" border-[#E6E8EB]">
+                                <td>{{ $case->title }}</td>
+                                <td>{{ $name }}</td>
+                                <td><span class="{{ $class }}">{{ __($case->status) }}</span></td>
+                                <td>{{ $case->open_date }}</td>
+                                <td>{{ $case->close_date }}</td>
+                                <td class="text-end"><input type="checkbox" id="" name=""
+                                        class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <div class=" p-5 pt-10 text-center text-black text-lg">{{ __('There are no cases registered yet.') }}</div>
+        @endif
 
     </div>
     <style>
@@ -120,7 +123,7 @@
         }
     </style>
 
-    <dialog id="my_modal_5" class="modal modal-middle sm:modal-middle" style="width:90%;">
+    <dialog id="addCase" class="modal modal-middle sm:modal-middle" style="width:90%;">
         <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
             <form method="dialog">
                 <button type="submit" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
@@ -138,7 +141,8 @@
                             <label for="case_name"
                                 class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
                                 <span class="text-red-500">*</span></label>
-                            <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}" value="{{ old('case_name') }}"
+                            <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
+                                value="{{ old('case_name') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                             @error('case_name')
                                 <p class="text-sm text-red-500">
@@ -154,7 +158,7 @@
                                 placeholder="{{ __('صاحب القضية') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                              --}}
-                            <select type="text" id="client_id" name="client_id" 
+                            <select type="text" id="client_id" name="client_id"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                                 <option disabled selected></option>
 
@@ -211,7 +215,8 @@
                             <label for="case_openDate"
                                 class="block text-sm font-medium text-gray-700">{{ __('تاريخ الفتح') }}
                                 <span class="text-red-500">*</span></label>
-                            <input type="date" id="case_openDate" name="case_openDate" value="{{ old('case_openDate') }}"
+                            <input type="date" id="case_openDate" name="case_openDate"
+                                value="{{ old('case_openDate') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                             @error('case_openDate')
                                 <p class="text-sm text-red-500">
@@ -223,7 +228,8 @@
                             <label for="case_closeDate"
                                 class="block text-sm font-medium text-gray-700">{{ __('تاريخ الاغلاق') }} <span
                                     class="text-red-500">*</span></label>
-                            <input type="date" id="case_closeDate" name="case_closeDate" value="{{ old('case_closeDate') }}"
+                            <input type="date" id="case_closeDate" name="case_closeDate"
+                                value="{{ old('case_closeDate') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                             @error('case_closeDate')
                                 <p class="text-sm text-red-500">
@@ -237,7 +243,8 @@
                             <label for="case_description"
                                 class="block text-sm font-medium text-gray-700">{{ __('وصف') }}
                                 <span class="text-red-500">*</span></label>
-                            <textarea type="text" id="case_description" name="case_description" rows="3" value="{{ old('case_description') }}"
+                            <textarea type="text" id="case_description" name="case_description" rows="3"
+                                value="{{ old('case_description') }}"
                                 class="mt-1 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"></textarea>
                             @error('case_description')
                                 <p class="text-sm text-red-500">
