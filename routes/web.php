@@ -4,6 +4,7 @@ use App\Http\Controllers\LegalCasesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CompleteRegistration;
+use App\Http\Middleware\RegistrationComplete;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\CommunicationController;
@@ -44,7 +45,7 @@ Route::get('/chating', function () {
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
-Route::middleware(['auth', CompleteRegistration::class])->group(function () {
+Route::middleware(['auth', RegistrationComplete::class])->group(function () {
     Route::get('/profile', [MainController::class, 'profile'])->name('profile');
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/calender', [MainController::class, 'calender'])->name('calender');
@@ -56,7 +57,7 @@ Route::middleware(['auth', CompleteRegistration::class])->group(function () {
 
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', CompleteRegistration::class])->group(function () {
     Route::get('/CompleteRegistration', [MainController::class, 'completeRegistration'])->name('complete.registration');
     Route::post('/newOffice', [MainController::class, 'newOffice'])->name('newOffice');
     Route::post('/newClientUser', [MainController::class, 'newClientUser'])->name('newClientUser');
