@@ -12,5 +12,8 @@ class Client extends Model
     {
         return $this->belongsTo(Role::class);
     }
-
+    public function lawyers()
+    {
+        return $this->belongsToMany(Lawyer::class, 'lawyer_client');
+    }
 }

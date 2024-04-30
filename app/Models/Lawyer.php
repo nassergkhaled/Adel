@@ -13,4 +13,9 @@ class Lawyer extends Model
         return $this->hasOne(Role::class);
     }
 
+    public function clients()
+{
+    return $this->belongsToMany(Client::class, 'lawyer_client');
+}
+
 }
