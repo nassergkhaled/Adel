@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\TasksController;
+use App\Models\ChatSession;
+use App\Models\User;
 
 /* Route::get('/', function () {
     return view('welcome');
@@ -27,9 +29,7 @@ Route::get('/test', function () {
     return view('clients.index');
 })->name('clients.index');
  */
-Route::get('/chating', function () {
-    return view('chating.index');
-})->name('chating.index');
+
 
 
 
@@ -50,6 +50,14 @@ Route::middleware(['auth', RegistrationComplete::class])->group(function () {
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/calender', [MainController::class, 'calender'])->name('calender');
     Route::resource('/legalCases', LegalCasesController::class);
+
+    Route::get('/chating', function () {
+        // $users=User::whereNot('id',Auth()->id())->get();
+        $chats = ChatSession::all();
+        return view('chating.index',compact('chats'));
+    })->name('chating.index');
+
+    
     Route::resource('tasks',TasksController::class);
     Route::resource('clients',ClientsController::class);
     Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');

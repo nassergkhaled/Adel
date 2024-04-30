@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Almarai:wght@300;400&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,15 +7,36 @@
 
 @layer base {
     :where([dir="rtl"]) select {
-      background-position: left theme('spacing.2') center;
-      padding-left: theme('spacing.10');
-      padding-right: theme('spacing.3');
+        background-position: left theme("spacing.2") center;
+        padding-left: theme("spacing.10");
+        padding-right: theme("spacing.3");
     }
 
     [dir="rtl"] input[type="date"]::-webkit-calendar-picker-indicator {
-        filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0) brightness(0%) contrast(0%);
+        filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0) brightness(0%)
+            contrast(0%);
     }
+}
 
+/* ------------------scrollbar-------------------- */
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
 
-  }
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f5f0ea;
+}
 
+/* bar */
+::-webkit-scrollbar-thumb {
+    background: #bf9874;
+    border-radius: 5px;
+}
+
+/*hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #997a5d;
+}
+/* --------------------------------------------------- */

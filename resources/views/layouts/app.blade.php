@@ -16,6 +16,11 @@
 
     <script src="https://kit.fontawesome.com/a9938c3b92.js" crossorigin="anonymous"></script>
 
+    {{-- firebase --}}
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
