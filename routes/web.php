@@ -20,9 +20,13 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/test', function () {
-})->name('test');
+Route::get('/hello', function () {
+    return view('frame1515');
+})->name('hello');
 
+Route::get('/joinoffice', function () {
+    return view('frame1516');
+})->name('joinoffice');
 
 
 /* Route::get('/clients', function () {
@@ -57,7 +61,7 @@ Route::middleware(['auth', RegistrationComplete::class])->group(function () {
         return view('chating.index',compact('chats'));
     })->name('chating.index');
 
-    
+
     Route::resource('tasks',TasksController::class);
     Route::resource('clients',ClientsController::class);
     Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');
