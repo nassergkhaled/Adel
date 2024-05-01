@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('office_name');
             $table->string('location');
-            $table->string('phone_number')->nullable();
+            $table->string('office_phone')->nullable();
 
             $table->unsignedBigInteger('manager_id')->nullable();
             //$table->foreign( 'manager_id' )->references('user_id')->on('managers'); // cant be null , change the manager not delete it

@@ -113,11 +113,11 @@
                                 class="text-lg font-semibold bg-[#1d232a] rounded-md border border-white px-2 absolute -top-3 left-4">
                                 معلومات المدير</h2>
                             <div class="text-black">
-                                <input type="text" name="full_name" class="mt-2 text-black  rounded-lg"
+                                <input type="text" name="manager_name" class="mt-2 text-black  rounded-lg"
                                     placeholder="الاسم الكامل">
-                                <input type="text" inputmode="numeric" name="phone"
+                                <input type="text" inputmode="numeric" name="manager_phone"
                                     class="mt-2 text-black  rounded-lg" placeholder="رقم الهاتف">
-                                <input type="text" inputmode="numeric" name="ID"
+                                <input type="text" inputmode="numeric" name="manager_id"
                                     class="mt-2 text-black  rounded-lg" placeholder="رقم الهوية">
                                 <input type="date" name="hiring_date" class="mt-2 text-black rounded-lg"
                                     placeholder="تاريخ التعيين">

@@ -41,9 +41,9 @@ class OfficesController extends Controller
 
 
         $office = new Office();
-        $office->name = $validatedData['office_name'];
+        $office->office_name = $validatedData['office_name'];
         $office->location = $validatedData['location'];
-        $office->phone_number = $validatedData['office_phone'];
+        $office->office_phone = $validatedData['office_phone'];
         $office->subscription_code = 'office-'.$subscription_code;
         //$office->manager_id = Auth::id();
         $office->save();

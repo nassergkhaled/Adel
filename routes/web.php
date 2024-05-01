@@ -20,13 +20,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/hello', function () {
-    return view('frame1515');
-})->name('hello');
 
-Route::get('/joinoffice', function () {
-    return view('frame1516');
-})->name('joinoffice');
 
 
 /* Route::get('/clients', function () {
@@ -73,6 +67,14 @@ Route::middleware(['auth', CompleteRegistration::class])->group(function () {
     Route::get('/CompleteRegistration', [MainController::class, 'completeRegistration'])->name('complete.registration');
     Route::post('/newOffice', [MainController::class, 'newOffice'])->name('newOffice');
     Route::post('/newClientUser', [MainController::class, 'newClientUser'])->name('newClientUser');
+
+    Route::get('/createOffice', function () {
+        return view('newUser/createOffice');
+    })->name('createOffice');
+    
+    Route::get('/joinOffice', function () {
+        return view('newUser/joinOffice');
+    })->name('joinOffice');
 
 });
 

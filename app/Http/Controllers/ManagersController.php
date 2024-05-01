@@ -31,21 +31,21 @@ class ManagersController extends Controller
     public function store(Request $request,$office_id)
     {
         $validatedData = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:15|unique:users,phone_number',
-            'ID' => 'required|integer|unique:managers',
-            'hiring_date' => 'required|date'
+            'manager_name' => 'required|string|max:255',
+            'manager_phone' => 'required|string|max:15|unique:users,phone_number',
+            'manager_id' => 'required|integer|unique:managers,manager_id_number',
+            // 'hiring_date' => 'required|date'
         ]);
 
         $user = User::where('id', Auth::user()->id)->first();
-        $user->phone_number = $validatedData['phone'];
+        $user->phone_number = $validatedData['manager_phone'];
         $user->save();
         
         $manager = new Manager();
         $manager->user_id = Auth::id();
-        $manager->full_name = $validatedData['full_name'];
-        $manager->ID = $validatedData['ID'];
-        $manager->hiring_date = $validatedData['hiring_date'];
+        $manager->manager_name = $validatedData['manager_name'];
+        $manager->manager_id_number = $validatedData['manager_id'];
+        // $manager->hiring_date = $validatedData['hiring_date'];
         $manager->office_id= $office_id;
         $manager->save();
 

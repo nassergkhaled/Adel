@@ -57,7 +57,7 @@ class MainController extends Controller
     }
     public function completeRegistration()
     {
-        return view('completeRegistration');
+        return view('newUser/completeRegistration');
     }
 
     public function newOffice(Request $request)
@@ -66,10 +66,10 @@ class MainController extends Controller
             'office_name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'office_phone' => 'required|string|max:15',
-            'full_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:15|unique:users,phone_number',
-            'ID' => 'required|integer|unique:managers',
-            'hiring_date' => 'required|date'
+            'manager_name' => 'required|string|max:255',
+            'manager_phone' => 'required|string|max:15|unique:users,phone_number',
+            'manager_id' => 'required|integer|unique:managers,manager_id_number',
+            // 'hiring_date' => 'nullable|date'
         ]);
 
         //we should check if there is a record connected with this user by error (delete it before create a new one)
