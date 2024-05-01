@@ -98,5 +98,7 @@
     "Create a new office": "إنشاء مكتب جديد",
     "Join your office":"انضم الى مكتبك",
     "Do you work in an office?": "هل تعمل في مكتب ؟",
+    "The selected join code is invalid.": "كود الانضمام المحدد غير صالح.",
+    "The selected user type is invalid.": "نوع المستخدم المحدد غير صالح.",
     "Full name": "الاسم الكامل"
 }
