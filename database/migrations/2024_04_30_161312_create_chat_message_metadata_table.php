@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chat_messages_metadata', function (Blueprint $table) {
+        Schema::create('chat_message_metadata', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('session_id');
             $table->unsignedBigInteger('sender_id');
             $table->string('message_type');
             $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         
             $table->foreign('session_id')->references('id')->on('chat_sessions')->onDelete('cascade');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
