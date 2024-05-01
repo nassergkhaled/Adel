@@ -17,10 +17,11 @@ return new class extends Migration
             $table->foreign('user_id')->references('user_id')->on('roles')->onDelete('cascade');
 
             $table->string('full_name');
-            $table->date('birthday');
-            $table->boolean('gender')->default(null);
-            $table->unsignedInteger('ID');
+            $table->unsignedInteger('id_number')->unique();
 
+
+            // $table->date('birthday');
+            // $table->boolean('gender')->default(null);
             // $table->json('contact_info');
             // $table->string('address')->nullable();
 

@@ -64,8 +64,13 @@ Route::middleware(['auth', RegistrationComplete::class])->group(function () {
 });
 
 Route::middleware(['auth', CompleteRegistration::class])->group(function () {
-    Route::get('/CompleteRegistration', [MainController::class, 'completeRegistration'])->name('complete.registration');
+    // Route::get('/CompleteRegistration', [MainController::class, 'completeRegistration'])->name('complete.registration');
+   
+   
     Route::post('/newOffice', [MainController::class, 'newOffice'])->name('newOffice');
+    Route::post('/joinOffice', [MainController::class, 'joinOffice'])->name('joinOffice');
+
+    
     Route::post('/newClientUser', [MainController::class, 'newClientUser'])->name('newClientUser');
 
     Route::get('/createOffice', function () {

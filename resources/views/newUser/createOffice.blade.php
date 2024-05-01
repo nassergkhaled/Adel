@@ -108,6 +108,10 @@
                         class="w-full mt-2 bg-[#BF9874] text-white p-2 rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Subscribe') }}</button>
                 </div>
             </form>
+            <div class="mt-4 text-sm text-gray-600 text-center">
+                <p>{{ __("Do you work in an office?") }}&nbsp; <a href="{{ route('joinOffice') }}"
+                        class="text-[#BF9874] hover:underline">{{ __('Join your office') }} </a></p>
+            </div>
 
            
         </div>

@@ -13,6 +13,6 @@ class RegistrationComplete
             return $next($request);
         }
 
-        return redirect()->route('complete.registration');
+        return redirect()->route('joinOffice');
     }
 }

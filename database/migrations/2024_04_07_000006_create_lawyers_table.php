@@ -17,11 +17,13 @@ return new class extends Migration
             $table->foreign('user_id')->references('user_id')->on('roles')->onDelete('cascade');
 
             $table->string('full_name');
-            $table->date('birthday');
-            $table->boolean('gender')->default(null);
-            $table->unsignedInteger('ID')->unique();
-            $table->string('registration_no',15)->unique();
-            $table->unsignedTinyInteger('exp_years');
+            $table->unsignedInteger('id_number')->unique();
+
+
+            // $table->date('birthday');
+            // $table->boolean('gender')->default(null);
+            // $table->string('registration_no',15)->unique();
+            // $table->unsignedTinyInteger('exp_years');
 
             // id, reg_licenseو CV scan will be in S3 Bucket
 

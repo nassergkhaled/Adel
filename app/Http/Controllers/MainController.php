@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Lawyer;
 use App\Models\LegalCase;
 use App\Models\Office;
 use App\Models\Role;
+use App\Models\Secretary;
 use App\Models\User;
 use App\Rules\ckeckSignupTokens;
 use Illuminate\Http\Request;
@@ -107,11 +109,75 @@ class MainController extends Controller
 
         // return response()->json('done', 200);
     }
+
+
+
+
+    public function joinOffice(Request $request)
+    {
+        $validatedData = $request->validate([
+            'join_code' => 'required|string|max:37|exists:offices,subscription_code',
+            'user_type' => 'required|string|in:Secretary,Lawyer',
+            'full_name' => 'required|string|max:255',
+            'user_phone' => 'required|string|max:15|unique:users,phone_number',
+            'user_id_num' => 'required|integer|unique:secretaries,id_number|unique:lawyers,id_number',
+        ]);
+
+
+
+        $type = $validatedData['user_type'];
+        $existSecretary = Role::where('user_id', '=', Auth::id())->where('role', 'Secretary')->first();
+        $existLawyer = Role::where('user_id', '=', Auth::id())->where('role', 'Lawyer')->first();
+
+        if (!$existSecretary && !$existLawyer) {
+            $userData = [
+                'full_name' => $request->full_name,
+                'id_number' => $request->user_id_num,
+            ];
+
+            $office_id = Office::where('subscription_code', $validatedData['join_code'])->first()->id;
+            $role = new Role();
+            $role->office_id = $office_id;
+            $role->user_id = Auth::id();
+
+            if ('Secretary' === $type) {
+                $role->role = 'Secretary';
+                $role->save();
+
+                $userData += ['user_id' => $role->user_id];
+                Secretary::create($userData);
+
+                // $secretary = new SecretariesController();
+                // $secretary->store($request, $office_id);
+            } else if ('Lawyer' === $type) {
+                $role->role = 'Lawyer';
+                $role->save();
+
+                $userData += ['user_id' => $role->user_id];
+                Lawyer::create($userData);
+
+                // $lawyer = new LawyersController();
+                // $lawyer->store($request, $office_id);
+            }
+        }
+        $user = User::findOrFail(Auth::id());
+        $user->completeRegistration = true;
+        $user->save();
+
+        return redirect('dashboard');
+    }
+
+
+
+
+
+
+
     public function newClientUser(Request $request)
     {
         $validated = Validator::make($request->all(), [
             // 'join_code' => ['required','string','max:40',new ckeckSignupTokens('join_code')],            
-            'join_code' => ['required','string','max:25','exists:clients,signupToken'],            
+            'join_code' => ['required', 'string', 'max:25', 'exists:clients,signupToken'],
         ], [
             'join_code.exists' => 'This joining code is invalid or has been used.',
         ]);
@@ -120,7 +186,7 @@ class MainController extends Controller
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
         }
 
-        $client = Client::where('signupToken',$request->join_code)->first();
+        $client = Client::where('signupToken', $request->join_code)->first();
 
         Role::where('id', $client->role_id)->update(['user_id' => Auth::id()]);
         User::where('id', Auth::id())->update(['completeRegistration' => true]);
@@ -128,7 +194,6 @@ class MainController extends Controller
         $client->signupToken = null;
         $client->save();
 
-        return redirect('dashboard')->with('msg','You have been registered successfully.');     
-        
+        return redirect('dashboard')->with('msg', 'You have been registered successfully.');
     }
 }

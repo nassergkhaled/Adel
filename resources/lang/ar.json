@@ -93,5 +93,10 @@
     "* The email has already been taken.": "البريد الإلكتروني موجود مسبقا .",
     "There are no clients yet.": "لا يوجد موكلين حتى الآن .",
     "There are no cases registered yet.": "لا يوجد قضايا مسجلة حتى الآن .",
-    "There are no registered clients yet.": "لا يوجد موكلين مسجلين حتى الآن ."
+    "There are no registered clients yet.": "لا يوجد موكلين مسجلين حتى الآن .",
+    "Don't work in an office?": "لا تعمل في مكتب ؟",
+    "Create a new office": "إنشاء مكتب جديد",
+    "Join your office":"انضم الى مكتبك",
+    "Do you work in an office?": "هل تعمل في مكتب ؟",
+    "Full name": "الاسم الكامل"
 }
