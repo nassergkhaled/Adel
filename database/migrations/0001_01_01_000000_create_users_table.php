@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('avatar')->nullable();
 
             $table->unsignedBigInteger('office_id');
-            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
 
+            
             $table->unsignedbigInteger('id_number')->unique()->nullable(); //National id
             $table->string('role', 12); // Secretary, Manager, Lawyer, Client
 
