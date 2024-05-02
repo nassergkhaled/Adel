@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('legal_cases', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('lawyer_id');
+            $table->foreign('lawyer_id')->references('user_id')->on('lawyers');
+
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('clients');
+
             $table->string('title');
             $table->string('status');
             $table->string('type');

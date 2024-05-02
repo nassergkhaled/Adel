@@ -28,9 +28,12 @@ class CustomMigrateCommand extends Command
             'database/migrations/2024_04_07_000010_create_witnesses_table.php',
             'database/migrations/2024_04_07_000011_create_case_witness_table.php',
             'database/migrations/2024_04_07_000012_create_tasks_table.php',
-            'database/migrations/2024_04_07_000013_create_role_task_table.php',
+            'database/migrations/2024_04_07_000013_create_user_task_table.php',
             'database/migrations/2024_04_09_063001_add_office_foreign_key.php',
             'database/migrations/2024_04_21_185722_add_manager_foreign_key.php',
+            'database/migrations/2024_04_25_213153_create_lawyer_client_table.php',
+            'database/migrations/2024_04_30_161253_create_chat_sessions_table.php',
+            'database/migrations/2024_04_30_161312_create_chat_message_metadata_table.php',
         ];
 
         foreach ($migrations as $migration) {

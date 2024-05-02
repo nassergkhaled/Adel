@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('managers', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->primary();
-            $table->foreign( 'user_id' )->references('user_id')->on('roles') ->onDelete('cascade');
+            $table->foreign( 'user_id' )->references('id')->on('users') ->onDelete('cascade');
 
             $table->string('manager_name', 255);
             // $table->string('phone_number', 15)->unique();
-            $table->unsignedbigInteger('manager_id_number')->unique();
             // $table->date('hiring_date');
             // $table->string('address')->nullable();
 

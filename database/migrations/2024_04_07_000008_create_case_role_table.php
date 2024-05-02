@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('case_role', function (Blueprint $table) {
-
-
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->unsignedBigInteger('case_id');
-            $table->foreign('case_id')->references('id')->on('legal_cases')->onDelete('cascade');
-
-            $table->primary(['role_id','case_id']);
-            $table->timestamps();
-        });
+        // Schema::create('case_role', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('role_id');
+        //     $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+        //     $table->unsignedBigInteger('case_id');
+        //     $table->foreign('case_id')->references('id')->on('legal_cases')->onDelete('cascade');
+        //     $table->primary(['role_id','case_id']);
+        //     $table->timestamps();
+        // });
     }
 
     /**

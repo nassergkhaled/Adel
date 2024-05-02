@@ -21,6 +21,13 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('avatar')->nullable();
 
+            $table->unsignedBigInteger('office_id');
+            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
+
+            $table->unsignedbigInteger('id_number')->unique()->nullable(); //National id
+            $table->string('role', 12); // Secretary, Manager, Lawyer, Client
+
+
 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

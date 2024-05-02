@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('case_id')->references('id')->on('legal_cases');
 
             $table->unsignedBigInteger('created_by'); //user who created the task
-            $table->foreign('created_by')->references('user_id')->on('roles');
+            $table->foreign('created_by')->references('id')->on('users');
 
             $table->string('title');
             $table->text('description');
