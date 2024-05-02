@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Lawyer;
 use App\Models\LegalCase;
+use App\Models\Manager;
 use App\Models\Office;
 use App\Models\Role;
 use App\Models\Secretary;
@@ -14,38 +15,51 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use function PHPUnit\Framework\isEmpty;
 
 class MainController extends Controller
 {
 
     public function dashboard()
     {
-        $roleId = Auth::user()->roles->first()->id;
 
-        //return All cases connected with me
-        $legalCases = LegalCase::whereHas('roles', function ($query) use ($roleId) {
-            $query->where('id', $roleId);
-        });
+        // $roleId = Auth::user()->roles->first()->id;
 
-        // Get legal cases associated with the user's role
-        $legalCaseIds = $legalCases->pluck('id');
+        // //return All cases connected with me
+        // $legalCases = LegalCase::whereHas('roles', function ($query) use ($roleId) {
+        //     $query->where('id', $roleId);
+        // });
 
-        // Get roles that are associated with these legal cases
-        $roleIds = Role::whereHas('legalCases', function ($query) use ($legalCaseIds) {
-            $query->whereIn('legal_cases.id', $legalCaseIds);
-        })->pluck('id');
+        // // Get legal cases associated with the user's role
+        // $legalCaseIds = $legalCases->pluck('id');
 
-        // Get clients linked to the roles associated with legal cases
-        $clients = Client::whereHas('role', function ($query) use ($roleIds) {
-            $query->whereIn('role_id', $roleIds);
-        })->get();
+        // // Get roles that are associated with these legal cases
+        // $roleIds = Role::whereHas('legalCases', function ($query) use ($legalCaseIds) {
+        //     $query->whereIn('legal_cases.id', $legalCaseIds);
+        // })->pluck('id');
 
-        $legalCases = $legalCases->get();
+        // // Get clients linked to the roles associated with legal cases
+        // $clients = Client::whereHas('role', function ($query) use ($roleIds) {
+        //     $query->whereIn('role_id', $roleIds);
+        // })->get();
+
+        // $legalCases = $legalCases->get();
+
 
         $data = [
-            'clients' => $clients,
-            'cases' => $legalCases,
+            'flag' => false
         ];
+        if (Auth::user()->role == 'Lawyer') {
+            $clients = Auth::user()->lawyer->clients;
+            $legalCases = Auth::user()->lawyer->legalCases;
+
+            $data = [
+                'clients' => $clients,
+                'cases' => $legalCases,
+                'flag' => true,
+            ];
+        }
+
 
         return view('dashboard', compact('data'));
     }
@@ -70,7 +84,7 @@ class MainController extends Controller
             'office_phone' => 'required|string|max:15',
             'manager_name' => 'required|string|max:255',
             'manager_phone' => 'required|string|max:15|unique:users,phone_number',
-            'manager_id' => 'required|integer|unique:managers,manager_id_number',
+            'manager_id' => 'required|integer|unique:users,id_number',
             // 'hiring_date' => 'nullable|date'
         ]);
 
@@ -80,28 +94,30 @@ class MainController extends Controller
         $office_id = $office->store($request);
         //dd($office_id);
 
+        $user = User::findOrFail(Auth::id());
+        $user->role = 'Manager';
+        $user->office_id = $office_id;
+        $user->id_number = $request->manager_id;
+        $user->phone_number = $request->manager_phone;
 
-        $role = new Role();
-        $role->role = 'Manager';
-        $role->office_id = $office_id;
-        $role->user_id = Auth::id();
-        $role->save();
+        $newManager = [
+            'manager_name' => $request->manager_name,
+            'user_id' => Auth::id(),
+        ];
+        Manager::create($newManager);
+
+        // $manager = new ManagersController();
+        // $manager->store($request, $office_id);
 
 
-        $manager = new ManagersController();
-        $manager->store($request, $office_id);
-
-        $updateOffice = Office::find($office_id);
+        $updateOffice = Office::findOrFail($office_id);
         if ($updateOffice) {
             $updateOffice->manager_id = Auth::id(); // assuming manager_id should be updated, not Auth::id()
             $updateOffice->save();
         } else {
-            // Handle the case where the office isn't found
-            // return response()->json(['error' => 'Office not found'], 404);
             return abort(403, 'Office Not Found');
         }
 
-        $user = User::findOrFail(Auth::id());
         $user->completeRegistration = true;
         $user->save();
 
@@ -120,49 +136,47 @@ class MainController extends Controller
             'user_type' => 'required|string|in:Secretary,Lawyer',
             'full_name' => 'required|string|max:255',
             'user_phone' => 'required|string|max:15|unique:users,phone_number',
-            'user_id_num' => 'required|integer|unique:secretaries,id_number|unique:lawyers,id_number',
+            'user_id_num' => 'required|integer|unique:users,id_number',
         ]);
 
 
 
         $type = $validatedData['user_type'];
-        $existSecretary = Role::where('user_id', '=', Auth::id())->where('role', 'Secretary')->first();
-        $existLawyer = Role::where('user_id', '=', Auth::id())->where('role', 'Lawyer')->first();
+        $role = Auth::user()->role;
+        //dd($role);
 
-        if (!$existSecretary && !$existLawyer) {
+        if (isEmpty($role)) {
             $userData = [
                 'full_name' => $request->full_name,
-                'id_number' => $request->user_id_num,
+                'user_id' => Auth::id(),
             ];
 
             $office_id = Office::where('subscription_code', $validatedData['join_code'])->first()->id;
-            $role = new Role();
-            $role->office_id = $office_id;
-            $role->user_id = Auth::id();
 
             if ('Secretary' === $type) {
-                $role->role = 'Secretary';
-                $role->save();
+                User::where('id', Auth::id())->update([
+                    'role' => $type,
+                    'id_number' => $request->user_id_num,
+                    'phone_number' => $request->user_phone,
+                    'office_id' => $office_id,
+                ]);
 
-                $userData += ['user_id' => $role->user_id];
                 Secretary::create($userData);
-
-                // $secretary = new SecretariesController();
-                // $secretary->store($request, $office_id);
             } else if ('Lawyer' === $type) {
-                $role->role = 'Lawyer';
-                $role->save();
+                User::where('id', Auth::id())->update([
+                    'role' => $type,
+                    'id_number' => $request->user_id_num,
+                    'phone_number' => $request->user_phone,
+                    'office_id' => $office_id,
+                    'completeRegistration' => true,
+                ]);
 
-                $userData += ['user_id' => $role->user_id];
                 Lawyer::create($userData);
-
-                // $lawyer = new LawyersController();
-                // $lawyer->store($request, $office_id);
             }
         }
-        $user = User::findOrFail(Auth::id());
-        $user->completeRegistration = true;
-        $user->save();
+        // $user = User::findOrFail(Auth::id());
+        // $user->completeRegistration = true;
+        // $user->save();
 
         return redirect('dashboard');
     }
@@ -188,9 +202,12 @@ class MainController extends Controller
 
         $client = Client::where('signupToken', $request->join_code)->first();
 
-        Role::where('id', $client->role_id)->update(['user_id' => Auth::id()]);
-        User::where('id', Auth::id())->update(['completeRegistration' => true]);
+        User::where('id', Auth::id())->update([
+            'completeRegistration' => true,
+            'role' => 'Client'
+        ]);
 
+        $client->user_id = Auth::id();
         $client->signupToken = null;
         $client->save();
 

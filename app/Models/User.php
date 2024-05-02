@@ -22,6 +22,14 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'completeRegistration',
+        'phone_number',
+        'address',
+        'avatar',
+        'office_id',
+        'id_number',
+        'role',
+
     ];
 
     /**
@@ -51,7 +59,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Office::class);
     }
-    public function lowyer()
+    public function lawyer()
     {
         return $this->hasOne(Lawyer::class);
     }

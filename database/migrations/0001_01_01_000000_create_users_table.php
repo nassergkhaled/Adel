@@ -21,11 +21,11 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('avatar')->nullable();
 
-            $table->unsignedBigInteger('office_id');
+            $table->unsignedBigInteger('office_id')->nullable();
 
             
             $table->unsignedbigInteger('id_number')->unique()->nullable(); //National id
-            $table->string('role', 12); // Secretary, Manager, Lawyer, Client
+            $table->string('role', 12)->nullable(); // Secretary, Manager, Lawyer, Client
 
 
 

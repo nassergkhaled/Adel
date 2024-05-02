@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('managers', function (Blueprint $table) {
-            $table->unsignedBigInteger('office_id');
-            $table->foreign('office_id')->references('id')->on('offices');
-        });
+        // Schema::table('managers', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('office_id');
+        //     $table->foreign('office_id')->references('id')->on('offices');
+        // });
         
     }
 

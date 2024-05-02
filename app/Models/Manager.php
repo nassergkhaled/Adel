@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Manager extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'manager_name',
+        'user_id',
+    ];
+
     public function office()
     {
         return $this->belongsTo(Office::class);

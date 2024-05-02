@@ -37,11 +37,9 @@
 
 
                     @php
-                        $role = auth()->user()->roles->first();
+                        $role = auth()->user()->role;
                         if ($role === null) {
                             $role = 'New  User';
-                        } else {
-                            $role = $role->role;
                         }
 
                         $avatar = Auth::user()->avatar;
