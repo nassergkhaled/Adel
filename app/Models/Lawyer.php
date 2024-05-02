@@ -12,17 +12,20 @@ class Lawyer extends Model
 
     protected $fillable = [
         'full_name',
-        'id_number',
+        // 'id_number',
         'user_id',
     ];
-    public function role()
+    public function user()
     {
-        return $this->hasOne(Role::class);
+        return $this->hasOne(User::class);
     }
 
     public function clients()
-{
-    return $this->belongsToMany(Client::class, 'lawyer_client');
-}
-
+    {
+        return $this->belongsToMany(Client::class, 'lawyer_client');
+    }
+    public function legalCases()
+    {
+        return $this->hasMany(LegalCase::class);
+    }
 }

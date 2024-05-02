@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Office extends Model
 {
     use HasFactory;
-    public function roles()
+    public function users()
     {
-        return $this->hasMany(Role::class);
+        return $this->hasMany(User::class);
     }
     public function manager()
     {

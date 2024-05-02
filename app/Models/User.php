@@ -46,8 +46,36 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function roles()
+
+    public function office()
     {
-        return $this->hasMany(Role::class);
+        return $this->belongsTo(Office::class);
+    }
+    public function lowyer()
+    {
+        return $this->hasOne(Lawyer::class);
+    }
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+    public function secretary()
+    {
+        return $this->hasOne(Secretary::class);
+    }
+    public function manager()
+    {
+        return $this->hasOne(Manager::class);
+    }
+
+    public function tasks_assigned()
+    {
+        return $this->belongsToMany(Task::class, 'user_task', 'user_id', 'task_id')
+            ->withPivot('assigned_date')
+            ->withTimestamps();
+    }
+    public function tasks_created()
+    {
+        return $this->hasMany(Task::class, 'created_by');
     }
 }

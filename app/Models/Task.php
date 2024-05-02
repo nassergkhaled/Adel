@@ -15,13 +15,14 @@ class Task extends Model
     {
         return $this->belongsTo(LegalCase::class);
     }
-    public function roles()
-{
-    return $this->belongsToMany(Role::class, 'role_task', 'task_id', 'user_id')
-                ->withPivot('assigned_date')
-                ->withTimestamps();
-}
-
-
-
+    public function users_assigned_to()
+    {
+        return $this->belongsToMany(User::class, 'user_task', 'task_id', 'user_id')
+            ->withPivot('assigned_date')
+            ->withTimestamps();
+    }
+    public function created_by()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

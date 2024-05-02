@@ -8,12 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
-    public function role()
+    public function user()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(User::class);
     }
     public function lawyers()
     {
         return $this->belongsToMany(Lawyer::class, 'lawyer_client');
     }
+    public function legalCases()
+    {
+        return $this->belongsToMany(LegalCase::class);
+    }
+
 }

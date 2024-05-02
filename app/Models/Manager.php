@@ -12,9 +12,9 @@ class Manager extends Model
     {
         return $this->belongsTo(Office::class);
     }
-    public function role()
+    public function user()
     {
-        return $this->hasOne(Role::class);
+        return $this->hasOne(User::class);
     }
 
 }

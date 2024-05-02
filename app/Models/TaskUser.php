@@ -18,8 +18,8 @@ class TaskRole extends Model
         return $this->belongsTo(Task::class, 'task_id');
     }
 
-    public function role()
+    public function user()
     {
-        return $this->belongsTo(Role::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

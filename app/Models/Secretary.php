@@ -11,12 +11,12 @@ class Secretary extends Model
 
     protected $fillable = [
         'full_name',
-        'id_number',
+        // 'id_number',
         'user_id',
     ];
-    public function role()
+    public function user()
     {
-        return $this->hasOne(Role::class);
+        return $this->hasOne(User::class);
     }
 
 }
