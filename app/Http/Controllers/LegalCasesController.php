@@ -17,31 +17,40 @@ class LegalCasesController extends Controller
      */
     public function index(Request $request)
     {
-        $officeId = Auth::user()->roles->first()->office_id;
+        // $officeId = Auth::user()->roles->first()->office_id;
 
-        //return All clients in my office
-        $clients = Client::whereHas('role', function ($query) use ($officeId) {
-            $query->where('office_id', $officeId);
-        })->get();
-
-        // //return All legalCases in my office
-        // $legalCases = LegalCase::whereHas('roles', function ($query) use ($officeId) {
+        // //return All clients in my office
+        // $clients = Client::whereHas('role', function ($query) use ($officeId) {
         //     $query->where('office_id', $officeId);
         // })->get();
 
+        // // //return All legalCases in my office
+        // // $legalCases = LegalCase::whereHas('roles', function ($query) use ($officeId) {
+        // //     $query->where('office_id', $officeId);
+        // // })->get();
 
-        //return All cases connected with me
-        $roleId = Auth::user()->roles->first()->id;
 
-        $legalCases = LegalCase::whereHas('roles', function ($query) use ($roleId) {
-            $query->where('id', $roleId);
-        })->get();
+        // //return All cases connected with me
+        // $roleId = Auth::user()->roles->first()->id;
 
+        // $legalCases = LegalCase::whereHas('roles', function ($query) use ($roleId) {
+        //     $query->where('id', $roleId);
+        // })->get();
 
         $data = [
-            'clients' => $clients,
-            'cases'  => $legalCases,
+            'flag' => false
         ];
+        if (Auth::user()->role == 'Lawyer') {
+            $clients = Auth::user()->lawyer->clients;
+            $legalCases = Auth::user()->lawyer->legalCases;
+
+            $data = [
+                'clients' => $clients,
+                'cases' => $legalCases,
+                'flag' => true,
+            ];
+        }
+
         return view("legal_cases.index", compact("data"));
     }
 
@@ -78,17 +87,24 @@ class LegalCasesController extends Controller
         $officeId = Auth::user()->roles->first()->office_id;
 
 
-        // Get IDs of all clients in my office
-        $clientRoleIds = Client::whereHas('role', function ($query) use ($officeId) {
-            $query->where('office_id', $officeId);
-        })->pluck('role_id');
-        $client_id = $request->client_id;
+        // // Get IDs of all clients in my office
+        // $clientRoleIds = Client::whereHas('role', function ($query) use ($officeId) {
+        //     $query->where('office_id', $officeId);
+        // })->pluck('role_id');
+        // $client_id = $request->client_id;
+
+        // // Check if the client role ID exists in my office role IDs
+        // if (!$clientRoleIds->contains($client_id)) {
+        //     return back()->with('errMsg', "Please do not tamper with the system.");
+        // }
+
+
+        $clientIds = Auth::user()->lawyer->clients->pluck('id');
 
         // Check if the client role ID exists in my office role IDs
-        if (!$clientRoleIds->contains($client_id)) {
-            return back()->with('errMsg',"Please do not tamper with the system.");
+        if (!$clientIds->contains($request->client_id)) {
+            return back()->with('errMsg', "Please do not tamper with the system.");
         }
-
 
 
         $legalCase = new LegalCase();
@@ -99,12 +115,13 @@ class LegalCasesController extends Controller
         $legalCase->close_date = $request->case_closeDate;
         $legalCase->description = $request->case_description;
         $legalCase->notes = $request->case_notes;
-
-
+        $legalCase->lawyer_id = Auth::id();
+        $legalCase->client_id = $request->client_id;
         $legalCase->save();
 
-        $role_ids = [$request->client_id, Auth::user()->roles->first()->id];
-        $legalCase->roles()->attach($role_ids);
+
+        // $role_ids = [$request->client_id, Auth::user()->roles->first()->id];
+        // $legalCase->roles()->attach($role_ids);
 
 
 

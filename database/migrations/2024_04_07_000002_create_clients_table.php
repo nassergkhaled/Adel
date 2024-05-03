@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('signupToken'); // to link the client to the user if he make a signup
 
             $table->string('full_name');
-            // $table->unsignedInteger('ID_number')->unique();
-            $table->string('phone_number',15); // cause if the lawyer create the client then theres no use row for him to store phone number in it
+            $table->unsignedInteger('id_number')->unique();
+            $table->string('phone_number',15)->unique(); // cause if the lawyer create the client then theres no use row for him to store phone number in it
 
             // $table->json('contact_info'); // Phone, Email
             // $table->string('nationality')->nullable();

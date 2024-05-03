@@ -39,12 +39,12 @@ class ManagersController extends Controller
 
         $user = User::where('id', Auth::user()->id)->first();
         $user->phone_number = $validatedData['manager_phone'];
+        $user->id_number = $validatedData['manager_id'];
         $user->save();
         
         $manager = new Manager();
         $manager->user_id = Auth::id();
         $manager->manager_name = $validatedData['manager_name'];
-        $manager->manager_id_number = $validatedData['manager_id'];
         // $manager->hiring_date = $validatedData['hiring_date'];
         $manager->office_id= $office_id;
         $manager->save();

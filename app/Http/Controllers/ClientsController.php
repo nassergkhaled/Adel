@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\LawyerClient;
 use App\Models\LegalCase;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -34,31 +35,42 @@ class ClientsController extends Controller
         */
 
 
-        
-        $roleId = Auth::user()->roles->first()->id;
 
-        //return All cases connected with me
-        $legalCases = LegalCase::whereHas('roles', function ($query) use ($roleId) {
-            $query->where('id', $roleId);
-        });
+        // $roleId = Auth::user()->roles->first()->id;
 
-        // Get legal cases associated with the user's role
-        $legalCaseIds = $legalCases->pluck('id');
+        // //return All cases connected with me
+        // $legalCases = LegalCase::whereHas('roles', function ($query) use ($roleId) {
+        //     $query->where('id', $roleId);
+        // });
 
-        // Get roles that are associated with these legal cases
-        $roleIds = Role::whereHas('legalCases', function ($query) use ($legalCaseIds) {
-            $query->whereIn('legal_cases.id', $legalCaseIds);
-        })->pluck('id');
+        // // Get legal cases associated with the user's role
+        // $legalCaseIds = $legalCases->pluck('id');
 
-        // Get clients linked to the roles associated with legal cases
-        $clients = Client::whereHas('role', function ($query) use ($roleIds) {
-            $query->whereIn('role_id', $roleIds);
-        })->get();
+        // // Get roles that are associated with these legal cases
+        // $roleIds = Role::whereHas('legalCases', function ($query) use ($legalCaseIds) {
+        //     $query->whereIn('legal_cases.id', $legalCaseIds);
+        // })->pluck('id');
+
+        // // Get clients linked to the roles associated with legal cases
+        // $clients = Client::whereHas('role', function ($query) use ($roleIds) {
+        //     $query->whereIn('role_id', $roleIds);
+        // })->get();
+
 
         $data = [
-            'clients' => $clients,
-
+            'flag' => false
         ];
+
+        if (Auth::user()->role == 'Lawyer') {
+            $clients = Auth::user()->lawyer->clients;
+
+            $data = [
+                'clients' => $clients,
+                'flag' => true,
+            ];
+        }
+
+
         return view('clients.index', compact('data'));
     }
 
@@ -78,8 +90,8 @@ class ClientsController extends Controller
 
         $validated = Validator::make($request->all(), [
             'user_name' => 'required | max:50 | string ',
-            'client_id_num' => 'required | integer | unique:clients,ID_number',
-            'phone' => 'required|max:14|regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/',
+            'client_id_num' => 'required | integer | unique:clients,id_number | unique:users,id_number',
+            'phone' => 'required|max:14|regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/|unique:clients,phone_number|unique:users,phone_number',
         ], [
             'user_name.required' => 'The client name is required.',
             'user_name.max' => 'The client name must not be greater than 50 characters.',
@@ -96,22 +108,21 @@ class ClientsController extends Controller
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
         }
 
-        $role = new Role();
-        $role->role = 'Client';
-        $role->office_id = Auth::user()->roles->first()->office_id;
-        $role->user_id = null;
-        $role->save();
 
         $signupToken = str::random(20); // Generates a 20-character random string for user to link him with system if he want to create new account
 
-
         $client = new Client();
-        $client->role_id = $role->id;
         $client->full_name = strip_tags($request->input('user_name'));
-        $client->ID_number = strip_tags($request->input('client_id_num'));
+        $client->id_number = strip_tags($request->input('client_id_num'));
         $client->phone_number = strip_tags($request->input('phone'));
         $client->signupToken = 'client-' . $signupToken;
         $client->save();
+
+        $lawye_client = new LawyerClient();
+        $lawye_client->lawyer_id = Auth::id();
+        $lawye_client->client_id = $client->id;
+        $lawye_client->save();
+
 
         return back()->with('msg', "Client added successfully");
     }
