@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('offices', function (Blueprint $table) {
             
-            $table->foreign( 'manager_id' )->references('user_id')->on('managers'); // cant be null , change the manager not delete it
+            $table->foreign( 'manager_id' )->references('id')->on('managers'); // cant be null , change the manager not delete it
         });
         // Schema::table('managers', function (Blueprint $table) {
             
