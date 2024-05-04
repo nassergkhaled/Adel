@@ -20,4 +20,8 @@ class Client extends Model
     {
         return $this->hasMany(LegalCase::class);
     }
+    public function offices()
+    {
+        return $this->belongsToMany(Office::class);
+    }
 }

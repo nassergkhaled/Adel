@@ -104,8 +104,8 @@
                         @foreach ($data['clients'] as $client)
                             @php
                                 //to print one case tite + number of other cases
-                                $caseName = $client->legalCases->first()->title;
-                                $casesCount = $client->legalCases->count() - 1;
+                                $caseName = $client->legalCases->where('lawyer_id',Auth::id())->first()->title;
+                                $casesCount = $client->legalCases->where('lawyer_id',Auth::id())->count() - 1;
                                 $print = $caseName;
                                 if ($casesCount > 0) {
                                     $print .= ' + ' . $casesCount;

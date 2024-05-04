@@ -144,7 +144,7 @@
                             <td class="text-center py-2 text-black border-b" dir="ltr">
                                 {{ $client->phone_number }}
                             </td>
-                            <td class="text-center py-2 text-black border-b">{{ $client->legalCases->count() }}
+                            <td class="text-center py-2 text-black border-b">{{ $client->legalCases->where('lawyer_id',Auth::id())->count() }}
                             </td>
                             <td class="text-center py-2 text-black border-b"><input type="checkbox"
                                     class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">

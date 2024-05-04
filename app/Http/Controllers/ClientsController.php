@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\ClientOffice;
 use App\Models\LawyerClient;
 use App\Models\LegalCase;
 use App\Models\Role;
@@ -62,7 +63,7 @@ class ClientsController extends Controller
         ];
 
         if (Auth::user()->role == 'Lawyer') {
-            $clientsIds = LawyerClient::where('lawyer_id',Auth::id())->pluck('client_id');
+            $clientsIds = LawyerClient::where('lawyer_id', Auth::id())->pluck('client_id');
             $clients = Client::findMany($clientsIds);
             // $clients = Auth::user()->lawyer->clients;
             // dd($clients);
@@ -94,7 +95,8 @@ class ClientsController extends Controller
 
         $validated = Validator::make($request->all(), [
             'user_name' => 'required | max:50 | string ',
-            'client_id_num' => 'required | integer  | unique:users,id_number',
+            // 'client_id_num' => 'required | integer  | unique:users,id_number',
+            'client_id_num' => 'required | integer', // we should check if theres no chance to find two ids with the same number in deferent countrieis
             'phone' => 'required|max:14|string|unique:clients,phone_number|unique:users,phone_number',
         ], [
             'user_name.required' => 'The client name is required.',
@@ -113,19 +115,34 @@ class ClientsController extends Controller
         }
 
 
-        $signupToken = str::random(20); // Generates a 20-character random string for user to link him with system if he want to create new account
+        if (Client::all()->pluck('id_number')->contains(strip_tags($request->input('client_id_num')))) {
+            if (LawyerClient::where('client_id', strip_tags($request->input('client_id_num')))->where('lawyer_id', Auth::id())) {
+                return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'You already have this client!');
+            } else {
+                $client_id = Client::where('id_number', strip_tags($request->input('client_id_num')))->first()->id;
+                $lawyer_client = new LawyerClient();
+                $lawyer_client->lawyer_id = Auth::id();
+                $lawyer_client->client_id = $client_id;
+                $lawyer_client->save();
 
-        $client = new Client();
-        $client->full_name = strip_tags($request->input('user_name'));
-        $client->id_number = strip_tags($request->input('client_id_num'));
-        $client->phone_number = strip_tags($request->input('phone'));
-        $client->signupToken = 'client-' . $signupToken;
-        $client->save();
+                ClientOffice::create(['office_id' => Auth::user()->office_id, 'client_id' => $client_id]);
+            }
+        } else {
+            $signupToken = str::random(20); // Generates a 20-character random string for user to link him with system if he want to create new account
 
-        $lawye_client = new LawyerClient();
-        $lawye_client->lawyer_id = Auth::id();
-        $lawye_client->client_id = $client->id;
-        $lawye_client->save();
+            $client = new Client();
+            $client->full_name = strip_tags($request->input('user_name'));
+            $client->id_number = strip_tags($request->input('client_id_num'));
+            $client->phone_number = strip_tags($request->input('phone'));
+            $client->signupToken = 'client-' . $signupToken;
+            $client->save();
+
+            $lawyer_client = new LawyerClient();
+            $lawyer_client->lawyer_id = Auth::id();
+            $lawyer_client->client_id = $client->id;
+            $lawyer_client->save();
+            ClientOffice::create(['office_id' => Auth::user()->office_id, 'client_id' => $client->id]);
+        }
 
 
         return back()->with('msg', "Client added successfully");

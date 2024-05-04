@@ -100,5 +100,6 @@
     "Do you work in an office?": "هل تعمل في مكتب ؟",
     "The selected join code is invalid.": "كود الانضمام المحدد غير صالح.",
     "The selected user type is invalid.": "نوع المستخدم المحدد غير صالح.",
+    "You already have this client!":"هذا الموكّل موجود لديك مسبقاً !",
     "Full name": "الاسم الكامل"
 }

@@ -19,7 +19,7 @@
                     <div class="flex flex-row items-center justify-between text-xs">
                         <span class="font-bold">المحادثات النشطة</span>
                         <span
-                            class="flex items-center justify-center bg-adel-Dark text-white h-4 w-4 rounded-full">4</span>
+                            class="flex items-center justify-center bg-adel-Dark text-white h-4 w-4 rounded-full">-</span>
                     </div>
                     <div class="flex flex-col space-y-1 mt-4 -mx-2 h-[50vh] max-sm:[40vh] overflow-x-hidden ">
                         @foreach ($chats as $chat)

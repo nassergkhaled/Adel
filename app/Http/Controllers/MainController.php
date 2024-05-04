@@ -52,8 +52,14 @@ class MainController extends Controller
             'flag' => false
         ];
         if (Auth::user()->role == 'Lawyer') {
-            $clients = $user->lawyer->clients()->whereHas('legalCases')->get();
+            
+            
+            // $clients = $user->lawyer->clients()->whereHas('legalCases')->get();
+
             $legalCases = $user->lawyer->legalCases;
+
+            $myClientsIds = $legalCases->pluck('client_id')->unique();
+            $clients = Client::findMany($myClientsIds);
 
             $data = [
                 'clients' => $clients,

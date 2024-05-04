@@ -16,4 +16,8 @@ class Office extends Model
     {
         return $this->hasOne(Manager::class);
     }
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class);
+    }
 }
