@@ -44,13 +44,18 @@
 
                         $avatar = Auth::user()->avatar;
                         if ($avatar) {
-                            $avatar = '/images/avatars/' . $avatar;
+                            $avatar = 'images/avatars/'. $avatar;
+
                             if (!file_exists($avatar)) {
                                 $avatar = '/images/profile_avatar.png';
                             }
+
+                            
+
                         } else {
                             $avatar = '/images/profile_avatar.png';
                         }
+
 
                     @endphp
 

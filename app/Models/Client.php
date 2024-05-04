@@ -14,11 +14,10 @@ class Client extends Model
     }
     public function lawyers()
     {
-        return $this->belongsToMany(Lawyer::class, 'lawyer_client');
+        return $this->hasMany(Lawyer::class, 'lawyer_clients','client_id');
     }
     public function legalCases()
     {
-        return $this->belongsToMany(LegalCase::class);
+        return $this->hasMany(LegalCase::class);
     }
-
 }

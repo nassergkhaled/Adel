@@ -61,7 +61,7 @@ class User extends Authenticatable
     }
     public function lawyer()
     {
-        return $this->hasOne(Lawyer::class);
+        return $this->hasOne(Lawyer::class,'id');
     }
     public function client()
     {

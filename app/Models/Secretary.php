@@ -12,7 +12,7 @@ class Secretary extends Model
     protected $fillable = [
         'full_name',
         // 'id_number',
-        'user_id',
+        'id',
     ];
     public function user()
     {

@@ -11,7 +11,7 @@ class Manager extends Model
 
     protected $fillable = [
         'manager_name',
-        'user_id',
+        'id',
     ];
 
     public function office()

@@ -140,11 +140,11 @@
                     @foreach ($data['clients'] as $client)
                         <tr>
                             <td class="text-center py-2 text-black border-b">{{ $client->full_name }}</td>
-                            <td class="text-center py-2 text-black border-b">{{ $client->ID_number }}</td>
+                            <td class="text-center py-2 text-black border-b">{{ $client->id_number }}</td>
                             <td class="text-center py-2 text-black border-b" dir="ltr">
                                 {{ $client->phone_number }}
                             </td>
-                            <td class="text-center py-2 text-black border-b">{{ $client->role->legalCases->count() }}
+                            <td class="text-center py-2 text-black border-b">{{ $client->legalCases->count() }}
                             </td>
                             <td class="text-center py-2 text-black border-b"><input type="checkbox"
                                     class="border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100  hover:bg-adel-Light-active shadow-sm size-5">

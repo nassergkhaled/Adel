@@ -104,19 +104,18 @@
                         @foreach ($data['clients'] as $client)
                             @php
                                 //to print one case tite + number of other cases
-                                $caseName = $client->role->legalCases->first()->title;
-                                $casesCount = $client->role->legalCases->count() - 1;
+                                $caseName = $client->legalCases->first()->title;
+                                $casesCount = $client->legalCases->count() - 1;
                                 $print = $caseName;
                                 if ($casesCount > 0) {
                                     $print .= ' + ' . $casesCount;
                                 }
 
-                                $clientAvatar = $client->role;
-                                if (!($clientAvatar->user_id && $clientAvatar->user->avatar)) {
+                                if (!($client->user_id && $client->user->avatar)) {
                                     // $clientAvatar = '\images\profile_avatar.png';
                                     $clientAvatar = null;
                                 } else {
-                                    $clientAvatar = '/images/avatars/' . $clientAvatar->user->avatar;
+                                    $clientAvatar = '/images/avatars/' . $client->user->avatar;
                                 }
 
                             @endphp

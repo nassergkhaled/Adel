@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\LawyerClient;
 use App\Models\LegalCase;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -37,12 +38,21 @@ class LegalCasesController extends Controller
         //     $query->where('id', $roleId);
         // })->get();
 
+
+
+        $user = Auth::user();
         $data = [
             'flag' => false
         ];
-        if (Auth::user()->role == 'Lawyer') {
-            $clients = Auth::user()->lawyer->clients;
-            $legalCases = Auth::user()->lawyer->legalCases;
+        if ($user->role == 'Lawyer') {
+
+
+            // $clientsIds = LawyerClient::where('lawyer_id',Auth::id())->pluck('client_id');
+            // $clients = Client::findMany($clientsIds);
+
+
+            $clients = $user->lawyer->clients;
+            $legalCases = $user->lawyer->legalCases;
 
             $data = [
                 'clients' => $clients,
@@ -70,7 +80,7 @@ class LegalCasesController extends Controller
         // Validate the incoming request data
         $validated = Validator::make($request->all(), [
             'case_name' => 'required|string|max:255',
-            'client_id' => 'required|integer|exists:roles,id',
+            'client_id' => 'required|integer|exists:clients,id',
             'case_status' => 'required|string|in:Open,Closed,Pending',
             'case_type' => 'required|string',
             'case_openDate' => 'required|date',
@@ -84,7 +94,7 @@ class LegalCasesController extends Controller
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
         }
 
-        $officeId = Auth::user()->roles->first()->office_id;
+        $officeId = Auth::user()->office_id;
 
 
         // // Get IDs of all clients in my office
@@ -97,6 +107,8 @@ class LegalCasesController extends Controller
         // if (!$clientRoleIds->contains($client_id)) {
         //     return back()->with('errMsg', "Please do not tamper with the system.");
         // }
+
+
 
 
         $clientIds = Auth::user()->lawyer->clients->pluck('id');

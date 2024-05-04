@@ -85,7 +85,7 @@
                                         break;
                                 }
 
-                                $name = $case->roles->where('role', 'Client')->first()->client->full_name;
+                                $name = $case->client->full_name;
                             @endphp
 
                             <tr class=" border-[#E6E8EB]">
@@ -163,7 +163,7 @@
                                 <option disabled selected></option>
 
                                 @foreach ($data['clients'] as $client)
-                                    <option value="{{ $client->role_id }}">{{ $client->full_name }} -
+                                    <option value="{{ $client->id }}">{{ $client->full_name }} -
                                         {{ $client->phone_number }}</option>
                                 @endforeach
                             </select>

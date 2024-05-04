@@ -13,7 +13,7 @@ class Lawyer extends Model
     protected $fillable = [
         'full_name',
         // 'id_number',
-        'user_id',
+        'id',
     ];
     public function user()
     {
@@ -22,8 +22,9 @@ class Lawyer extends Model
 
     public function clients()
     {
-        return $this->belongsToMany(Client::class, 'lawyer_client');
+        return $this->belongsToMany(Client::class, 'lawyer_clients', 'lawyer_id', 'client_id');
     }
+
     public function legalCases()
     {
         return $this->hasMany(LegalCase::class);

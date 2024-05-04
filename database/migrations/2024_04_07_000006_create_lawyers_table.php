@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('lawyers', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('user_id')->primary();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id')->primary();
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('full_name');
             // $table->unsignedInteger('id_number')->unique();
@@ -31,7 +31,7 @@ return new class extends Migration
             // $table->string('address')->nullable();
 
 
-            $table->string('specialization');
+            // $table->string('specialization');
             $table->timestamps();
         });
         

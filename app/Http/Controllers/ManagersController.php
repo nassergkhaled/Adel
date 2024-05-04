@@ -43,7 +43,7 @@ class ManagersController extends Controller
         $user->save();
         
         $manager = new Manager();
-        $manager->user_id = Auth::id();
+        $manager->id = Auth::id();
         $manager->manager_name = $validatedData['manager_name'];
         // $manager->hiring_date = $validatedData['hiring_date'];
         $manager->office_id= $office_id;

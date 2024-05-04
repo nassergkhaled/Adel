@@ -28,6 +28,6 @@ class LegalCase extends Model
     }
     public function lawyer()
     {
-        return $this->belongsTo(Lawyer::class);
+        return $this->hasOne(Lawyer::class);
     }
 }

@@ -27,7 +27,8 @@
                     @php
                         $avatar = Auth::user()->avatar;
                         if ($avatar) {
-                            $avatar = '/images/avatars/' . $avatar;
+                            $avatar = 'images/avatars/' . $avatar;
+
                             if (!file_exists($avatar)) {
                                 $avatar = '/images/profile_avatar.png';
                             }
@@ -41,7 +42,8 @@
                     <button type="button" class="ms-1" onclick="email_image.showModal()">
                         {{-- <i
                             class="fa-solid fa-pencil absolute bottom-0 end-0 bg-adel-Normal text-white rounded-full mb-2 p-1"></i> --}}
-                        <svg class="fa-solid fa-pencil absolute bottom-0 end-0 size-6 bg-adel-Normal text-white rounded-full mb-2 p-1" fill="#ffffff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="fa-solid fa-pencil absolute bottom-0 end-0 size-6 bg-adel-Normal text-white rounded-full mb-2 p-1"
+                            fill="#ffffff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier">

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lawyer_client', function (Blueprint $table) {
+        Schema::create('lawyer_clients', function (Blueprint $table) {
             // Assuming user_id in lawyers table and role_id in clients table are used for linking
             $table->unsignedBigInteger('lawyer_id');
             $table->unsignedBigInteger('client_id');
             $table->timestamps();
 
             // Foreign key referencing the primary key in the lawyers table
-            $table->foreign('lawyer_id')->references('user_id')->on('lawyers')->onDelete('cascade');
+            $table->foreign('lawyer_id')->references('id')->on('lawyers')->onDelete('cascade');
 
             // Foreign key referencing the primary key in the clients table
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');

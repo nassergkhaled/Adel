@@ -46,12 +46,14 @@ class MainController extends Controller
         // $legalCases = $legalCases->get();
 
 
+        $user =Auth::user();
+
         $data = [
             'flag' => false
         ];
         if (Auth::user()->role == 'Lawyer') {
-            $clients = Auth::user()->lawyer->clients;
-            $legalCases = Auth::user()->lawyer->legalCases;
+            $clients = $user->lawyer->clients()->whereHas('legalCases')->get();
+            $legalCases = $user->lawyer->legalCases;
 
             $data = [
                 'clients' => $clients,
@@ -102,7 +104,7 @@ class MainController extends Controller
 
         $newManager = [
             'manager_name' => $request->manager_name,
-            'user_id' => Auth::id(),
+            'id' => Auth::id(),
         ];
         Manager::create($newManager);
 
@@ -148,7 +150,7 @@ class MainController extends Controller
         if (isEmpty($role)) {
             $userData = [
                 'full_name' => $request->full_name,
-                'user_id' => Auth::id(),
+                'id' => Auth::id(),
             ];
 
             $office_id = Office::where('subscription_code', $validatedData['join_code'])->first()->id;

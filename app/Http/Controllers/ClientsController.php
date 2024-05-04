@@ -62,7 +62,11 @@ class ClientsController extends Controller
         ];
 
         if (Auth::user()->role == 'Lawyer') {
-            $clients = Auth::user()->lawyer->clients;
+            $clientsIds = LawyerClient::where('lawyer_id',Auth::id())->pluck('client_id');
+            $clients = Client::findMany($clientsIds);
+            // $clients = Auth::user()->lawyer->clients;
+            // dd($clients);
+
 
             $data = [
                 'clients' => $clients,
@@ -90,8 +94,8 @@ class ClientsController extends Controller
 
         $validated = Validator::make($request->all(), [
             'user_name' => 'required | max:50 | string ',
-            'client_id_num' => 'required | integer | unique:clients,id_number | unique:users,id_number',
-            'phone' => 'required|max:14|regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/|unique:clients,phone_number|unique:users,phone_number',
+            'client_id_num' => 'required | integer  | unique:users,id_number',
+            'phone' => 'required|max:14|string|unique:clients,phone_number|unique:users,phone_number',
         ], [
             'user_name.required' => 'The client name is required.',
             'user_name.max' => 'The client name must not be greater than 50 characters.',

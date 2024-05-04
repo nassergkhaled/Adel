@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('secretaries', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('user_id')->primary();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id')->primary();
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('full_name');
             // $table->unsignedInteger('id_number')->unique();
