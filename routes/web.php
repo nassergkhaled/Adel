@@ -20,7 +20,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-
+Auth::routes(['verify'=> true]);
 
 
 /* Route::get('/clients', function () {
@@ -43,7 +43,7 @@ Route::get('/', function () {
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
-Route::middleware(['auth', RegistrationComplete::class])->group(function () {
+Route::middleware(['auth', RegistrationComplete::class,'verified'])->group(function () {
     Route::get('/profile', [MainController::class, 'profile'])->name('profile');
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/calender', [MainController::class, 'calender'])->name('calender');
@@ -65,18 +65,18 @@ Route::middleware(['auth', RegistrationComplete::class])->group(function () {
 
 Route::middleware(['auth', CompleteRegistration::class])->group(function () {
     // Route::get('/CompleteRegistration', [MainController::class, 'completeRegistration'])->name('complete.registration');
-   
-   
+
+
     Route::post('/newOffice', [MainController::class, 'newOffice'])->name('newOffice');
     Route::post('/joinOffice', [MainController::class, 'joinOffice'])->name('joinOffice');
 
-    
+
     Route::post('/newClientUser', [MainController::class, 'newClientUser'])->name('newClientUser');
 
     Route::get('/createOffice', function () {
         return view('newUser/createOffice');
     })->name('createOffice');
-    
+
     Route::get('/joinOffice', function () {
         return view('newUser/joinOffice');
     })->name('joinOffice');

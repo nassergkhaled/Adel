@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -17,6 +18,11 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\CustomVerifyEmail);
+    }
+
     protected $fillable = [
         'first_name',
         'last_name',
@@ -29,7 +35,6 @@ class User extends Authenticatable
         'office_id',
         'id_number',
         'role',
-
     ];
 
     /**
@@ -61,7 +66,7 @@ class User extends Authenticatable
     }
     public function lawyer()
     {
-        return $this->hasOne(Lawyer::class,'id');
+        return $this->hasOne(Lawyer::class, 'id');
     }
     public function client()
     {
