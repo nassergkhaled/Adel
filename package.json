@@ -15,5 +15,8 @@
         "postcss": "^8.4.31",
         "tailwindcss": "^3.4.1",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "fullcalendar": "^6.1.11"
     }
 }

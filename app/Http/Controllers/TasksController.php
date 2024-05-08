@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TasksController extends Controller
@@ -11,7 +13,15 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return view('calender.index');
+        $tasks = Task::all(); // Fetch all tasks, consider adding pagination or filters as needed
+        // dd($tasks);
+        return response()->json($tasks->map(function ($task) {
+            return [
+                'title' => $task->title,
+                'start' => Carbon::parse($task->start_date)->toIso8601String(),
+                'end' => Carbon::parse($task->due_date)->toIso8601String(),
+            ];
+        }));
     }
 
     /**

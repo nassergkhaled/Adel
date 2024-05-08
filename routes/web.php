@@ -11,6 +11,7 @@ use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\TasksController;
 use App\Models\ChatSession;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 /* Route::get('/', function () {
     return view('welcome');
