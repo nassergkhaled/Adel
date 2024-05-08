@@ -1,0 +1,32 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH into production server
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
+          # ssh-known-hosts: ${{ secrets.PRODUCTION_SSH_KNOWN_HOSTS }}
+          ssh-strict: true
+
+      - name: Clone files to production server
+        run: |
+          ssh ubuntu@34.245.218.187 'cd /app/ && git pull'
+
+      - name: Build Docker image
+        run: docker build -t adel .
+
+      - name: Run Docker container
+        run: |
+          docker run -p 8000:8000 adel
