@@ -1,4 +1,5 @@
 # Use the official PHP image with Alpine Linux
+#testing el machine
 FROM php:8.2-alpine AS php
 
 # Set working directory
