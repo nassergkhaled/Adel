@@ -34,7 +34,7 @@ RUN composer install --no-scripts --no-autoloader --prefer-dist
 COPY . .
 
 # Generate optimized autoloader and cache
-RUN composer dump-autoload --optimize && php artisan optimize
+# RUN composer dump-autoload --optimize && php artisan optimize
 
 # Set permissions (optional, adjust as needed)
 RUN chown -R www-data:www-data /var/www/html \

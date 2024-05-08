@@ -12,7 +12,7 @@
             <h1 class="text-2xl font-bold font-Almarai mb-6 text-black text-center">{{ __('Join an office') }}</h1>
             <h1 class=" mb-10 text-[#B4B4B4] text-center">أدخل المعلومات التالية للإنضمام لمكتب محاماة</h1>
 
-            <form form method="POST" action="{{ route('joinOffice') }}" class="space-y-4 max"
+            <form form method="POST" action="{{ route('joinOfficeX') }}" class="space-y-4 max"
                 dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
                 @csrf
                 {{-- join code field --}}

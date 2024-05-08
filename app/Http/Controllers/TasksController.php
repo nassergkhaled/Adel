@@ -17,9 +17,11 @@ class TasksController extends Controller
         // dd($tasks);
         return response()->json($tasks->map(function ($task) {
             return [
+                'id' => $task->id,
                 'title' => $task->title,
                 'start' => Carbon::parse($task->start_date)->toIso8601String(),
                 'end' => Carbon::parse($task->due_date)->toIso8601String(),
+                'priority' => $task->priority,
             ];
         }));
     }
@@ -37,7 +39,7 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Task::create($request->all());
     }
 
     /**
@@ -61,7 +63,7 @@ class TasksController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return response()->json('ds');
     }
 
     /**

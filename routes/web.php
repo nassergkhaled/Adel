@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Auth::routes(['verify'=> true]);
+Auth::routes(['verify' => true]);
 
 
 /* Route::get('/clients', function () {
@@ -44,7 +44,7 @@ Auth::routes(['verify'=> true]);
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
-Route::middleware(['auth', RegistrationComplete::class,'verified'])->group(function () {
+Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(function () {
     Route::get('/profile', [MainController::class, 'profile'])->name('profile');
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/calender', [MainController::class, 'calender'])->name('calender');
@@ -53,23 +53,22 @@ Route::middleware(['auth', RegistrationComplete::class,'verified'])->group(funct
     Route::get('/chating', function () {
         // $users=User::whereNot('id',Auth()->id())->get();
         $chats = ChatSession::all();
-        return view('chating.index',compact('chats'));
+        return view('chating.index', compact('chats'));
     })->name('chating.index');
 
 
-    Route::resource('tasks',TasksController::class);
-    Route::resource('clients',ClientsController::class);
+    // Route::resource('tasks',TasksController::class);
+    Route::resource('clients', ClientsController::class);
     Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');
     Route::post('/Update_Avatar_Email', [ProfileController::class, 'Update_Avatar_Email'])->name('UpdateAvatarEmail');
-
 });
 
 Route::middleware(['auth', CompleteRegistration::class])->group(function () {
     // Route::get('/CompleteRegistration', [MainController::class, 'completeRegistration'])->name('complete.registration');
 
 
-    Route::post('/newOffice', [MainController::class, 'newOffice'])->name('newOffice');
-    Route::post('/joinOffice', [MainController::class, 'joinOffice'])->name('joinOffice');
+    Route::post('/newOffice', [MainController::class, 'newOffice'])->name('newOfficeX');
+    Route::post('/joinOffice', [MainController::class, 'joinOffice'])->name('joinOfficeX');
 
 
     Route::post('/newClientUser', [MainController::class, 'newClientUser'])->name('newClientUser');
@@ -81,8 +80,15 @@ Route::middleware(['auth', CompleteRegistration::class])->group(function () {
     Route::get('/joinOffice', function () {
         return view('newUser/joinOffice');
     })->name('joinOffice');
-
 });
+
+Route::get('forgot-password', function () {
+    return response()->json('gg');
+})->name('password.request');
+Route::get('forgot-password', function () {
+    return response()->json('gg');
+})->name('password.forgot');
+
 
 
 

@@ -12,7 +12,7 @@
             <h1 class="text-2xl font-bold font-Almarai mb-6 text-black text-center">{{ __('Office subscription') }}</h1>
             <h1 class=" mb-10 text-[#B4B4B4] text-center">أدخل المعلومات التالية لانشاء حساب خاص في مكتبك</h1>
 
-            <form form method="POST" action="{{ route('newOffice') }}" class="space-y-4 max"
+            <form form method="POST" action="{{ route('newOfficeX') }}" class="space-y-4 max"
                 dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
                 @csrf
                 {{-- Office Name field --}}

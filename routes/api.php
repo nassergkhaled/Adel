@@ -24,6 +24,7 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 
 use App\Http\Controllers\ChatSessionController;
 use App\Http\Controllers\ChatMessageMetadataController;
+use App\Http\Controllers\TasksController;
 
 // Chat Sessions Routes
 Route::get('/chat_sessions', [ChatSessionController::class, 'index']);
@@ -35,6 +36,8 @@ Route::delete('/chat_sessions/{id}', [ChatSessionController::class, 'destroy']);
 // Chat Messages Routes
 Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'fetchMessages']);
 Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessage']);
+
+Route::resource('tasks',TasksController::class);
 
 
 
