@@ -28,7 +28,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY composer.json composer.lock ./
 
 # Install PHP dependencies
-RUN composer install --no-scripts --no-autoloader --prefer-dist
+RUN composer install --no-scripts --prefer-dist
 
 # Copy Laravel files to container
 COPY . .
