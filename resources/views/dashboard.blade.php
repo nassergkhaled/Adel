@@ -4,7 +4,8 @@
 <x-app-layout>
     @if (!$data['flag'])
         <div class="flex justify-center items-center mt-[20%]">
-            <h1 class="text-black text-5xl border rounded-full p-7 border-adel-Normal-hover">لوحة بيانات {{__(auth()->user()->role)}} لا زالت قيد التصميم !!</h1>
+            <h1 class="text-black text-5xl border rounded-full p-7 border-adel-Normal-hover">لوحة بيانات
+                {{ __(auth()->user()->role) }} لا زالت قيد التصميم !!</h1>
         </div>
     @else
         @php
@@ -104,8 +105,8 @@
                         @foreach ($data['clients'] as $client)
                             @php
                                 //to print one case tite + number of other cases
-                                $caseName = $client->legalCases->where('lawyer_id',Auth::id())->first()->title;
-                                $casesCount = $client->legalCases->where('lawyer_id',Auth::id())->count() - 1;
+                                $caseName = $client->legalCases->where('lawyer_id', Auth::id())->first()->title;
+                                $casesCount = $client->legalCases->where('lawyer_id', Auth::id())->count() - 1;
                                 $print = $caseName;
                                 if ($casesCount > 0) {
                                     $print .= ' + ' . $casesCount;
@@ -241,29 +242,118 @@
                 </ul>
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-1 mx-4 my-4">
 
+        <div class="grid grid-cols-1 gap-1 mx-4 my-4">
             <div class="col-span-1 bg-white rounded-lg ">
                 <div class="flex justify-between items-center mx-4 my-2 pb-1">
-                    <div class="text-black font-bold"> نظـرة عامـة على الأربـاح</div>
-                    <select type=" " id="case_status" name="case_status"
-                        class=" w-28 border text-center ml-2 lg:text-[90%] font-bold text-[#9F9E9E] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        <option value="1">سنوي</option>
-                        <option value="2">شهري</option>
-                        <option value="2">يومي</option>
+                    <div class="text-black font-bold">نظـرة عامـة على الأربـاح</div>
+                    <select id="timeframeSelect" name="timeframeSelect"
+                        class="w-28 border text-center ml-2 lg:text-[90%] font-bold text-[#9F9E9E] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                        <option value="monthly">شهري</option>
+                        <option value="yearly">سنوي</option>
+                        <option value="daily">يومي</option>
                     </select>
                 </div>
                 <hr>
-
                 <div class="flex items-center mx-5 my-4 gap-2">
                     <h1 class="text-[#9F9E9E]">الأرباح الكليّة</h1>
                     <h1 class="text-black font-bold">4200$</h1>
                 </div>
+                <div class="h-72 w-full pb-3"> <!-- Ensure the container is full width -->
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <canvas id="profitChart"></canvas>
+                    <script>
+                        const ctx = document.getElementById('profitChart').getContext('2d');
+                        const profitChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // Default to monthly
+                                datasets: [{
+                                    label: 'Monthly Profit',
+                                    data: [800, 190, 300, 500, 200, 300, 450, 520, 610, 700, 670, 530],
+                                    backgroundColor: '#F6F6F3',
+                                    borderColor: '#F6F6F3',
+                                    borderWidth: 1,
+                                    borderRadius: 6,
+                                    borderSkipped: false,
+                                    barThickness: 27,
+                                    hoverBackgroundColor: '#BF9874',
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    y: {
+                                        display: false,
+                                        beginAtZero: true,
+                                        grid: {
+                                            display: false
+                                        }
+                                    },
+                                    x: {
+                                        grid: {
+                                            display: false
+                                        },
+                                        border: {
+                                            display: false
+                                        }
+                                    }
+                                },
+                                /* onClick: (e) => {
+                                    const activePoints = profitChart.getElementsAtEventForMode(e, 'nearest', {
+                                        intersect: true
+                                    }, true);
+                                    if (activePoints.length > 0) {
+                                        const { index } = activePoints[0];
+                                        profitChart.data.datasets.forEach((dataset) => {
+                                            dataset.backgroundColor = dataset.backgroundColor.map((color, colorIndex) =>
+                                                colorIndex === index ? '#A52A2A' : '#F6F6F3');
+                                        });
+                                        profitChart.update();
+                                    }
+                                }, */
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                return context.dataset.label + ': $' + context.raw;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        // Listening for changes on the select element
+                        document.getElementById('timeframeSelect').addEventListener('change', function() {
+                            const timeframe = this.value;
+                            if (timeframe === 'daily') {
+                                profitChart.data.labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; // Example for daily
+                                profitChart.data.datasets[0].label = 'Daily Profit';
+                                profitChart.data.datasets[0].data = [30, 60, 90, 20, 50, 70, 40]; // Example data for daily
+                            } else if (timeframe === 'monthly') {
+                                profitChart.data.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                                profitChart.data.datasets[0].label = 'Monthly Profit';
+                                profitChart.data.datasets[0].data = [120, 190, 300, 500, 200, 300, 450, 520, 610, 700, 670, 530];
+                            } else if (timeframe === 'yearly') {
+                                profitChart.data.labels = ['2020', '2021', '2022']; // Example for yearly
+                                profitChart.data.datasets[0].label = 'Yearly Profit';
+                                profitChart.data.datasets[0].data = [4000, 4500, 5000]; // Example data for yearly
+                            }
+                            profitChart.update();
+                        });
+                    </script>
+
+                </div>
             </div>
-
-            {{-- DO THE BAR CHART HERE I'M SLEEPY AND I'S 04:05AM - FRIDAY  --}}
-
         </div>
+
+
+
     @endif
 
 
