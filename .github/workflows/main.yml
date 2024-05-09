@@ -17,7 +17,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
-          # ssh-known-hosts: ${{ secrets.PRODUCTION_SSH_KNOWN_HOSTS }}
+         
 
       - name: Clone files to production server
         run: |
