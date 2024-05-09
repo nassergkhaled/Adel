@@ -10,6 +10,17 @@ class Task extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'case_id',
+        'created_by',
+        'title',
+        'description',
+        'start_date',
+        'completion_date',
+        'due_date',
+        'status',
+        'priority',
+    ];
 
     public function legalCase()
     {

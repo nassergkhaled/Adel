@@ -37,7 +37,7 @@ Route::delete('/chat_sessions/{id}', [ChatSessionController::class, 'destroy']);
 Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'fetchMessages']);
 Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessage']);
 
-Route::resource('tasks',TasksController::class);
+Route::resource('{user_id}/tasks',TasksController::class);
 
 
 
