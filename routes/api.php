@@ -27,6 +27,7 @@ use App\Http\Controllers\ChatSessionController;
 use App\Http\Controllers\ChatMessageMetadataController;
 use App\Http\Controllers\TasksController;
 use App\Http\Middleware\CheckApiTokenByAdel;
+use App\Http\Middleware\CheckApiTokenByAdelV2;
 
 // Chat Sessions Routes
 Route::get('/chat_sessions', [ChatSessionController::class, 'index']);
@@ -41,6 +42,8 @@ Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessag
 
 
 Route::resource('{api_token}/tasks', TasksController::class)->middleware(CheckApiTokenByAdel::class);
+
+Route::post('/newClientSission',[ChatSessionController::class,'newClientSission'])->middleware(CheckApiTokenByAdelV2::class);
 
 
 // Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'show']);

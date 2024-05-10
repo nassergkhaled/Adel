@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ChatSession;
+use App\Models\Client;
+use App\Models\User;
 
 class ChatSessionController extends Controller
 {
@@ -16,6 +18,18 @@ class ChatSessionController extends Controller
     {
         $session = ChatSession::create($request->all());
         return response()->json($session, 201);
+    }
+
+    public function newClientSission(Request $request)
+    {
+
+        $data =[
+            'user1_id' => $request->user_id,
+            'user2_id'=> Client::where('phone_number',$request->phone)->first()->id
+        ];
+
+        $session = ChatSession::create($data);
+        return response()->json($session->id, 201);
     }
 
     public function show($id)

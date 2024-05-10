@@ -3,6 +3,10 @@
 
 <x-app-layout>
 
+    @php
+        $chatSessions = $data['chatSessions'];
+        $clients = $data['clients'];
+    @endphp
     <div class="flex antialiased text-gray-800 m-3 ">
         <div class="flex flex-row  h-[80vh] w-full overflow-x-hidden">
             <div class="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0 rounded-md shadow-md">
@@ -15,24 +19,32 @@
                         <input type="text" class="bg-gray-100 px-5 py-2 w-60 rounded-xl border-none" placeholder="ابحث">
                     </div>
                 </div>
-                <div class="flex flex-col  mt-8">
-                    <div class="flex flex-row items-center justify-between text-xs">
+
+                <div x-data="{ isOpen: true }" class="flex flex-col  mt-8">
+                    <div @click="isOpen = !isOpen"
+                        class="flex flex-row items-center justify-between text-xs cursor-pointer">
                         <span class="font-bold">المحادثات النشطة</span>
-                        <span
-                            class="flex items-center justify-center bg-adel-Dark text-white h-4 w-4 rounded-full">-</span>
+                        <span class="flex items-center justify-center bg-adel-Dark text-white h-4 w-4 rounded-full"
+                            id="oldChatCount">{{ $chatSessions->count() }}</span>
                     </div>
-                    <div class="flex flex-col space-y-1 mt-4 -mx-2 h-[50vh] max-sm:[40vh] overflow-x-hidden ">
-                        @foreach ($chats as $chat)
+                    <div x-show="isOpen" x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 translate-y-[-2%]"
+                        x-transition:enter-end="opacity-100 translate-y-0"
+                        x-transition:leave="transition ease-in duration-200 transform"
+                        x-transition:leave-start="opacity-100 translate-y-0"
+                        x-transition:leave-end="opacity-0 translate-y-[-2%]"
+                        class="flex flex-col space-y-1 mt-4 -mx-2  overflow-x-hidden " id='currentChat'>
+                        @foreach ($chatSessions as $chatSession)
                             <button class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2"
-                                onclick="openChat(this)" id="{{ $chat->id }}">
+                                onclick="openChat(this)" id="{{ $chatSession->id }}">
                                 <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
                                     A
                                 </div>
                                 @php
-                                    if ($chat->user1_id != auth()->id()) {
-                                        $id = $chat->user1_id;
+                                    if ($chatSession->user1_id != auth()->id()) {
+                                        $id = $chatSession->user1_id;
                                     } else {
-                                        $id = $chat->user2_id;
+                                        $id = $chatSession->user2_id;
                                     }
                                     $user = \App\Models\User::find($id);
 
@@ -67,7 +79,36 @@
                     </div>
 
                 </div>
+                <div x-data="{ isOpen: true }" class="flex flex-col  mt-8 transition-all ease-in-out duration-200">
+                    <div @click="isOpen = !isOpen"
+                        class="flex flex-row items-center justify-between text-xs cursor-pointer">
+                        <span class="font-bold">محادثة جديدة</span>
+                        <span class="flex items-center justify-center bg-adel-Dark text-white h-4 w-4 rounded-full"
+                            id="newChatCount">{{ $clients->count() }}</span>
+                    </div>
+                    <div x-show="isOpen" x-transition:enter="transition ease-out duration-300 transform"
+                        x-transition:enter-start="opacity-0 translate-y-[-2%]"
+                        x-transition:enter-end="opacity-100 translate-y-0"
+                        x-transition:leave="transition ease-in duration-200 transform"
+                        x-transition:leave-start="opacity-100 translate-y-0"
+                        x-transition:leave-end="opacity-0 translate-y-[-2%]"
+                        class="flex flex-col space-y-1 mt-4 -mx-2 overflow-x-hidden ">
+                        @foreach ($clients as $client)
+                            <button
+                                class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2 transition-all duration-300 ease-in-out"
+                                onclick="createSession(this)" data-phone="{{ $client->phone_number }}">
+                                <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
+                                    {{ mb_substr($client->full_name, 0, 1, 'UTF-8') }}
+                                </div>
+                                <div class="ml-2 text-sm font-semibold" id="user_name">
+                                    {{ $client->full_name }}</div>
+                            </button>
+                        @endforeach
+                    </div>
+
+                </div>
             </div>
+
             <div class="flex flex-col flex-auto h-full p-6">
                 <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-white shadow-lg h-full p-4">
                     <div class="flex justify-between p-2 my-2">
@@ -94,7 +135,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-start-1 col-end-8 px-3 rounded-lg">
                                     <div class="flex flex-row items-center gap-2">
                                         <div
@@ -160,7 +201,7 @@
         const messageInput = document.getElementById('messageInput');
         const sendButton = document.getElementById('sendButton');
 
-        let session_id;
+        let session_id = 'x';
         scrollToBottom();
 
         function openChat(chat) {
@@ -172,6 +213,51 @@
             fetchMessages(session_id);
 
         }
+
+        function createSession(client) {
+            const api_token = "{{ $data['api_token'] }}";
+            const client_phone = client.getAttribute('data-phone');
+            let newSessioID = 1;
+            fetch(`/api/newClientSission`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        token: api_token,
+                        phone: client_phone,
+                    })
+                }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    newSessioID = data.session_id
+                })
+                .catch((error) => console.error('Error:', error));
+            console.log(api_token);
+
+            const newChatCount = document.querySelector("#newChatCount");
+            const oldChatCount = document.querySelector("#oldChatCount");
+            const currentChat = document.querySelector("#currentChat");
+
+
+            let newClient = client.cloneNode(true);
+            newClient.removeAttribute('data-phone');
+            newClient.setAttribute('onclick', 'openChat(this)');
+            newClient.setAttribute('id', newSessioID);
+            currentChat.appendChild(newClient);
+
+
+
+            client.style.opacity = 0;
+            oldChatCount.innerHTML = parseInt(oldChatCount.textContent) + 1;
+            newChatCount.innerHTML = parseInt(newChatCount.textContent) - 1;
+            setTimeout(function() {
+                client.parentNode.removeChild(client)
+            }, 300);
+
+        }
+
 
         document.getElementById('sendButton').addEventListener('click', sendMessage);
 
@@ -212,53 +298,10 @@
             }
         }
 
-
-
-        // let lastMessageId = null;
-        // fetchMessages(sessionId);
-
-        // setInterval(() => {
-        //     fetchMessages(sessionId, lastMessageId);
-        // }, 100);
-
-        // function fetchMessages(sessionId, lastId) {
-        //     let url = `/api/chat_messages/${sessionId}`;
-        //     if (lastId) {
-        //         url += `?last_id=${lastId}`;
-        //     }
-        //     fetch(url)
-        //         .then(response => response.json())
-        //         .then(messages => {
-        //             console.log('Messages fetched:', messages);
-        //             displayMessage(messages); // Function to display these messages on the page
-        //         })
-        //         .catch(error => console.error('Error fetching messages:', error));
-        // }
-
-        // function displayMessage(messages) {
-        //     var chatDiv = document.querySelector('#chatDev');
-        //     Object.values(messages).forEach(message => {
-        //         chatDiv.innerHTML += `<div class="col-start-1 mt-1 col-end-8 px-3 rounded-lg">
-    //                 <div class="flex flex-row items-center gap-2">
-    //                     <div class="relative ml-3 text-sm text-white bg-[#BF9874] py-2 px-4 shadow rounded-xl">
-    //                         <div>${message.content}</div>
-    //                     </div>
-    //                 </div>
-    //             </div>`;
-        //         console.log("Message displayed:", message.content);
-        //         lastMessageId = message.id;
-        //     });
-        //     scrollToBottom();
-        // }
-
-
         function scrollToBottom() {
             var chatDiv = document.getElementById('chatScroll');
             chatDiv.scrollTop = chatDiv.scrollHeight;
         }
-
-
-
 
 
         function fetchMessages(session_id) {
@@ -269,7 +312,6 @@
                 console.log("New message received:", message); // Debugging output
             });
         }
-
 
         function displayMessage(message) {
             var chatDiv = document.querySelector('#chatDev');
@@ -303,9 +345,6 @@
             scrollToBottom();
         }
 
-
-
-        // Add event listener to the send button
         document.getElementById('sendButton').addEventListener('click', sendMessage);
         document.getElementById('messageInput').addEventListener('keydown', function(event) {
             if (event.key === "Enter" && !event.shiftKey) { // Prevent sending on Shift+Enter
@@ -314,7 +353,20 @@
             }
         });
 
-        var messagesRef = firebase.database().ref('chat_sessions/' + sission_id + '/messages');
+        var firebaseConfig = {
+            apiKey: "your-apiKey",
+            authDomain: "your-authDomain",
+            databaseURL: "https://adel-c3f30-default-rtdb.firebaseio.com/",
+            projectId: "your-projectId",
+            storageBucket: "your-storageBucket",
+            messagingSenderId: "your-messagingSenderId",
+            appId: "your-appId",
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        // var messagesRef = firebase.database().ref('chat_sessions/' + sission_id + '/messages');
         var audio = document.getElementById('messageSound');
     </script>
 
