@@ -86,4 +86,13 @@ return [
     ],
     
 
+    'storage' => [
+        'database' => [
+            'connection' => 'mysql',
+            'table' => 'personal_access_tokens',
+            'expire' => 60,
+        ],
+    ],
+    
+
 ];

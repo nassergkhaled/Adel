@@ -9,6 +9,6 @@
     <script src="{{asset('js/full_calendar.js')}}"></script>
 
 
-    <div class="h-[96vh] m-2  bg-white rounded-lg p-4" id='calendar' data-id="{{Auth::id()}}" dir="rtl"></div>
+    <div class="h-[96vh] m-2  bg-white rounded-lg p-4" id='calendar' data-id="{{$token}}" dir="rtl"></div>
 
 </x-app-layout>

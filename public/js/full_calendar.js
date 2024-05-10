@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     var calendarEl = document.getElementById("calendar");
-    const id = calendarEl.getAttribute('data-id');;
+    const token = calendarEl.getAttribute('data-id');
+    const id = 2;
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
         editable: true,
@@ -9,7 +10,12 @@ document.addEventListener("DOMContentLoaded", function() {
         direction: "rtl",
         timeZone: "UTC",
         events: function(fetchInfo, successCallback, failureCallback) {
-            fetch(`/api/${id}/tasks`) // Adjust the URL to match your Laravel route
+            fetch(`/api/${token}/tasks`,{
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }) // Adjust the URL to match your Laravel route
                 .then((response) => response.json())
                 .then((events) => {
                     // Add colors based on priority to each event
@@ -61,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
             };
 
             // console.log(eventData);
-            fetch(`/api/${id}/tasks/${info.event.id}`, {
+            fetch(`/api/${token}/tasks/${info.event.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -80,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 };
                 // console.log(eventData);
 
-                fetch(`/api/${id}/tasks`, {
+                fetch(`/api/${token}/tasks`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -93,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     })
                     .then((response) => response.json())
                     .then((newEvent) => {
-                        // console.log("New Event:", newEvent);
+                        console.log("New Event:", newEvent);
                         calendar.addEvent(newEvent);
                     })
                     .catch((error) => console.error("Error:", error));
@@ -103,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Handle event deletion
         eventClick: function(info) {
             if (confirm("Are you sure you want to delete this event?")) {
-                fetch(`/api/${id}/tasks/${info.event.id}`, {
+                fetch(`/api/${token}/tasks/${info.event.id}`, {
                     method: "DELETE",
                 }).then(() => {
                     info.event.remove();

@@ -7,14 +7,39 @@ use Carbon\Carbon;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class TasksController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($user_id)
+
+    private function checkToken($api_token)
     {
+        $accessToken = PersonalAccessToken::findToken($api_token);
+        if ($accessToken) {
+            $user = $accessToken->tokenable;
+            if ($user) {
+                return $user->id;
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User not found',
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid token',
+            ]);
+        }
+    }
+    public function index(Request $request, $api_token)
+    {
+        // $user_id = $this->checkToken($api_token);
+        $user_id = $request->user_id;
+
         $tasks = Task::where('created_by', $user_id)->get(); // Fetch all tasks, consider adding pagination or filters as needed
         return response()->json($tasks->map(function ($task) {
             return [
@@ -38,8 +63,12 @@ class TasksController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $user_id)
+    public function store(Request $request, $api_token)
     {
+
+
+        // $user_id = $this->checkToken($api_token);
+        $user_id = $request->user_id;
 
 
 
@@ -65,6 +94,7 @@ class TasksController extends Controller
         $task->save();
 
         $request->merge(['id' => $task->id]);
+        $request = request()->except('user_id');
 
 
 
@@ -99,8 +129,10 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $user_id, string $id)
+    public function update(Request $request, $api_token, string $id)
     {
+        $user_id = $request->user_id;
+
         $data = [
             'title' => $request->title,
             'due_date' =>  Carbon::parse($request->end)->format('Y-m-d H:i:s'),
@@ -113,8 +145,10 @@ class TasksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($user_id, string $id)
+    public function destroy($api_token,Request $request, string $id)
     {
+        $user_id = $request->user_id;
+
         Task::where('created_by', $user_id)->where('id', $id)->delete();
         // Task::destroy($id);
         return response()->json("Success", 200);

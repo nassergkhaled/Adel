@@ -15,6 +15,7 @@ Route::post('/r', [TestController::class, 'returnRequest']);
 
 
 use App\Http\Controllers\api\ApiAuthController;
+
 Route::post('/register', [ApiAuthController::class, 'register']);
 Route::post('/login', [ApiAuthController::class, 'login']);
 
@@ -25,6 +26,7 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 use App\Http\Controllers\ChatSessionController;
 use App\Http\Controllers\ChatMessageMetadataController;
 use App\Http\Controllers\TasksController;
+use App\Http\Middleware\CheckApiTokenByAdel;
 
 // Chat Sessions Routes
 Route::get('/chat_sessions', [ChatSessionController::class, 'index']);
@@ -37,9 +39,8 @@ Route::delete('/chat_sessions/{id}', [ChatSessionController::class, 'destroy']);
 Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'fetchMessages']);
 Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessage']);
 
-Route::resource('{user_id}/tasks',TasksController::class);
 
-
+Route::resource('{api_token}/tasks', TasksController::class)->middleware(CheckApiTokenByAdel::class);
 
 
 // Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'show']);

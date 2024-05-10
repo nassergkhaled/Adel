@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Rules\ckeckSignupTokens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 use function PHPUnit\Framework\isEmpty;
@@ -46,14 +47,14 @@ class MainController extends Controller
         // $legalCases = $legalCases->get();
 
 
-        $user =Auth::user();
+        $user = Auth::user();
 
         $data = [
             'flag' => false
         ];
         if (Auth::user()->role == 'Lawyer') {
-            
-            
+
+
             // $clients = $user->lawyer->clients()->whereHas('legalCases')->get();
 
             $legalCases = $user->lawyer->legalCases;
@@ -75,10 +76,19 @@ class MainController extends Controller
     {
         return view('profile.show');
     }
-    public function calender()
+    public function calendar()
     {
-        return view('calender');
+        $user = User::find(Auth::id());
+        $token = session('api_token');
+
+        if (empty($token)) {
+            $token = $user->createToken('API Token', ['expires_in' => 120])->plainTextToken;
+            session(['api_token' => $token]);
+        }
+
+        return view('calendar', compact('token'));
     }
+
     public function completeRegistration()
     {
         return view('newUser/completeRegistration');
