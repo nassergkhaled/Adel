@@ -1,52 +1,42 @@
 <?php
 
-namespace Database\Factories;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Models\Task;
-use App\Models\User;
-use App\Models\LegalCase;
-use Illuminate\Database\Eloquent\Factories\Factory;
-
-class TaskFactory extends Factory
+return new class extends Migration
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
+     * Run the migrations.
      */
-    protected $model = Task::class;
+    public function up(): void
+    {
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->id();
+
+            $table->unsignedBigInteger('case_id')->nullable(); // the task can be with no case
+            $table->foreign('case_id')->references('id')->on('legal_cases');
+
+            $table->unsignedBigInteger('created_by'); //user who created the task
+            $table->foreign('created_by')->references('id')->on('users');
+
+            $table->string('title');
+            $table->text('description');
+            $table->date('start_date');
+            $table->date('completion_date')->nullable();
+            $table->date('due_date');
+            $table->string('status');
+            $table->string('priority');
+
+            $table->timestamps();
+        });
+    }
 
     /**
-     * Define the model's default state.
-     *
-     * @return array
+     * Reverse the migrations.
      */
-    public function definition()
+    public function down(): void
     {
-        // Generate start datetime between April 1 and June 30, 2024
-        $start_date = $this->faker->dateTimeBetween('2024-04-01', '2024-06-30');
-        
-        // Determine the due date offset (1 day or 3 hours)
-        $due_date_offset = $this->faker->boolean(30) ? '+3 hours' : '+1 day'; // 30% probability for 3-hour tasks
-        
-        // Set due datetime based on the calculated offset
-        $due_date = (clone $start_date)->modify($due_date_offset);
-
-        // Generate an optional completion datetime after the start date but before the due date
-        $completion_date = $this->faker->optional()->dateTimeBetween($start_date, $due_date);
-
-        return [
-            'case_id' => LegalCase::inRandomOrder()->value('id') ?: null,
-            'created_by' => User::inRandomOrder()->value('id') ?: User::factory(),
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
-            'start_date' => $start_date->format('Y-m-d H:i:s'),
-            'completion_date' => $completion_date ? $completion_date->format('Y-m-d H:i:s') : null,
-            'due_date' => $due_date->format('Y-m-d H:i:s'),
-            'status' => $this->faker->randomElement(['open', 'in_progress', 'completed', 'closed']),
-            'priority' => $this->faker->randomElement(['low', 'medium', 'high']),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
+        Schema::dropIfExists('tasks');
     }
-}
+};

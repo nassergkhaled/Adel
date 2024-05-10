@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Auth::routes(['verify' => true]);
+// Auth::routes(['verify' => true]);
 
 
 /* Route::get('/clients', function () {
@@ -81,14 +81,7 @@ Route::middleware(['auth', CompleteRegistration::class])->group(function () {
         return view('newUser/joinOffice');
     })->name('joinOffice');
 });
-
-Route::get('forgot-password', function () {
-    return response()->json('gg');
-})->name('password.request');
-Route::get('forgot-password', function () {
-    return response()->json('gg');
-})->name('password.forgot');
-
+require __DIR__ . '/auth.php';
 
 
 
