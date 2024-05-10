@@ -50,12 +50,14 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
     Route::get('/calendar', [MainController::class, 'calendar'])->name('calendar');
     Route::resource('/legalCases', LegalCasesController::class);
 
-    Route::get('/chating', function () {
-        // $users=User::whereNot('id',Auth()->id())->get();
-        $chats = ChatSession::all();
-        return view('chating.index', compact('chats'));
-    })->name('chating.index');
+    // Route::get('/chating', function () {
+    //     // $users=User::whereNot('id',Auth()->id())->get();
+    //     $chats = ChatSession::all();
+    //     return view('chating.index', compact('chats'));
+    // })->name('chating.index');
 
+
+    Route::get('/chating', [MainController::class, 'fetchChatSessions'])->name('chating.index');
 
     // Route::resource('tasks',TasksController::class);
     Route::resource('clients', ClientsController::class);
@@ -63,7 +65,7 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
     Route::post('/Update_Avatar_Email', [ProfileController::class, 'Update_Avatar_Email'])->name('UpdateAvatarEmail');
 });
 
-Route::middleware(['auth', CompleteRegistration::class])->group(function () {
+Route::middleware(['auth', CompleteRegistration::class, 'verified'])->group(function () {
     // Route::get('/CompleteRegistration', [MainController::class, 'completeRegistration'])->name('complete.registration');
 
 

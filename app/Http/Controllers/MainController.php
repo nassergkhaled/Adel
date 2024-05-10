@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChatSession;
 use App\Models\Client;
 use App\Models\Lawyer;
 use App\Models\LegalCase;
@@ -13,6 +14,7 @@ use App\Models\User;
 use App\Rules\ckeckSignupTokens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -72,10 +74,12 @@ class MainController extends Controller
 
         return view('dashboard', compact('data'));
     }
+
     public function profile()
     {
         return view('profile.show');
     }
+
     public function calendar()
     {
         $user = User::find(Auth::id());
@@ -144,9 +148,6 @@ class MainController extends Controller
         // return response()->json('done', 200);
     }
 
-
-
-
     public function joinOffice(Request $request)
     {
         $validatedData = $request->validate([
@@ -199,12 +200,6 @@ class MainController extends Controller
         return redirect('dashboard');
     }
 
-
-
-
-
-
-
     public function newClientUser(Request $request)
     {
         $validated = Validator::make($request->all(), [
@@ -230,5 +225,36 @@ class MainController extends Controller
         $client->save();
 
         return redirect('dashboard')->with('msg', 'You have been registered successfully.');
+    }
+
+    public function fetchChatSessions(Request $request)
+    {
+
+
+        $user = User::find(Auth::id());
+        $token = session('api_token');
+
+        if (empty($token)) {
+            $token = $user->createToken('API Token', ['expires_in' => 120])->plainTextToken;
+            session(['api_token' => $token]);
+        }
+        $my_id = Auth::id();
+        $chatSessions = ChatSession::where('user1_id', $my_id)->orWhere('user2_id', $my_id)->get();
+        $clients = null;
+        $lawyer = Auth::user()->lawyer;
+        if ($lawyer) {
+            $clients = $lawyer->clients()
+            ->whereNotNull('user_id')
+            ->whereNotExists(function ($query) use ($lawyer) {
+                $query->select(DB::raw(1))
+                    ->from('chat_sessions')
+                    ->whereRaw('((user1_id = ? AND user2_id = clients.id) OR (user2_id = ? AND user1_id = clients.id))', [$lawyer->id, $lawyer->id]);
+            })->get();        }
+        $data = [
+            'chatSessions' => $chatSessions,
+            'clients' => $clients,
+            'api_token' => $token,
+        ];
+        return view('chating.index', compact('data'));
     }
 }
