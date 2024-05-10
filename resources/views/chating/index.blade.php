@@ -215,6 +215,10 @@
         }
 
         function createSession(client) {
+
+             //to prevent create multi session by multi clicks
+             client.removeAttribute('onclick');
+
             const api_token = "{{ $data['api_token'] }}";
             const client_phone = client.getAttribute('data-phone');
             let newSessioID;
@@ -254,7 +258,7 @@
             newChatCount.innerHTML = parseInt(newChatCount.textContent) - 1;
             setTimeout(function() {
                 client.parentNode.removeChild(client)
-            }, 300);
+            }, 3000);
 
         }
 
