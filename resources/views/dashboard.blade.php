@@ -67,7 +67,7 @@
                             d="M15.6657 8.33301L15.6653 9.18501L18.999 10.2969L21.4207 9.48973L21.8423 10.7546L19.8213 11.4283L21.8848 17.1029C21.1569 17.8611 20.1331 18.333 18.999 18.333C17.865 18.333 16.8412 17.8611 16.1133 17.1029L18.1759 11.4283L15.6653 10.591V19.6663H18.3323V20.9997H11.6657V19.6663H14.3319V10.591L11.8213 11.4283L13.8848 17.1029C13.1569 17.8611 12.133 18.333 10.999 18.333C9.865 18.333 8.84119 17.8611 8.11328 17.1029L10.1759 11.4283L8.15575 10.7546L8.57739 9.48973L10.999 10.2969L14.3319 9.18501L14.3323 8.33301H15.6657ZM18.999 13.0681L18.0539 15.6663H19.9439L18.999 13.0681ZM10.999 13.0681L10.0539 15.6663H11.9439L10.999 13.0681Z"
                             fill="#74BF99" />
                     </svg>
-                    <span class="text-[#9F9E9E]">القضايا المحلولة</span>
+                    <span class="text-[#9F9E9E]">القضايا المفتوحة</span>
                 </div>
                 <p class="text-xl mr-1 font-bold mt-3 text-black">{{ $open }}</p>
             </div>
@@ -159,23 +159,64 @@
             </div>
             {{-- must be modified only for test and design !! --}}
             <!-- Second Card (Pie Chart) -->
-            <div class="col-span-1 bg-white rounded-lg ">
+            <div class="col-span-1 bg-white rounded-lg">
                 <div class="rounded-lg overflow-hidden">
                     <div class="flex justify-between items-center mx-4 my-2 pb-0">
                         <div class="text-black font-bold">أنواع القضايا</div>
-                        <select type=" " id="case_status" name="case_status"
-                            class=" w-28 border text-center  lg:text-[90%] font-bold text-[#9F9E9E] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                        <select id="case_status" name="case_status"
+                            class="w-28 border text-center lg:text-[90%] font-bold text-[#9F9E9E] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                             <option value="1">شهري</option>
                             <option value="2">سنوي</option>
-                            <option value="2">يومي</option>
+                            <option value="3">يومي</option>
                         </select>
                     </div>
                     <hr>
                 </div>
-                <canvas class="p-4 ml-24 mr-24" id="chartPie"></canvas>
-                <!-- Required chart.js -->
+
+                <div class="grid grid-cols-2 my-9">
+                    <div class="p-4">
+                        <canvas id="chartPie"></canvas>
+                    </div>
+                    <div class="flex justify-center items-center"> <!-- This container centers everything inside it -->
+                        <div class=" p-4 leading-10 text-center"> <!-- Added text-center for text alignment within each flex item -->
+                            {{-- <div class="text-black flex justify-center items-center my-2 space-x-4"> <!-- justify-center aligns children horizontally center -->
+                                <span class="bg-[#F9F5F1] rounded-full w-4 h-4 ml-2"></span>
+                                <p class="ml-2">القضايا الجنائية</p>
+                                <p class="text-[#9F9E9E]">60%</p>
+                            </div>
+
+                            <div class="text-black flex justify-center items-center my-2 space-x-4">
+                                <span class="bg-[#775635] rounded-full w-4 h-4 ml-2"></span>
+                                <p class="ml-2">القضايا الحقوقية</p>
+                                <p class="text-[#9F9E9E]">40%</p>
+                            </div>
+
+                            <div class="text-black flex justify-center items-center my-2 space-x-4">
+                                <span class="bg-[#553818] rounded-full w-4 h-4 ml-2"></span>
+                                <p class="ml-2">القضايا الإنهائية</p>
+                                <p class="text-[#9F9E9E]">20%</p>
+                            </div> --}}
+                            <ul>
+                                <li class="flex items-center space-x-4 text-black ">
+                                    <span class="bg-[#F9F5F1] rounded-full w-4 h-4 ml-2"></span>
+                                    <span>القضايا الجنائية</span>
+                                    <span class="text-[#9F9E9E] font-bold">60%</span>
+                                </li>
+                                <li class="flex items-center space-x-4 text-black">
+                                    <span class="bg-[#775635] rounded-full w-4 h-4 ml-2"></span>
+                                    <span>القضايا الحقوقية</span>
+                                    <span class="text-[#9F9E9E] font-bold">40%</span>
+                                </li>
+                                <li class="flex items-center space-x-4 text-black">
+                                    <span class="bg-[#553818] rounded-full w-4 h-4 ml-2"></span>
+                                    <span>القضايا الإنهائية</span>
+                                    <span class="text-[#9F9E9E] font-bold">20%</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <!-- Chart pie -->
                 <script>
                     const dataPie = {
                         labels: ["القضايا الإنهائية", "القضايا الحقوقية", "القضايا الجنائية"],
@@ -191,20 +232,20 @@
                         }]
                     };
                     const configPie = {
-                        type: "pie",
+                        type: 'pie',
                         data: dataPie,
                         options: {
                             plugins: {
                                 legend: {
-                                    position: 'left' // Moves the legend to the left side of the chart
+                                    display: false,
                                 }
                             }
                         }
                     };
-                    var chartBar = new Chart(document.getElementById("chartPie"), configPie);
+                    var chartPie = new Chart(document.getElementById("chartPie"), configPie);
                 </script>
-
             </div>
+
 
             <!-- Third Card -->
             <div class="col-span-1 bg-white rounded-lg ">
@@ -352,9 +393,5 @@
             </div>
         </div>
 
-
-
     @endif
-
-
 </x-app-layout>
