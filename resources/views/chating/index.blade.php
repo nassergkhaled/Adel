@@ -206,7 +206,7 @@
 
         function openChat(chat) {
             session_id = chat.id;
-            console.log(session_id);
+            // console.log(session_id);
             document.getElementById('chatDev').innerHTML = "";
             document.getElementById('chatHeader').innerHTML = chat.children[1].innerHTML;
 
@@ -217,7 +217,7 @@
         function createSession(client) {
             const api_token = "{{ $data['api_token'] }}";
             const client_phone = client.getAttribute('data-phone');
-            let newSessioID = 1;
+            let newSessioID;
             fetch(`/api/newClientSission`, {
                     method: 'POST',
                     headers: {
@@ -230,11 +230,11 @@
                     })
                 }).then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    newSessioID = data.session_id
+                    // console.log(data);
+                    newSessioID = data;
                 })
                 .catch((error) => console.error('Error:', error));
-            console.log(api_token);
+            // console.log(api_token);
 
             const newChatCount = document.querySelector("#newChatCount");
             const oldChatCount = document.querySelector("#oldChatCount");
@@ -282,7 +282,7 @@
                         })
                     })
                     .then(response => response.json())
-                    .then(message => console.log(message))
+                    // .then(message => console.log(message))
                     .catch(error => console.error('Error:', error));
                 inputField.value = '';
 
@@ -309,7 +309,7 @@
             messagesRef.on('child_added', function(snapshot) {
                 var message = snapshot.val();
                 displayMessage(message);
-                console.log("New message received:", message); // Debugging output
+                // console.log("New message received:", message); // Debugging output
             });
         }
 
@@ -341,7 +341,7 @@
                                 </div>`
 
             }
-            console.log("Message displayed:", message.content); // Debugging output
+            // console.log("Message displayed:", message.content); // Debugging output
             scrollToBottom();
         }
 
