@@ -47,7 +47,7 @@ Route::get('/', function () {
 Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(function () {
     Route::get('/profile', [MainController::class, 'profile'])->name('profile');
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
-    Route::get('/calender', [MainController::class, 'calendar'])->name('calendar');
+    Route::get('/calendar', [MainController::class, 'calendar'])->name('calendar');
     Route::resource('/legalCases', LegalCasesController::class);
 
     Route::get('/chating', function () {
