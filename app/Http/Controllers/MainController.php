@@ -239,7 +239,7 @@ class MainController extends Controller
             session(['api_token' => $token]);
         }
         $my_id = Auth::id();
-        $chatSessions = ChatSession::where('user1_id', $my_id)->orWhere('user2_id', $my_id)->get();
+        $chatSessions = ChatSession::where('user1_id', $my_id)->orWhere('user2_id', $my_id)->orderByDesc('created_at')->get();
         $clients = null;
         $lawyer = Auth::user()->lawyer;
         if ($lawyer) {

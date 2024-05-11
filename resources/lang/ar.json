@@ -101,5 +101,7 @@
     "The selected join code is invalid.": "كود الانضمام المحدد غير صالح.",
     "The selected user type is invalid.": "نوع المستخدم المحدد غير صالح.",
     "You already have this client!":"هذا الموكّل موجود لديك مسبقاً !",
-    "Full name": "الاسم الكامل"
+    "Full name": "الاسم الكامل",
+    "New Chat":"محادثة جديدة",
+    "Click on Any Chat to Open it":"انقر على اي محادثة في الجانب لفتحها"
 }

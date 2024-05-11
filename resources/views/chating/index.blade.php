@@ -16,11 +16,31 @@
                 </div>
                 <div class="max-md:hidden justify-center items-center me-8">
                     <div class="flex rounded-xl items-center">
-                        <input type="text" class="bg-gray-100 px-5 py-2 w-60 rounded-xl border-none" placeholder="ابحث">
+                        <input type="search" id="chatSearch"
+                            class="bg-gray-100 dark:bg-gray-100 text-black dark:text-black px-5 py-2 w-60 rounded-xl border-none focus:ring-adel-Normal"
+                            placeholder="ابحث" onfocus="this.select();">
                     </div>
+                    {{-- <div id="chat_results"
+                        class="absolute w-[89%] max-w-[14.2rem] mt-[0.1rem] bg-white border ms-1 border-gray-300 rounded-md hidden">
+                        <ul class="max-h-60 overflow-auto transition ease-in-out duration-300">
+                            <li class="p-2 cursor-pointer transition ease-in-out duration-100 hover:bg-gray-300">000000
+                            </li>
+                            <li class="p-2 cursor-pointer transition ease-in-out duration-100 hover:bg-gray-300">000000
+                            </li>
+                            <li class="p-2 cursor-pointer transition ease-in-out duration-100 hover:bg-gray-300">000000
+                            </li>
+                            <li class="p-2 cursor-pointer transition ease-in-out duration-100 hover:bg-gray-300">000000
+                            </li>
+                            <li class="p-2 cursor-pointer transition ease-in-out duration-100 hover:bg-gray-300">000000
+                            </li>
+                        </ul>
+                    </div> --}}
                 </div>
 
-                <div x-data="{ isOpen: true }" class="flex flex-col  mt-8">
+
+
+                <div x-data="{ isOpen: true }"
+                    class="flex flex-col  mt-8 transition-all ease-in-out duration-200  min-h-[30%] overflow-hidden">
                     <div @click="isOpen = !isOpen"
                         class="flex flex-row items-center justify-between text-xs cursor-pointer">
                         <span class="font-bold">المحادثات النشطة</span>
@@ -33,9 +53,9 @@
                         x-transition:leave="transition ease-in duration-200 transform"
                         x-transition:leave-start="opacity-100 translate-y-0"
                         x-transition:leave-end="opacity-0 translate-y-[-2%]"
-                        class="flex flex-col space-y-1 mt-4 -mx-2  overflow-x-hidden " id='currentChat'>
+                        class="flex flex-col space-y-1 mt-4 -mx-2 overflow-x-hidden" id='currentChat'>
                         @foreach ($chatSessions as $chatSession)
-                            <button class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2"
+                            <button class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2 chat_item"
                                 onclick="openChat(this)" id="{{ $chatSession->id }}">
                                 <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
                                     A
@@ -79,7 +99,8 @@
                     </div>
 
                 </div>
-                <div x-data="{ isOpen: true }" class="flex flex-col  mt-8 transition-all ease-in-out duration-200">
+                <div x-data="{ isOpen: true }"
+                    class="flex flex-col  mt-8 transition-all ease-in-out duration-200 overflow-hidden">
                     <div @click="isOpen = !isOpen"
                         class="flex flex-row items-center justify-between text-xs cursor-pointer">
                         <span class="font-bold">محادثة جديدة</span>
@@ -95,7 +116,7 @@
                         class="flex flex-col space-y-1 mt-4 -mx-2 overflow-x-hidden ">
                         @foreach ($clients as $client)
                             <button
-                                class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2 transition-all duration-300 ease-in-out"
+                                class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2 transition-all duration-300 ease-in-out chat_item"
                                 onclick="createSession(this)" data-phone="{{ $client->phone_number }}">
                                 <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
                                     {{ mb_substr($client->full_name, 0, 1, 'UTF-8') }}
@@ -109,19 +130,53 @@
                 </div>
             </div>
 
+            <script>
+                // const currentSession = @json($chatSessions);
+                // const newSession = @json($clients);
+                // const all = @json(array_merge($chatSessions->toArray(), $clients->toArray()));
+                // console.log(all);
+                // const chat_results = document.querySelector("#chat_results");
+
+
+                const chatSearch = document.querySelector("#chatSearch");
+                const chat_items = document.querySelectorAll(".chat_item");
+
+                function search() {
+                    chat_items.forEach(item => {
+                        const secondDiv = item.querySelector("div:nth-child(2)");
+                        let searchString = chatSearch.value.toLowerCase();
+                        if (!secondDiv.innerHTML.toLowerCase().includes(searchString)) {
+                            item.classList.add('hidden');
+                        } else {
+                            item.classList.remove('hidden');
+                        }
+                    });
+                }
+                chatSearch.addEventListener('input', function() {
+                    search();
+                });
+            </script>
+
             <div class="flex flex-col flex-auto h-full p-6">
                 <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-white shadow-lg h-full p-4">
                     <div class="flex justify-between p-2 my-2">
-                        <div class="text-black font-bold text-2xl mr-2 " id="chatHeader">علي أحمد</div>
-                        <div>
-
+                        <div class="text-black font-bold text-2xl mr-2 removeHidden" id="chatHeader" hidden></div>
+                        <div
+                            class="flex items-center justify-center text-black font-bold text-2xl mt-0 w-full removeElement">
+                            {{ __('New Chat') }}
                         </div>
                     </div>
                     <hr>
+                    <div class="my-1"></div>
                     <div class="flex flex-col h-full overflow-x-auto mb-4 scroll-smooth" id="chatScroll">
                         <div class="flex flex-col h-full">
+                            <div
+                                class="flex h-full w-full justify-center items-center shadow-md text-adel-Dark removeElement">
+                                {{ __('Click on Any Chat to Open it') . ' ...' }}
+                            </div>
                             <div class="grid grid-cols-12 gap-y-2" id="chatDev">
-                                <div class="col-start-6 col-end-13 p-3 rounded-lg">
+
+                                {{-- <div class="col-start-6 col-end-13 p-3 rounded-lg">
                                     <div class="flex items-center justify-start flex-row-reverse gap-2">
 
                                         <div
@@ -146,7 +201,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -162,12 +217,12 @@
                             </button>
                         </div> --}}
 
-                        <div class="flex-grow ml-4">
+                        <div class="flex-grow ml-4 removeHidden" hidden>
                             <div class="relative w-full">
-                                <input type="text" placeholder="اكتب الرسالة" id="messageInput"
-                                    class="flex w-full border rounded-xl bg-[#F9FAFB] focus:outline-none focus:border-indigo-300 ps-4 pe-10 h-10" />
-                                <button
-                                    class="absolute flex items-center justify-center h-full w-12 top-0 left-0 text-gray-400 hover:text-gray-600">
+                                <input type="text" placeholder="اكتب الرسالة" id="messageInput" disabled
+                                    class="enableIt flex w-full border rounded-xl bg-[#F9FAFB] focus:outline-none focus:border-indigo-300 ps-4 pe-10 h-10" />
+                                <button disabled
+                                    class="enableIt absolute flex items-center justify-center h-full w-12 top-0 left-0 text-gray-400 hover:text-gray-600">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -177,10 +232,11 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="ml-4">
+                        <div class="ml-4 removeHidden" hidden>
 
 
-                            <button class="flex  items-center hover:bg-gray-100 rounded-xl" id="sendButton">
+                            <button class="flex  items-center hover:bg-gray-100 rounded-xl enableIt" id="sendButton"
+                                disabled>
                                 <div
                                     class="flex items-center justify-center h-11 w-11 bg-adel-Normal hover:bg-adel-Dark-hover rounded-full">
                                     <svg width="15" height="12" viewBox="0 0 15 12" fill="none" class=""
@@ -201,23 +257,45 @@
         const messageInput = document.getElementById('messageInput');
         const sendButton = document.getElementById('sendButton');
 
-        let session_id = 'x';
+        let session_id = null;
+        let firstOpen = false; // to prevent multi class check in every chat open
         scrollToBottom();
 
         function openChat(chat) {
             session_id = chat.id;
+
             // console.log(session_id);
+            if (!firstOpen) {
+                console.log("im in");
+                const enableIt = document.querySelectorAll('.enableIt'); // elements to enable after open chat
+                const removeHidden = document.querySelectorAll(
+                    '.removeHidden'); // elements to make it visable after open chat
+                const removeElement = document.querySelectorAll('.removeElement'); // elements to remove it after open chat
+
+                enableIt.forEach(element => {
+                    element.removeAttribute('disabled');
+                });
+
+                removeHidden.forEach(element => {
+                    element.removeAttribute('hidden');
+                });
+
+                removeElement.forEach(element => {
+                    element.parentNode.removeChild(element);
+                });
+            }
             document.getElementById('chatDev').innerHTML = "";
             document.getElementById('chatHeader').innerHTML = chat.children[1].innerHTML;
 
+            firstOpen = true;
             fetchMessages(session_id);
 
         }
 
         function createSession(client) {
 
-             //to prevent create multi session by multi clicks
-             client.removeAttribute('onclick');
+            //to prevent create multi session by multi clicks
+            client.removeAttribute('onclick');
 
             const api_token = "{{ $data['api_token'] }}";
             const client_phone = client.getAttribute('data-phone');
@@ -249,7 +327,8 @@
             newClient.removeAttribute('data-phone');
             newClient.setAttribute('onclick', 'openChat(this)');
             newClient.setAttribute('id', newSessioID);
-            currentChat.appendChild(newClient);
+            currentChat.insertBefore(newClient, currentChat.firstChild);
+            openChat(newClient); // to open chat after create a sission
 
 
 
@@ -258,12 +337,26 @@
             newChatCount.innerHTML = parseInt(newChatCount.textContent) - 1;
             setTimeout(function() {
                 client.parentNode.removeChild(client)
-            }, 3000);
+            }, 300);
 
         }
 
+        document.getElementById('sendButton').addEventListener('click', function() {
+            if (session_id)
+                sendMessage();
+            else
+                console.log('open chat first');
+        });
 
-        document.getElementById('sendButton').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keydown', function(event) {
+            if (event.key === "Enter" && !event.shiftKey) { // Prevent sending on Shift+Enter
+                event.preventDefault(); // Prevent default Enter behavior (like submitting a form)
+                if (session_id)
+                    sendMessage();
+                else
+                    console.log('open chat first');
+            }
+        });
 
         function sendMessage() {
             var inputField = document.querySelector('#messageInput');
@@ -349,14 +442,6 @@
             scrollToBottom();
         }
 
-        document.getElementById('sendButton').addEventListener('click', sendMessage);
-        document.getElementById('messageInput').addEventListener('keydown', function(event) {
-            if (event.key === "Enter" && !event.shiftKey) { // Prevent sending on Shift+Enter
-                event.preventDefault(); // Prevent default Enter behavior (like submitting a form)
-                sendMessage(); // Call send message function
-            }
-        });
-
         var firebaseConfig = {
             apiKey: "your-apiKey",
             authDomain: "your-authDomain",
@@ -369,7 +454,7 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        
+
         // var messagesRef = firebase.database().ref('chat_sessions/' + sission_id + '/messages');
         var audio = document.getElementById('messageSound');
     </script>
