@@ -157,7 +157,7 @@
                             {{-- <input type="text" id="client_name" name="client_name"
                                 placeholder="{{ __('صاحب القضية') }}"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                             --}}
+                            --}}
                             <select type="text" id="client_id" name="client_id"
                                 class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                                 <option disabled selected></option>
