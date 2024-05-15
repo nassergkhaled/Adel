@@ -89,7 +89,7 @@
                             @endphp
 
                             <tr class=" border-[#E6E8EB]">
-                                <td>{{ $case->title }}</td>
+                                <td><a href="{{ route('legal_cases.Details', $case->id) }}">{{ $case->title }}</a></td>
                                 <td>{{ $name }}</td>
                                 <td><span class="{{ $class }}">{{ __($case->status) }}</span></td>
                                 <td>{{ $case->open_date }}</td>

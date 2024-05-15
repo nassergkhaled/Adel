@@ -21,9 +21,11 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/gg', function () {
+/* Route::get('/gg', function () {
     return view('legal_cases.Details');
-})->name('legal_cases.Details');
+})->name('legal_cases.Details'); */
+
+Route::get('/cases/{id}', [LegalCasesController::class, 'show'])->name('legal_cases.Details');
 
 // Auth::routes(['verify' => true]);
 

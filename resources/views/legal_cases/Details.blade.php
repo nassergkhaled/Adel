@@ -4,7 +4,7 @@
     <div class="overflow-scroll h-screen">
         <div class="flex m-5 justify-between items-center">
             <div class="text-black font-bold text-2xl tracking-wide">
-                <h1>تفاصيل قضية السرقة</h1>
+                <h1>تفاصيل قضية <span>ال{{ $case->title }}</span></h1>
             </div>
 
             <div>
@@ -24,12 +24,7 @@
 
             <div class="bg-white p-5 rounded-md w-full">
                 <h2 class="text-2xl font-semibold text-black mb-2 tracking-wide">الوصف</h2>
-                <p class="text-[#9B9B9B] text-sm">و ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) و في صناعات
-                    المطابع الدوارة. كان لوريم إيبسوم ولايزال المطاطين للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة
-                    مجهولة برص مجموعة من المشاهير بشك .و ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) و في
-                    صناعات
-                    المطابع الدوارة. كان لوريم إيبسوم ولايزال المطاطين للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة
-                    مجهولة برص مجموعة من المشاهير بشك .</p>
+                <p class="text-[#9B9B9B] text-sm">{{$case->description}}</p>
             </div>
 
 
@@ -40,20 +35,37 @@
                     <div class="flex items-center space-x-2 gap-1">
                         <span class=" text-black ">صاحب القضية: </span>
                         <img src="images\avatar.png" alt="Owner Icon" class="w-8 h-8 rounded-full">
-                        <span class="text-black tracking-wide">علا أبو خضر</span>
+                        <span class="text-black tracking-wide">{{$case->client->full_name}}</span>
                     </div>
 
                     <div class="flex items-center space-x-4">
                         <div>
                             <span class="text-black">تاريخ الفتح والإغلاق :</span>
-                            <span class="text-[#9B9B9B] text-md">3/Oct/2024 -20/Mar/2024</span>
+                            <span class="text-[#9B9B9B] text-md">{{$case->open_date}}</span><span class="font-bold px-1 text-adel-Dark">-</span><span>{{$case->close_date}}</span>
                         </div>
-
                     </div>
 
+                    @php
+                    $class;
+                    switch ($case->status) {
+                        case 'Open':
+                            $class = 'bg-[#c1ebd7] px-2 py-0 rounded-md text-[#06A759] tracking-wide';
+                            break;
+                        case 'Closed':
+                            $class = 'bg-[#f9c6c6] px-2 py-0 rounded-md text-[#EA1B1B] tracking-wide';
+                            break;
+                        case 'Pending':
+                            $class = 'bg-[#e9e2c0] px-2 py-0 rounded-md text-[#A78D06] tracking-wide';
+                            break;
+                        default:
+                            break;
+                    }
+
+                    $name = $case->client->full_name;
+                @endphp
                     <div class="flex items-center gap-1 ">
                         <span class="text-black">حالة القضية :</span>
-                        <span class="bg-[#e9e2c0] px-2 py-0 rounded-md text-[#A78D06] tracking-wide">في الانتظار</span>
+                        <span class="{{ $class }}">{{ __($case->status) }}</span>
                     </div>
 
                 </div>
@@ -61,10 +73,7 @@
 
             <div class="bg-white p-5 rounded-md w-full">
                 <h2 class="text-2xl font-semibold text-black mb-3 tracking-wide">الملاحظات</h2>
-                <p class="text-[#9B9B9B] text-sm mb-2">و ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) و في
-                    صناعات
-                    المطابع الدوارة. كان لوريم إيبسوم ولايزال المطاطين للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة
-                    مجهولة برص مجموعة من المشاهير بشك .</p>
+                <p class="text-[#9B9B9B] text-sm mb-2">{{$case->notes}}</p>
             </div>
         </div>
 

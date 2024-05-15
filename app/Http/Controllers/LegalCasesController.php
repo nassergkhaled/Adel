@@ -145,7 +145,9 @@ class LegalCasesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $case = LegalCase::findOrFail($id);
+
+        return view('legal_cases.Details', compact('case'));
     }
 
     /**
@@ -153,7 +155,7 @@ class LegalCasesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
