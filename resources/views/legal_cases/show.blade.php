@@ -32,9 +32,24 @@
                 <h2 class="text-2xl font-semibold text-black mb-4 tracking-wide">تفاصيل أخرى</h2>
                 <div class=" flex justify-around items-center text-lg">
 
+                    @php
+                        $avatar = Auth::user()->avatar;
+                        if ($avatar) {
+                            $avatar = 'images/avatars/'. $avatar;
+
+                            if (!file_exists($avatar)) {
+                                $avatar = '/images/profile_avatar.png';
+                            }
+
+                            
+
+                        } else {
+                            $avatar = '/images/profile_avatar.png';
+                        }
+                    @endphp
                     <div class="flex items-center space-x-2 gap-1">
                         <span class=" text-black ">صاحب القضية: </span>
-                        <img src="images\avatar.png" alt="Owner Icon" class="w-8 h-8 rounded-full">
+                        <img src="{{$avatar}}" alt="Owner Icon" class="w-8 h-8 rounded-full">
                         <span class="text-black tracking-wide">{{$case->client->full_name}}</span>
                     </div>
 

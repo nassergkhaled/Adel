@@ -147,7 +147,7 @@ class LegalCasesController extends Controller
     {
         $case = LegalCase::findOrFail($id);
 
-        return view('legal_cases.Details', compact('case'));
+        return view('legal_cases.show', compact('case'));
     }
 
     /**
