@@ -43,7 +43,23 @@
                     class="flex flex-col  mt-8 transition-all ease-in-out duration-200  min-h-[30%] overflow-hidden">
                     <div @click="isOpen = !isOpen"
                         class="flex flex-row items-center justify-between text-xs cursor-pointer">
-                        <span class="font-bold">المحادثات النشطة</span>
+
+                        <div class="flex">
+                            <span x-bind:class="{ 'transform rotate-180': isOpen }"
+                                class="flex items-center justify-center me-1 text-white h-4 w-4 rounded-full cursor-pointer"
+                                id="newChatCount">
+                                <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+                                    transform="matrix(1, 0, 0, -1, 0, 0)">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M8 20.695l7.997-11.39L24 20.695z"></path>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="font-bold">المحادثات النشطة</span>
+                        </div>
+
                         <span class="flex items-center justify-center bg-adel-Dark text-white h-4 w-4 rounded-full"
                             id="oldChatCount">{{ $chatSessions->count() }}</span>
                     </div>
@@ -103,9 +119,25 @@
                     class="flex flex-col  mt-8 transition-all ease-in-out duration-200 overflow-hidden">
                     <div @click="isOpen = !isOpen"
                         class="flex flex-row items-center justify-between text-xs cursor-pointer">
-                        <span class="font-bold">محادثة جديدة</span>
+                        <div class="flex">
+                            <span x-bind:class="{ 'transform rotate-180': isOpen }"
+                                class="flex items-center justify-center me-1 text-white h-4 w-4 rounded-full cursor-pointer"
+                                id="newChatCount">
+                                <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+                                    transform="matrix(1, 0, 0, -1, 0, 0)">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M8 20.695l7.997-11.39L24 20.695z"></path>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="font-bold">محادثة جديدة</span>
+                        </div>
+
                         <span class="flex items-center justify-center bg-adel-Dark text-white h-4 w-4 rounded-full"
                             id="newChatCount">{{ $clients->count() }}</span>
+
                     </div>
                     <div x-show="isOpen" x-transition:enter="transition ease-out duration-300 transform"
                         x-transition:enter-start="opacity-0 translate-y-[-2%]"
@@ -239,8 +271,8 @@
                                 disabled>
                                 <div
                                     class="flex items-center justify-center h-11 w-11 bg-adel-Normal hover:bg-adel-Dark-hover rounded-full">
-                                    <svg width="15" height="12" viewBox="0 0 15 12" fill="none" class=""
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg width="15" height="12" viewBox="0 0 15 12" fill="none"
+                                        class="" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M15 12V7.5L9 6L15 4.5V0L0.75 6L15 12Z" fill="white" />
                                     </svg>
                                 </div>
