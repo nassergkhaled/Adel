@@ -4,12 +4,13 @@
     <div class="overflow-scroll h-screen">
         <div class="flex m-5 justify-between items-center">
             <div class="text-black font-bold text-2xl tracking-wide">
-                <h1>تفاصيل قضية <span>ال{{ $case->title }}</span></h1>
+                <h1>تفاصيل قضية <span>{{ $case->title }}</span></h1>
             </div>
 
+            {{-- Back to Previous page button --}}
             <div>
-                <button
-                    class="flex items-center px-3 py-3 bg-white border border-[#E1E1E1] font-semibold rounded-lg  hover:bg-adel-Normal-hover focus:outline-none focus:ring-2 focus:ring-adel-Normal-active focus:ring-opacity-75">
+                <button class="flex items-center px-3 py-3 bg-white border border-[#E1E1E1] font-semibold rounded-lg  hover:bg-adel-Normal-hover focus:outline-none focus:ring-2 focus:ring-adel-Normal-active focus:ring-opacity-75"
+                onclick="window.location.href='{{ url()->previous() }}'">
 
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -41,7 +42,7 @@
                                 $avatar = '/images/profile_avatar.png';
                             }
 
-                            
+
 
                         } else {
                             $avatar = '/images/profile_avatar.png';
@@ -95,7 +96,11 @@
         <div class="text-black m-5 font-bold text-2xl tracking-wide">
             <h1>الشهود</h1>
         </div>
+        @foreach ($collection as $item)
 
+
+
+        @endforeach
         <div class="mx-5">
             <table class="table border-[#E6E8EB] text-black rounded-sm bg-white">
                 <thead>

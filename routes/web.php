@@ -25,7 +25,7 @@ Route::get('/', function () {
     return view('legal_cases.Details');
 })->name('legal_cases.Details'); */
 
-Route::get('/cases/{id}', [LegalCasesController::class, 'show'])->name('legal_cases.Details');
+Route::get('/cases/{id}', [LegalCasesController::class, 'show'])->name('legal_cases.show');
 
 // Auth::routes(['verify' => true]);
 
