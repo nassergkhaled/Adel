@@ -13,9 +13,9 @@ use PhpParser\Node\Stmt\Case_;
 
 class LegalCasesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    /*
+    //INDEX
+    */
 
     private function sharedIndex($user)
     {
@@ -55,7 +55,6 @@ class LegalCasesController extends Controller
         // //     $query->where('office_id', $officeId);
         // // })->get();
 
-
         // //return All cases connected with me
         // $roleId = Auth::user()->roles->first()->id;
 
@@ -81,18 +80,16 @@ class LegalCasesController extends Controller
         return response()->json(['message' => 'Bad Request'], 400);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    /*
+    Store.
+    */
+
+
+    private function sharedStore(Request $request, $user)
     {
         // Validate the incoming request data
         $validated = Validator::make($request->all(), [
@@ -111,7 +108,8 @@ class LegalCasesController extends Controller
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
         }
 
-        $officeId = Auth::user()->office_id;
+
+        $officeId = $user->office_id;
 
 
         // // Get IDs of all clients in my office
@@ -128,7 +126,7 @@ class LegalCasesController extends Controller
 
 
 
-        $clientIds = Auth::user()->lawyer->clients->pluck('id');
+        $clientIds = $user->lawyer->clients->pluck('id');
 
         // Check if the client role ID exists in my office role IDs
         if (!$clientIds->contains($request->client_id)) {
@@ -144,7 +142,7 @@ class LegalCasesController extends Controller
         $legalCase->close_date = $request->case_closeDate;
         $legalCase->description = $request->case_description;
         $legalCase->notes = $request->case_notes;
-        $legalCase->lawyer_id = Auth::id();
+        $legalCase->lawyer_id = $user->id;
         $legalCase->client_id = $request->client_id;
         $legalCase->save();
 
@@ -154,15 +152,46 @@ class LegalCasesController extends Controller
 
 
 
+
+        // to return response depends on where request come from (API or WEP)
+
+        return $legalCase;
+    }
+    public function store(Request $request)
+    {
+        $this->sharedStore($request, Auth::user());
         return redirect()->back()->with('msg', 'Case added successfully!');
     }
-
+    public function APIstore(Request $request)
+    {
+        $legalCase = $this->sharedStore($request, $request->user());
+        return response()->json(['message' => 'Case added successfully!', 'LegalCase' => $legalCase], 200);
+    }
     /**
      * Display the specified resource.
      */
+    public function APIshow(Request $request, string $id)
+    {
+        if ($request->user())
+            $user = $request->user();
+        else
+            return response()->json(['message' => 'Bad Request'], 400);
+
+        $case = LegalCase::findOrFail($id);
+
+        if ($case->lawyer->id !== $user->id)
+            return response()->json(['message' => 'Unauthorized'], 400);
+
+        return response()->json(['Message' => 'Founded', 'LegalCase' => $case], 200);
+    }
     public function show(string $id)
     {
+
+        $user = Auth::user();
         $case = LegalCase::findOrFail($id);
+
+        if ($case->lawyer->id !== $user->id)
+            abort(404);
 
         return view('legal_cases.show', compact('case'));
     }

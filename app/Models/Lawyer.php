@@ -27,6 +27,6 @@ class Lawyer extends Model
 
     public function legalCases()
     {
-        return $this->hasMany(LegalCase::class);
+        return $this->hasMany(LegalCase::class, 'lawyer_id');
     }
 }

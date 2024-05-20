@@ -53,6 +53,7 @@ Route::post('/newClientSission', [ChatSessionController::class, 'newClientSissio
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/legalCases', [LegalCasesController::class, "apiIndex"]);
+    Route::post('/legalCases', [LegalCasesController::class, "store"]);
+    Route::get('/legalCases/{id}', [LegalCasesController::class, "APIshow"]);
 });
-
-Route::get('/legalCases', [LegalCasesController::class, "apiIndex"])->middleware('auth:sanctum');
