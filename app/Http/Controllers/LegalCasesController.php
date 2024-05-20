@@ -16,6 +16,31 @@ class LegalCasesController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    private function sharedIndex($user)
+    {
+        $data = [
+            'flag' => false
+        ];
+        if ($user->role == 'Lawyer') {
+
+
+            // $clientsIds = LawyerClient::where('lawyer_id',Auth::id())->pluck('client_id');
+            // $clients = Client::findMany($clientsIds);
+
+
+            $clients = $user->lawyer->clients;
+            $legalCases = $user->lawyer->legalCases;
+
+            $data = [
+                'clients' => $clients,
+                'cases' => $legalCases,
+                'flag' => true,
+            ];
+        }
+
+        return $data;
+    }
     public function index(Request $request)
     {
         // $officeId = Auth::user()->roles->first()->office_id;
@@ -41,27 +66,19 @@ class LegalCasesController extends Controller
 
 
         $user = Auth::user();
-        $data = [
-            'flag' => false
-        ];
-        if ($user->role == 'Lawyer') {
 
 
-            // $clientsIds = LawyerClient::where('lawyer_id',Auth::id())->pluck('client_id');
-            // $clients = Client::findMany($clientsIds);
-
-
-            $clients = $user->lawyer->clients;
-            $legalCases = $user->lawyer->legalCases;
-
-            $data = [
-                'clients' => $clients,
-                'cases' => $legalCases,
-                'flag' => true,
-            ];
-        }
+        $data = $this->sharedIndex($user);
 
         return view("legal_cases.index", compact("data"));
+    }
+    public function apiIndex(Request $request)
+    {
+        if ($request->user()) {
+            $data = $this->sharedIndex($request->user());
+            return response()->json(['data' => $data, 'message' => 'Success'], 200);
+        }
+        return response()->json(['message' => 'Bad Request'], 400);
     }
 
     /**
@@ -155,7 +172,6 @@ class LegalCasesController extends Controller
      */
     public function edit(string $id)
     {
-
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class testController extends Controller
@@ -25,9 +26,8 @@ class testController extends Controller
      */
     function test()
     {
-        return response()->json([
-            'message' => 'Hello World'
-        ]);
+        $user = User::all();
+        return response()->json($user);
     }
 
     /**

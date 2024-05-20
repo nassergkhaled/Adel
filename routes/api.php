@@ -16,8 +16,8 @@ Route::post('/r', [TestController::class, 'returnRequest']);
 
 use App\Http\Controllers\api\ApiAuthController;
 
-Route::post('/register', [ApiAuthController::class, 'register']);
-Route::post('/login', [ApiAuthController::class, 'login']);
+Route::post('/register', [ApiAuthController::class, 'register'])->name("apiRegister");
+Route::post('/login', [ApiAuthController::class, 'login'])->name("apiLogin");
 
 
 
@@ -25,6 +25,7 @@ Route::post('/login', [ApiAuthController::class, 'login']);
 
 use App\Http\Controllers\ChatSessionController;
 use App\Http\Controllers\ChatMessageMetadataController;
+use App\Http\Controllers\LegalCasesController;
 use App\Http\Controllers\TasksController;
 use App\Http\Middleware\CheckApiTokenByAdel;
 use App\Http\Middleware\CheckApiTokenByAdelV2;
@@ -43,9 +44,15 @@ Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessag
 
 Route::resource('{api_token}/tasks', TasksController::class)->middleware(CheckApiTokenByAdel::class);
 
-Route::post('/newClientSission',[ChatSessionController::class,'newClientSission'])->middleware(CheckApiTokenByAdelV2::class);
+Route::post('/newClientSission', [ChatSessionController::class, 'newClientSission'])->middleware(CheckApiTokenByAdelV2::class);
 
 
 // Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'show']);
 // Route::put('/chat_messages/{id}', [ChatMessageMetadataController::class, 'update']);
 // Route::delete('/chat_messages/{id}', [ChatMessageMetadataController::class, 'destroy']);
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+});
+
+Route::get('/legalCases', [LegalCasesController::class, "apiIndex"])->middleware('auth:sanctum');

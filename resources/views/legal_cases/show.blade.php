@@ -96,11 +96,7 @@
         <div class="text-black m-5 font-bold text-2xl tracking-wide">
             <h1>الشهود</h1>
         </div>
-        @foreach ($collection as $item)
-
-
-
-        @endforeach
+       
         <div class="mx-5">
             <table class="table border-[#E6E8EB] text-black rounded-sm bg-white">
                 <thead>
@@ -115,8 +111,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($case->witnesses as $witness)            
                     <tr class=" border-[#E6E8EB]">
-                        <td>لانا أحمد</td>
+                        <td>{{$witness->full_name}}</td>
                         <td>059687954</td>
                         <td>2134567</td>
                         <td>زواتا الشارع المفرق الثانى...</td>
@@ -124,24 +121,8 @@
                                 class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
                         </td>
                     </tr>
-                    <tr class=" border-[#E6E8EB]">
-                        <td>لانا أحمد</td>
-                        <td>059687954</td>
-                        <td>2134567</td>
-                        <td>زواتا الشارع المفرق الثانى...</td>
-                        <td class="text-end"><input type="checkbox" id="" name=""
-                                class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
-                        </td>
-                    </tr>
-                    <tr class=" border-[#E6E8EB]">
-                        <td>لانا أحمد</td>
-                        <td>059687954</td>
-                        <td>2134567</td>
-                        <td>زواتا الشارع المفرق الثانى...</td>
-                        <td class="text-end"><input type="checkbox" id="" name=""
-                                class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
-                        </td>
-                    </tr>
+                    @endforeach
+                    
                 </tbody>
             </table>
         </div>

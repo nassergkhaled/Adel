@@ -10,7 +10,7 @@ class Witness extends Model
     use HasFactory;
     public function legalCases()
     {
-        return $this->belongsToMany(LegalCase::class);
+        return $this->belongsToMany(Witness::class,'case_witness','case_id');
     }
 
 }
