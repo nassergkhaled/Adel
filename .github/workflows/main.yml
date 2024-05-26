@@ -21,7 +21,7 @@ jobs:
 
       - name: Clone files to production server
         run: |
-          ssh -vvv ubuntu@34.245.218.187 'cd /app/ && git pull'
+          ssh -vvv ubuntu@34.249.169.232 'cd /app/ && git pull'
 
       - name: Build Docker image
         run: docker build -t adel .
