@@ -20,7 +20,7 @@ class LegalCasesController extends Controller
     private function sharedIndex($user)
     {
         $data = [
-            'flag' => false
+            'isLowyer' => false
         ];
         if ($user->role == 'Lawyer') {
 
@@ -35,7 +35,7 @@ class LegalCasesController extends Controller
             $data = [
                 'clients' => $clients,
                 'cases' => $legalCases,
-                'flag' => true,
+                'isLowyer' => true,
             ];
         }
 
