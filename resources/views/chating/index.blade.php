@@ -205,8 +205,11 @@
                             <div
                                 class="flex h-full w-full justify-center items-center shadow-md text-adel-Dark removeElement">
                                 {{ __('Click on Any Chat to Open it') . ' ...' }}
+
                             </div>
                             <div class="grid grid-cols-12 gap-y-2" id="chatDev">
+
+
 
                                 {{-- <span class="loading loading-spinner text-adel-Normal size-20 absolute"></span> --}}
 
@@ -286,6 +289,8 @@
             </div>
         </div>
     </div>
+
+
     <audio id="messageSound" src="\tap-notification-180637.mp3" preload="auto"></audio>
 
     <script>
@@ -297,6 +302,10 @@
         let session_id = null;
         let firstOpen = false; // to prevent multi class check in every chat open
         let emptyChatDiv = false; // to remove loading after fetching chat messages //used in OpenChat() & fetchMessages()
+
+        //to center Loading in the middle
+        const chatDivLoadingClasses = "flex justify-center items-center h-full w-full";
+        const chatDivMainClasses = "grid grid-cols-12 gap-y-2";
 
         scrollToBottom();
 
@@ -323,7 +332,16 @@
                     element.parentNode.removeChild(element);
                 });
             }
-            document.getElementById('chatDev').innerHTML = `<span class="loading loading-spinner text-adel-Normal size-20 absolute"></span>`;
+
+            const chatDiv = document.getElementById('chatDev');
+
+            chatDiv.innerHTML = `<span class="loading loading-bars loading-lg text-adel-Normal size-20 absolute"></span>`;
+
+
+            //change chat div design to make loading animation in the middle
+            chatDiv.classList.remove(...chatDivMainClasses.split(' '));
+            chatDiv.classList.add(...chatDivLoadingClasses.split(' '));
+
             emptyChatDiv = false;
 
             document.getElementById('chatHeader').innerHTML = chat.children[1].innerHTML;
@@ -454,7 +472,15 @@
             //to check if there no messages (already empty chat)
             messagesRef.once('value', function(snapshot) {
                 if (!snapshot.exists()) {
-                    document.querySelector('#chatDev').innerHTML = "";
+                    const chatDiv = document.getElementById('chatDev');
+                    chatDiv.innerHTML = "";
+
+                    //return chat classes to return chat Design
+                    chatDiv.className = chatDivMainClasses;
+
+
+                    emptyChatDiv = true;
+
                 }
             });
 
@@ -462,7 +488,13 @@
             messagesRef.on('child_added', function(snapshot) {
 
                 if (!emptyChatDiv) {
-                    document.querySelector('#chatDev').innerHTML = "";
+
+                    const chatDiv = document.getElementById('chatDev');
+                    chatDiv.innerHTML = "";
+
+                    //return chat classes to return chat Design
+                    chatDiv.className = chatDivMainClasses;
+
                     emptyChatDiv = true;
                 }
 
