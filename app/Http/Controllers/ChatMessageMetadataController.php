@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChatSession;
 use Illuminate\Http\Request;
 use App\Models\ChatMessageMetadata;
 use Illuminate\Support\Facades\Auth;
@@ -28,17 +29,29 @@ class ChatMessageMetadataController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $messagesRef = $this->database->getReference('chat_sessions/' . $request->session_id . '/messages');
-        $message = $messagesRef->push([
-            
-            'content' => $request->input('message'),
-            'sender_id' => $request->sender_id,
-            'timestamp' => now()->toISOString(),
-        ]);
+        $user = $request->user();
 
-        $message = ChatMessageMetadata::create($request->all());
+        $belongToMe = ChatSession::where('id', $request->session_id)
+            ->where(function ($query) use ($user) {
+                $query->where('user1_id', $user->id)
+                    ->orWhere('user2_id', $user->id);
+            })
+            ->first();
+        if ($belongToMe) {
+            $messagesRef = $this->database->getReference('chat_sessions/' . $request->session_id . '/messages');
+            $message = $messagesRef->push([
 
-        return response()->json($message, 201);
+                'content' => $request->input('message'),
+                'sender_id' => $user->id,
+                'timestamp' => now()->toISOString(),
+            ]);
+
+            $message = ChatMessageMetadata::create($request->all());
+
+            return response()->json($message, 201);
+        } else {
+            return response()->json(['error' => 'You are not part of this chat session'], 401);
+        }
     }
 
     public function fetchMessages($sessionId)

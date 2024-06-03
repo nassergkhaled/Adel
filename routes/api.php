@@ -39,8 +39,6 @@ Route::put('/chat_sessions/{id}', [ChatSessionController::class, 'update']);
 Route::delete('/chat_sessions/{id}', [ChatSessionController::class, 'destroy']);
 
 // Chat Messages Routes
-Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'fetchMessages']);
-Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessage']);
 
 
 Route::resource('{api_token}/tasks', TasksController::class)->middleware(CheckApiTokenByAdel::class);
@@ -57,6 +55,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/legalCases', [LegalCasesController::class, "apiIndex"]);
     Route::post('/legalCases', [LegalCasesController::class, "store"]);
     Route::get('/legalCases/{id}', [LegalCasesController::class, "APIshow"]);
+
+
+
+    Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessage']);
+    Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'fetchMessages']);
 });
 
 Route::post('/hash', function (Request $request) {

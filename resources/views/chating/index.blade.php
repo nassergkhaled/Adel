@@ -205,8 +205,14 @@
                             <div
                                 class="flex h-full w-full justify-center items-center shadow-md text-adel-Dark removeElement">
                                 {{ __('Click on Any Chat to Open it') . ' ...' }}
+
                             </div>
                             <div class="grid grid-cols-12 gap-y-2" id="chatDev">
+
+
+
+                                {{-- <span class="loading loading-spinner text-adel-Normal size-20 absolute"></span> --}}
+
 
                                 {{-- <div class="col-start-6 col-end-13 p-3 rounded-lg">
                                     <div class="flex items-center justify-start flex-row-reverse gap-2">
@@ -283,14 +289,24 @@
             </div>
         </div>
     </div>
+
+
     <audio id="messageSound" src="\tap-notification-180637.mp3" preload="auto"></audio>
 
     <script>
         const messageInput = document.getElementById('messageInput');
         const sendButton = document.getElementById('sendButton');
+        const api_token = "{{ $data['api_token'] }}";
+
 
         let session_id = null;
         let firstOpen = false; // to prevent multi class check in every chat open
+        let emptyChatDiv = false; // to remove loading after fetching chat messages //used in OpenChat() & fetchMessages()
+
+        //to center Loading in the middle
+        const chatDivLoadingClasses = "flex justify-center items-center h-full w-full";
+        const chatDivMainClasses = "grid grid-cols-12 gap-y-2";
+
         scrollToBottom();
 
         function openChat(chat) {
@@ -316,7 +332,18 @@
                     element.parentNode.removeChild(element);
                 });
             }
-            document.getElementById('chatDev').innerHTML = "";
+
+            const chatDiv = document.getElementById('chatDev');
+
+            chatDiv.innerHTML = `<span class="loading loading-bars loading-lg text-adel-Normal size-20 absolute"></span>`;
+
+
+            //change chat div design to make loading animation in the middle
+            chatDiv.classList.remove(...chatDivMainClasses.split(' '));
+            chatDiv.classList.add(...chatDivLoadingClasses.split(' '));
+
+            emptyChatDiv = false;
+
             document.getElementById('chatHeader').innerHTML = chat.children[1].innerHTML;
 
             firstOpen = true;
@@ -329,7 +356,6 @@
             //to prevent create multi session by multi clicks
             client.removeAttribute('onclick');
 
-            const api_token = "{{ $data['api_token'] }}";
             const client_phone = client.getAttribute('data-phone');
             let newSessioID;
             fetch(`/api/newClientSission`, {
@@ -399,19 +425,25 @@
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
+                            'Authorization': `Bearer ${api_token}`,
+
                             'X-Requested-With': 'XMLHttpRequest',
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         },
                         body: JSON.stringify({
                             session_id: session_id,
-                            sender_id: {{ auth()->id() }},
-                            message_type: 'text',
                             message: messageText,
-                            created_at: new Date().toISOString(),
                         })
                     })
-                    .then(response => response.json())
-                    // .then(message => console.log(message))
+                    .then(response => {
+                        if (response.status === 401) {
+                            // Refresh the page if the status is 401
+                            window.location.reload();
+                        } else {
+                            return response.json();
+                        }
+                    })
+                    .then(message => console.log(message))
                     .catch(error => console.error('Error:', error));
                 inputField.value = '';
 
@@ -435,7 +467,37 @@
 
         function fetchMessages(session_id) {
             messagesRef = firebase.database().ref('chat_sessions/' + session_id + '/messages');
+
+
+            //to check if there no messages (already empty chat)
+            messagesRef.once('value', function(snapshot) {
+                if (!snapshot.exists()) {
+                    const chatDiv = document.getElementById('chatDev');
+                    chatDiv.innerHTML = "";
+
+                    //return chat classes to return chat Design
+                    chatDiv.className = chatDivMainClasses;
+
+
+                    emptyChatDiv = true;
+
+                }
+            });
+
+            //fetch all messages
             messagesRef.on('child_added', function(snapshot) {
+
+                if (!emptyChatDiv) {
+
+                    const chatDiv = document.getElementById('chatDev');
+                    chatDiv.innerHTML = "";
+
+                    //return chat classes to return chat Design
+                    chatDiv.className = chatDivMainClasses;
+
+                    emptyChatDiv = true;
+                }
+
                 var message = snapshot.val();
                 displayMessage(message);
                 // console.log("New message received:", message); // Debugging output
