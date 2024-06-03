@@ -83,11 +83,11 @@ class MainController extends Controller
     public function calendar()
     {
         $user = User::find(Auth::id());
-        $token = session('api_token');
+        $token = session('auth_token');
 
         if (empty($token)) {
             $token = $user->createToken('API Token', ['expires_in' => 120])->plainTextToken;
-            session(['api_token' => $token]);
+            session(['auth_token' => $token]);
         }
 
         return view('calendar', compact('token'));
@@ -232,11 +232,11 @@ class MainController extends Controller
 
 
         $user = User::find(Auth::id());
-        $token = session('api_token');
+        $token = session('auth_token');
 
         if (empty($token)) {
             $token = $user->createToken('API Token', ['expires_in' => 120])->plainTextToken;
-            session(['api_token' => $token]);
+            session(['auth_token' => $token]);
         }
         $my_id = Auth::id();
         $chatSessions = ChatSession::where('user1_id', $my_id)->orWhere('user2_id', $my_id)->orderByDesc('created_at')->get();
@@ -244,12 +244,13 @@ class MainController extends Controller
         $lawyer = Auth::user()->lawyer;
         if ($lawyer) {
             $clients = $lawyer->clients()
-            ->whereNotNull('user_id')
-            ->whereNotExists(function ($query) use ($lawyer) {
-                $query->select(DB::raw(1))
-                    ->from('chat_sessions')
-                    ->whereRaw('((user1_id = ? AND user2_id = clients.id) OR (user2_id = ? AND user1_id = clients.id))', [$lawyer->id, $lawyer->id]);
-            })->get();        }
+                ->whereNotNull('user_id')
+                ->whereNotExists(function ($query) use ($lawyer) {
+                    $query->select(DB::raw(1))
+                        ->from('chat_sessions')
+                        ->whereRaw('((user1_id = ? AND user2_id = clients.id) OR (user2_id = ? AND user1_id = clients.id))', [$lawyer->id, $lawyer->id]);
+                })->get();
+        }
         $data = [
             'chatSessions' => $chatSessions,
             'clients' => $clients,
