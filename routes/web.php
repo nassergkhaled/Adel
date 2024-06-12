@@ -67,6 +67,9 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
 
     // Route::resource('tasks',TasksController::class);
     Route::resource('clients', ClientsController::class);
+    Route::post('/clients/storeById/{id}', [ClientsController::class, 'storeById'])->name('clients.storeById');
+
+
     Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');
     Route::post('/Update_Avatar_Email', [ProfileController::class, 'Update_Avatar_Email'])->name('UpdateAvatarEmail');
 });

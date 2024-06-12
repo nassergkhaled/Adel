@@ -23,6 +23,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @livewireStyles
 </head>
 
 <body class="bg-adel-bg font-Almarai">
@@ -37,6 +39,7 @@
             </main>
         </div>
     </div>
+    @livewireScripts
 </body>
 
 </html>
