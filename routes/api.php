@@ -9,8 +9,8 @@ Route::get('/user', function (Request $request) {
 
 use App\Http\Controllers\api\TestController;
 
-Route::get('/test', [TestController::class, 'test']);
-Route::post('/r', [TestController::class, 'returnRequest']);
+// Route::get('/test', [TestController::class, 'test'])->middleware("auth:sanctum");
+// Route::post('/r', [TestController::class, 'returnRequest']);
 
 
 
@@ -29,6 +29,7 @@ use App\Http\Controllers\LegalCasesController;
 use App\Http\Controllers\TasksController;
 use App\Http\Middleware\CheckApiTokenByAdel;
 use App\Http\Middleware\CheckApiTokenByAdelV2;
+use Illuminate\Support\Facades\Hash;
 
 // Chat Sessions Routes
 Route::get('/chat_sessions', [ChatSessionController::class, 'index']);
@@ -59,4 +60,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessage']);
     Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'fetchMessages']);
+});
+
+Route::post('/hash', function (Request $request) {
+    $hash = Hash::make($request->pass);
+    return response()->json(['hash' => $hash], 200);
+});
+
+Route::post('/check', function (Request $request) {
+    $hash = Hash::check($request->pass, $request->hash);
+    return response()->json(['hash' => $hash], 200);
 });
