@@ -44,18 +44,14 @@
 
                         $avatar = Auth::user()->avatar;
                         if ($avatar) {
-                            $avatar = 'images/avatars/'. $avatar;
+                            $avatar = 'images/avatars/' . $avatar;
 
                             if (!file_exists($avatar)) {
                                 $avatar = '/images/profile_avatar.png';
                             }
-
-                            
-
                         } else {
                             $avatar = '/images/profile_avatar.png';
                         }
-
 
                     @endphp
 
@@ -121,11 +117,12 @@
 
 
 
-                    <div class="ms-5 size-12 bg-[#FFFAF1] rounded-lg flex justify-center items-center">
+                    <div id="bell"
+                        class="ms-5 size-12 bg-[#FFFAF1] rounded-lg flex justify-center items-center border border-transparent transition-all ease-in-out duration-200 cursor-pointer hover:border-black">
                         <div class="absolute flex text-red-600 text-7xl me-4 mb-6">∙</div>
 
-                        {{-- <i class="text-[#FFA412]  text-3xl fa-regular fa-bell"></i> --}}
-                        <svg viewBox="0 0 24 24" class="text-[#FFA412] size-9" fill="none"
+                        <i class="text-[#FFA412]  text-3xl fa-regular fa-bell"></i>
+                        {{-- <svg viewBox="0 0 24 24" class="text-[#FFA412] size-9" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -135,9 +132,56 @@
                                     stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 </path>
                             </g>
-                        </svg>
+                        </svg> --}}
 
                     </div>
+                    <div id="bellMenu"
+                        class="hidden overflow-scroll no-scrollbar max-h-96 h-72 w-[50%] m-5 absolute end-0 top-16  mt-0 z-[1] p-2 shadow-lg transition ease-in-out duration-200 menu menu-sm dropdown-content border bg-slate-50 text-black rounded-box">
+                        <ul tabindex="0" class="">
+                            <li class=" hover:bg-adel-Light-hover rounded-md h-20 p-2">
+                                Hello
+
+                            </li>
+                            <li class=" hover:bg-adel-Light-hover rounded-md h-20 p-2">
+                                Hello
+
+                            </li>
+                            <li class=" hover:bg-adel-Light-hover rounded-md h-20 p-2">
+                                Hello
+
+                            </li>
+                            <li class=" hover:bg-adel-Light-hover rounded-md h-20 p-2">
+                                Hello
+
+                            </li>
+                            <li class=" hover:bg-adel-Light-hover rounded-md h-20 p-2">
+                                Hello
+
+                            </li>
+                            <li class=" hover:bg-adel-Light-hover rounded-md h-20 p-2">
+                                Hello
+
+                            </li>
+                            <li class=" hover:bg-adel-Light-hover rounded-md h-20 p-2">
+                                Hello
+
+                            </li>
+                        </ul>
+                    </div>
+                    <script>
+                        let ntfButton = document.querySelector('#bell');
+                        let ntfMenu = document.querySelector('#bellMenu');
+
+                        ntfButton.addEventListener('click', function() {
+                            ntfMenu.classList.toggle('hidden');
+                        });
+
+                        ntfMenu.addEventListener("mouseleave", function() {
+                            ntfMenu.classList.add('hidden');
+                        });
+                    </script>
+
+
 
 
                 </div>
