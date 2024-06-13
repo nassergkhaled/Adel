@@ -18,9 +18,11 @@ class LegalCase extends Model
     {
         return $this->hasMany(Task::class);
     }
-    public function sessiones()
+    public function sessions()
     {
-        return $this->hasMany(Session::class);
+        // return $this->hasMany(Session::class,'case_id','case_sessions');
+        return $this->hasMany(Session::class, 'case_id', 'id');
+
     }
     public function client()
     {
