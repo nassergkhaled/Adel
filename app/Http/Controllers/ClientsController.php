@@ -171,9 +171,10 @@ class ClientsController extends Controller
      */
     public function show(string $id)
     {
-        return view('client.show', [
+        $data=[
             'client' => Client::find($id)
-        ]);
+        ];
+        return view('clients.show', compact("data"));
     }
 
     /**

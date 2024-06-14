@@ -58,7 +58,7 @@
                 <hr class="mt-5">
 
 
-                @if (session()->has('ValError') && session()->get('ValError') == "Verify the entered data!")
+                @if (session()->has('ValError') && session()->get('ValError') == 'Verify the entered data!')
                     <form action="{{ route('clients.store') }}" method="POST" wire:loading.remove>
                         @csrf
 
@@ -149,7 +149,10 @@
                 <tbody class="bg-white text-md ">
                     @foreach ($data['clients'] as $client)
                         <tr>
-                            <td class="text-center py-2 text-black border-b">{{ $client->full_name }}</td>
+                            
+                                <td class="text-center py-2 text-black border-b">
+                                    <a href="{{ route('clients.show', $client->id) }}">{{ $client->full_name }}                            </a>
+                                </td>
                             <td class="text-center py-2 text-black border-b">{{ $client->id_number }}</td>
                             <td class="text-center py-2 text-black border-b" dir="ltr">
                                 {{ $client->phone_number }}
