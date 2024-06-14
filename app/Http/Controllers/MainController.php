@@ -204,16 +204,16 @@ class MainController extends Controller
     {
         $validated = Validator::make($request->all(), [
             // 'join_code' => ['required','string','max:40',new ckeckSignupTokens('join_code')],            
-            'join_code' => ['required', 'string', 'max:25', 'exists:clients,signupToken'],
+            'signupToken' => ['required', 'string', 'max:27', 'exists:clients,signupToken'],
         ], [
-            'join_code.exists' => 'This joining code is invalid or has been used.',
+            'signupToken.exists' => 'This joining code is invalid or has been used.',
         ]);
 
         if ($validated->fails()) {
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
         }
 
-        $client = Client::where('signupToken', $request->join_code)->first();
+        $client = Client::where('signupToken', $request->signupToken)->first();
 
         User::where('id', Auth::id())->update([
             'completeRegistration' => true,
