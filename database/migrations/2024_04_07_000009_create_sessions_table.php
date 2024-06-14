@@ -16,14 +16,16 @@ return new class extends Migration
             $table->unsignedBigInteger('case_id');
             $table->foreign('case_id')->references('id')->on('legal_cases')->onDelete('cascade');
 
-            $table->dateTime('date');
-            $table->string('type');
-            $table->string('status');
-            $table->integer('duration');
-            $table->text('notes')->nullable();
+            $table->dateTime('session_Date');
+            $table->string('session_name');
+            $table->string('Judge_name');
+            $table->string('session_location');
+            $table->string('session_status');
+            $table->string('file');
+
             $table->timestamps();
         });
-        
+
     }
 
     /**

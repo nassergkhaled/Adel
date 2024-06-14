@@ -159,10 +159,12 @@
                     <table class="table border-[#E6E8EB] text-black rounded-sm bg-white">
                         <thead>
                             <tr class=" border-[#E6E8EB] text-[#999999] text-[15px] bg-[#DDDDDDDD]">
-                                <th>الإسم</th>
-                                <th>التاريخ</th>
-                                <th>حالتها</th>
-                                <th>الملفات المرفقة</th>
+                                <th>اسم الجلسة</th>
+                                <th>حالة الجلسة</th>
+                                <th>تاريخ الجلسة</th>
+                                <th>إسم القاضي</th>
+                                <th>المكان</th>
+                                <th>الملفات</th>
                                 <th class="text-end"><input type="checkbox" id="" name=""
                                         class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
                                 </th>
@@ -171,11 +173,10 @@
                         <tbody>
                             @foreach ($case->sessions as $session)
                                 <tr class=" border-[#E6E8EB]">
-                                    <td>{{ $session->id }}</td>
-                                    <td>{{ $session->date }}</td>
+                                    <td>{{ $session->session_name }}</td>
                                     @php
                                         $class;
-                                        switch ($session->status) {
+                                        switch ($session->session_status) {
                                             case 'Open':
                                                 $class = 'bg-[#c1ebd7] px-2 py-1 rounded-md text-[#06A759]';
                                                 break;
@@ -190,9 +191,13 @@
                                         }
                                     @endphp
                                     <td>
-                                        <span class="{{ $class }}">{{ __($session->status) }}</span>
+                                        <span class="">{{ __($session->session_status) }}</span>
                                     </td>
-                                    <td>Null</td>
+                                    <td>{{ $session->session_Date }}</td>
+                                    <td>{{ $session->Judge_name }}</td>
+                                    <td>{{ $session->session_location }}</td>
+                                    <td><a href="{{asset("files")."/".$session->file}}" target="_blank" rel=""><i class="fa-solid fa-file-pdf text-xl"></i></a></td>
+
                                     <td class="text-end"><input type="checkbox" id="" name=""
                                             class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
                                     </td>
@@ -363,14 +368,8 @@
                                     <label for="2"
                                         class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">لا</label>
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
-
 
 
                         <div class="modal-action ">
@@ -384,7 +383,7 @@
             </div>
         </dialog>
 
-        
+
 
         {{-- ADD CASE-SESSION DIALOG/FORM START HERE --}}
 
@@ -400,9 +399,10 @@
             <hr>
         </div>
 
-        <form action="" method="POST">
+        <form action="{{route("Sessions.store")}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-1 gap-y-4">
+                <input type="hidden" name="case_id" value="{{$case->id}}">
                 <div>
                     <label for="session_name" class="block text-sm font-medium text-gray-700">
                         {{ __('اسم الجلسة') }} <span class="text-red-500">*</span>
@@ -440,7 +440,7 @@
                         <label for="session_Date" class="block text-sm font-medium text-gray-700">
                             تاريخ الجلسة <span class="text-red-500">*</span>
                         </label>
-                        <input type="date" id="session_Date" name="session_Date" value="{{ old('session_Date') }}"
+                        <input type="datetime-local" id="session_Date" name="session_Date" value="{{ old('session_Date') }}"
                             class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
                         @error('session_Date')
                         <p class="text-sm text-red-500">
@@ -481,7 +481,7 @@
                 </div>
 
                 <div class="border-2 border-dashed border-adel-Dark rounded-lg p-4">
-                    <input type="file" class="file-input-sm file-input-bordered w-full max-w-xs" />
+                    <input type="file" name="file" class="file-input-sm file-input-bordered w-full max-w-xs" />
                 </div>
 
                 <div class="modal-action">

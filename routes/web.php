@@ -3,6 +3,7 @@
 use App\Http\Controllers\LegalCasesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SessionsController;
 use App\Http\Middleware\CompleteRegistration;
 use App\Http\Middleware\RegistrationComplete;
 use Illuminate\Support\Facades\Route;
@@ -37,11 +38,6 @@ Route::get('/cases/{id}', [LegalCasesController::class, 'show'])->name('legal_ca
  */
 
 
-
-
-
-
-
 /* Route::resource('chating',CommunicationController::class);*/
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -58,6 +54,7 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
     Route::resource('/legalCases', LegalCasesController::class);
 
     Route::resource('/witnesses', witnessesController::class);
+    Route::resource('/Sessions', SessionsController::class);
 
 
     // Route::get('/chating', function () {
