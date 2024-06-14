@@ -17,7 +17,7 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white dark:bg-gray-100">
         <div>
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
@@ -25,8 +25,8 @@
         </div>
 
         <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-            <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+            class="w-full sm:max-w-md mt-6 px-6 py-4 border-2 border-dashed border-adel-Dark rounded-lg bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="mb-4 text-sm text-black dark:text-black">
                 {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
             </div>
 
@@ -41,7 +41,7 @@
                     @csrf
 
                     <div>
-                        <x-primary-button>
+                        <x-primary-button >
                             {{ __('Resend Verification Email') }}
                         </x-primary-button>
                     </div>
@@ -49,9 +49,8 @@
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <button type="submit"
-                        class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                        class="underline text-sm text-text-black dark:text-adel-Dark hover:text-adel-Dark-hover dark:hover:text-adel-Dark-hover rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
                         {{ __('Log Out') }}
                     </button>
                 </form>
