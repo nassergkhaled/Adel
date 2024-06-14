@@ -7,6 +7,7 @@ use App\Models\LegalCase;
 use App\Models\Witness;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class witnessesController extends Controller
@@ -48,43 +49,44 @@ class witnessesController extends Controller
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
         }
 
-        $contact_info = [
-            "phone" => strip_tags($request->phone),
-            "address" => strip_tags($request->address),
-        ];
+        $ImLawyer = Auth::user()->lawyer;
+        if ($ImLawyer) {
+            $caseBelongsToMe = $ImLawyer->legalCases->where('id', $request->case_id)->first();
+            if ($caseBelongsToMe) {
 
-        $data = [
-            'full_name' => strip_tags($request->witness_name),
-            'ID_no' => strip_tags($request->id_number),
-            'contact_info' => json_encode($contact_info),
-            'relationship' => strip_tags($request->relationship),
-            'oath_availability' => strip_tags($request->oath_availability),
-            'testimony' => null,
-        ];
-        // $witness = new Witness($data);
-        // dd($witness);
+                $contact_info = [
+                    "phone" => strip_tags($request->phone),
+                    "address" => strip_tags($request->address),
+                ];
 
-        $witness = Witness::create($data);
+                $data = [
+                    'full_name' => strip_tags($request->witness_name),
+                    'ID_no' => strip_tags($request->id_number),
+                    'contact_info' => json_encode($contact_info),
+                    'relationship' => strip_tags($request->relationship),
+                    'oath_availability' => strip_tags($request->oath_availability),
+                    'testimony' => null,
+                ];
 
-        $case_witness = [
-            'legal_case_id' => strip_tags($request->case_id),
-            'witness_id' => $witness->id,
-            'testimony_date' => Carbon::now(),
-        ];
+                $witness = Witness::create($data);
 
-        // Case_Witness::create($case_witness);
-        //$witness->legalCases()->attach($request->case_id, ['testimony_date' => Carbon::now()->toDateString()]);
-        // $ll = LegalCase::find($request->case_id);
-        // if ($ll)
-        //     $ll->witnesses()->attach($witness->id, ['testimony_date' => Carbon::now()->toDateString()]);
+                $case_witness = [
+                    'legal_case_id' => strip_tags($request->case_id),
+                    'witness_id' => $witness->id,
+                    'testimony_date' => Carbon::now(),
+                ];
 
-        $case_witness = new Case_Witness();
-        $case_witness->legal_case_id = strip_tags($request->case_id);
-        $case_witness->witness_id = $witness->id;
-        $case_witness->testimony_date = Carbon::now();
-        $case_witness->save();
+                $case_witness = new Case_Witness();
+                $case_witness->legal_case_id = strip_tags($request->case_id);
+                $case_witness->witness_id = $witness->id;
+                $case_witness->testimony_date = Carbon::now();
+                $case_witness->save();
 
-        return redirect()->back()->with('msg', 'Witness added successfully!');
+                return redirect()->back()->with('msg', 'Witness added successfully!');
+            }
+            return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'There is an attempt to manipulate the data.');
+        }
+        return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
     }
 
     /**
