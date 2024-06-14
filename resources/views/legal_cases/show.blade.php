@@ -336,127 +336,126 @@
                                 <label for="2"
                                     class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">لا</label>
                             </div>
-
-
-
-
-
                         </div>
                     </div>
 
-
-
                     <div class="modal-action ">
-
                         <button type="submit"
                             class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">{{ __('Add') }}</button>
-
                     </div>
                 </div>
             </form>
         </div>
     </dialog>
 
-    <dialog id="addSession" class="modal modal-middle sm:modal-middle" style="width:90%;">
-        <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
-            <form method="dialog">
-                <button type="submit"
-                    class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
-            </form>
-            <h3 class="font-bold text-2xl text-center">{{ __('إضافة جلسة') }}</h3>
-            <div class="my-5">
-                <hr>
+
+        {{-- ADD CASE-SESSION DIALOG/FORM START HERE --}}
+
+<dialog id="addSession" class="modal modal-middle sm:modal-middle" style="width:90%;">
+    <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
+
+        <form method="dialog">
+            <button type="submit" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
+        </form>
+
+        <h3 class="font-bold text-2xl text-center">{{ __('إضافة جلسة') }}</h3>
+        <div class="my-5">
+            <hr>
+        </div>
+
+        <form action="" method="POST">
+            @csrf
+            <div class="grid grid-cols-1 gap-y-4">
+                <div>
+                    <label for="session_name" class="block text-sm font-medium text-gray-700">
+                        {{ __('اسم الجلسة') }} <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="session_name" name="session_name"
+                        placeholder="أدخل اسم الجلسة" value="{{ old('session_name') }}"
+                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                    @error('session_name')
+                    <p class="text-sm text-red-500 text-center">
+                        * {{ __($message) }}
+                    </p>
+                    @enderror
+                </div>
+
+                <div class="grid grid-cols-2 gap-x-5">
+                    <div>
+                        <label for="session_status" class="block text-sm font-medium text-gray-700">
+                            حالة الجلسة <span class="text-red-500">*</span>
+                        </label>
+                        <select id="session_status" name="session_status"
+                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                            <option disabled selected></option>
+                            <option value="Scheduled">مجدولة</option>
+                            <option value="Finished">منتهية</option>
+                            <option value="Postponed">مؤجلة</option>
+                        </select>
+                        @error('session_status')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="session_Date" class="block text-sm font-medium text-gray-700">
+                            تاريخ الجلسة <span class="text-red-500">*</span>
+                        </label>
+                        <input type="date" id="session_Date" name="session_Date" value="{{ old('session_Date') }}"
+                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                        @error('session_Date')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-x-5">
+                    <div>
+                        <label for="Judge_name" class="block text-sm font-medium text-gray-700">
+                            إسم القاضي <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="Judge_name" name="Judge_name"
+                            placeholder="أدخل اسم القاضي" value="{{ old('Judge_name') }}"
+                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                        @error('Judge_name')
+                        <p class="text-sm text-red-500 text-center">
+                            * {{ __($message) }}
+                        </p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="session_location" class="block text-sm font-medium text-gray-700">
+                            المكان <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="session_location" name="session_location"
+                            placeholder="المحكمة ورقم القاعة" value="{{ old('session_location') }}"
+                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                        @error('session_location')
+                        <p class="text-sm text-red-500 text-center">
+                            * {{ __($message) }}
+                        </p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="border-2 border-dashed border-adel-Dark rounded-lg p-4">
+                    <input type="file" class="file-input-sm file-input-bordered w-full max-w-xs" />
+                </div>
+
+                <div class="modal-action">
+                    <button type="submit"
+                        class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">
+                        {{ __('Add') }}
+                    </button>
+                </div>
             </div>
+        </form>
+    </div>
+</dialog>
 
-            <form action="" method="POST">
-                @csrf
-                <div class="grid grid-flow-row gap-y-4">
-
-                    <div>
-                        <label for="session_name"
-                            class="block text-sm font-medium text-gray-700">{{ __('اسم الجلسة') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="session_name" name="session_name"
-                            placeholder="{{ __('اسم الشاهد') }}" value="{{ old('session_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('session_name')
-                            <p class="text-sm text-red-500 text-center">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div>
-                    {{--
-                    
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500 text-center">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500 text-center">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500 text-center">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500 text-center">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500 text-center">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div> --}}
-
-                    <div class="modal-action ">
-
-                        <button type="submit"
-                            class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">{{ __('Add') }}</button>
-
-                    </div>
-                </div>
-            </form>
-        </div>
-    </dialog>
 </x-app-layout>

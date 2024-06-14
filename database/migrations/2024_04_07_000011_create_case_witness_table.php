@@ -12,8 +12,8 @@ return new class extends Migration
     {
         Schema::create('case_witness', function (Blueprint $table) {
             // $table->id();
-           
-            $table->unsignedBigInteger('legal_case_id');
+
+              $table->unsignedBigInteger('legal_case_id');
             $table->foreign('legal_case_id')->references('id')->on('legal_cases');
 
             $table->unsignedBigInteger('witness_id');
