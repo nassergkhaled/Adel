@@ -113,9 +113,9 @@
                     @foreach ($case->witnesses as $witness)
                         <tr class=" border-[#E6E8EB]">
                             <td>{{ $witness->full_name }}</td>
-                            <td>{{ data_get($witness->contact_info, 'phone', 'N/A') }}</td>
+                            <td>{{ data_get(json_decode($witness->contact_info), 'phone', 'N/A') }}</td>
                             <td>{{ $witness->ID_no }}</td>
-                            <td>{{ data_get($witness->contact_info, 'location', 'N/A') }}</td>
+                            <td>{{ data_get(json_decode($witness->contact_info), 'address', 'N/A') }}</td>
                             <td class="text-end"><input type="checkbox" id="" name=""
                                     class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
                             </td>
@@ -215,91 +215,135 @@
                 <hr>
             </div>
 
-            <form action="" method="POST">
+            <form action="{{ route('witnesses.store') }}" method="POST">
                 @csrf
-                <div class="grid grid-flow-row gap-y-4">
+                <input type="hidden" name="case_id" value="{{ $case->id }}">
+                <div class="grid grid-flow-row gap-y-5">
+                    <div class="grid grid-flow-col gap-x-1">
+                        <div class="flex justify-center items-center row-span-1">
+                            <label for="witness_name" class="text-sm font-medium text-gray-700">{{ __('اسم الشاهد') }}
+                                <span class="text-red-500">*</span></label>
+                        </div>
+                        <div class=" row-span-11">
+                            <input type="text" id="witness_name" name="witness_name"
+                                placeholder="{{ __('اسم الشاهد') }}" value="{{ old('witness_name') }}"
+                                class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
 
-                    <div>
-                        <label for="witness_name"
-                            class="block text-sm font-medium text-gray-700">{{ __('اسم الشاهد') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="witness_name" name="witness_name"
-                            placeholder="{{ __('اسم الشاهد') }}" value="{{ old('witness_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('witness_name')
-                            <p class="text-sm text-red-500">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div>
-                    {{--
-                    
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div>
+                        </div>
 
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
                     </div>
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
+                    @error('witness_name')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
+                    <div class="grid grid-flow-col gap-x-2">
+                        <div class="flex justify-center items-center row-span-1">
+                            <label for="id_number" class="text-sm font-medium text-gray-700">{{ __('رقم الهوية') }}
+                                <span class="text-red-500">*</span></label>
+                        </div>
+                        <div class=" row-span-11">
+                            <input type="text" id="id_number" name="id_number" inputmode="numeric"
+                                placeholder="{{ __('رقم الهوية') }}" value="{{ old('id_number') }}"
+                                class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                        </div>
+
                     </div>
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
+                    @error('id_number')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
+                    <div class="grid grid-flow-col gap-x-2">
+                        <div class="flex justify-center items-center row-span-1">
+                            <label for="phone" class="text-sm font-medium text-gray-700">{{ __('رقم الهاتف') }}
+                                <span class="text-red-500">*</span></label>
+                        </div>
+                        <div class=" row-span-11">
+                            <input type="tel" id="phone" name="phone" inputmode="tel" dir="rtl"
+                                placeholder="{{ __('رقم الهاتف') }}" value="{{ old('phone') }}"
+                                class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                        </div>
                     </div>
-                    <div>
-                        <label for="case_name" class="block text-sm font-medium text-gray-700">{{ __('اسم القضية') }}
-                            <span class="text-red-500">*</span></label>
-                        <input type="text" id="case_name" name="case_name" placeholder="{{ __('اسم القضية') }}"
-                            value="{{ old('case_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        @error('case_name')
-                            <p class="text-sm text-red-500">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                    </div> --}}
+                    @error('phone')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
+                    <div class="grid grid-flow-col gap-x-2">
+                        <div class="flex justify-center items-center row-span-1">
+                            <label for="address" class="text-sm font-medium text-gray-700">{{ __('العنوان') }}
+                                <span class="text-red-500">*</span></label>
+                        </div>
+                        <div class=" row-span-11">
+                            <input type="text" id="address" name="address" placeholder="{{ __('العنوان') }}"
+                                value="{{ old('address') }}"
+                                class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                        </div>
+                    </div>
+                    @error('address')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
+                    <div class="grid grid-flow-col gap-x-2">
+                        <div class="flex justify-center items-center row-span-1">
+                            <label for="relationship" class="text-sm font-medium text-gray-700">{{ __('العلاقة') }}
+                                <span class="text-red-500">*</span></label>
+                        </div>
+                        <div class=" row-span-11">
+                            <input type="text" id="relationship" name="relationship"
+                                placeholder="{{ __('العلاقة') }}" value="{{ old('relationship') }}"
+                                class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                        </div>
+                    </div>
+                    @error('relationship')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
+                    <div class="grid grid-flow-col gap-x-2">
+                        <div class="flex justify-center items-center row-span-1">
+                            <label for="oath_availability"
+                                class="text-sm font-medium text-gray-700">{{ __('امكانية الحنث باليمين') }}
+                                <span class="text-red-500">*</span></label>
+                        </div>
+                        <div class=" row-span-11 grid grid-flow-col">
+
+                            <div>
+                                <input type="radio" name="oath_availability" id="1" value="1"
+                                    class="peer hidden" />
+                                <label for="1"
+                                    class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">نعم</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="oath_availability" id="2" value="0"
+                                    class="peer hidden" />
+                                <label for="2"
+                                    class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">لا</label>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                    @error('oath_availability')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
+
 
                     <div class="modal-action ">
 
                         <button type="submit"
-                            class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Add') }}</button>
+                            class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">{{ __('Add') }}</button>
 
                     </div>
                 </div>
@@ -310,7 +354,8 @@
     <dialog id="addSession" class="modal modal-middle sm:modal-middle" style="width:90%;">
         <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
             <form method="dialog">
-                <button type="submit" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
+                <button type="submit"
+                    class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
             </form>
             <h3 class="font-bold text-2xl text-center">{{ __('إضافة جلسة') }}</h3>
             <div class="my-5">
@@ -401,7 +446,7 @@
                     <div class="modal-action ">
 
                         <button type="submit"
-                            class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('Add') }}</button>
+                            class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">{{ __('Add') }}</button>
 
                     </div>
                 </div>

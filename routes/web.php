@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\witnessesController;
 use App\Models\ChatSession;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +56,9 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/calendar', [MainController::class, 'calendar'])->name('calendar');
     Route::resource('/legalCases', LegalCasesController::class);
+
+    Route::resource('/witnesses', witnessesController::class);
+
 
     // Route::get('/chating', function () {
     //     // $users=User::whereNot('id',Auth()->id())->get();
