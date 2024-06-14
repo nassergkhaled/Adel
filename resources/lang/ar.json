@@ -107,5 +107,11 @@
     "Client does not exist, you can add his information below":"الموكّل غير موجود، يمكنك إضافة معلوماته أدناه",
     "The client already exists, click to add him":"العميل موجود بالفعل، انقر لإضافته",
     "Witness added successfully!":"تم اضافة الشاهد بنجاح",
-    "The phone field must be a number.":"رقم الهاتف يجب ان يكون رقماً"
+    "The phone field must be a number.":"رقم الهاتف يجب ان يكون رقماً",
+
+
+    "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another." :"شكرا لتسجيلك! قبل البدء، هل يمكنك التحقق من عنوان بريدك الإلكتروني عن طريق النقر على الرابط الذي أرسلناه إليك للتو عبر البريد الإلكتروني؟ إذا لم تتلق رسالة البريد الإلكتروني، فسنرسل لك بكل سرور رسالة أخرى.",
+    "A new verification link has been sent to the email address you provided during registration.":"تم إرسال رابط تحقق جديد إلى عنوان البريد الإلكتروني الذي قدمته أثناء التسجيل.",
+    "Resend Verification Email":"إعادة ارسال بريد التحقق"
+
 }
