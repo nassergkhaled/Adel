@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('Judge_name');
             $table->string('session_location');
             $table->string('session_status');
-            $table->string('file');
+            $table->string('file')->nullable();
 
             $table->timestamps();
         });

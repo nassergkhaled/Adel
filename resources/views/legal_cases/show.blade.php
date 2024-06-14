@@ -196,7 +196,25 @@
                                     <td>{{ $session->session_Date }}</td>
                                     <td>{{ $session->Judge_name }}</td>
                                     <td>{{ $session->session_location }}</td>
-                                    <td><a href="{{asset("files")."/".$session->file}}" target="_blank" rel=""><i class="fa-solid fa-file-pdf text-xl"></i></a></td>
+                                    @php
+                                        $file = $session->file;
+                                        $filePath = public_path('files') . '/' . $file;
+                                        $fileUrl = asset('files') . '/' . $file;
+
+                                        if ($file) {
+                                            if(file_exists($filePath)){
+                                            $element =
+                                                '<a href="' .
+                                                $fileUrl .
+                                                '" target="_blank" rel=""><i class="fa-solid fa-file-pdf text-xl"></i></a>';
+                                            }else{
+                                                $element = '<span class="text-red-500">ملف محذوف</span>';
+                                            }
+                                        } else {
+                                            $element = 'لا يوجد ملف';
+                                        }
+                                    @endphp
+                                    <td>{!! $element !!}</td>
 
                                     <td class="text-end"><input type="checkbox" id="" name=""
                                             class="rounded-sm border-[#E1E1E1] text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
@@ -387,111 +405,114 @@
 
         {{-- ADD CASE-SESSION DIALOG/FORM START HERE --}}
 
-<dialog id="addSession" class="modal modal-middle sm:modal-middle" style="width:90%;">
-    <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
+        <dialog id="addSession" class="modal modal-middle sm:modal-middle" style="width:90%;">
+            <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
 
-        <form method="dialog">
-            <button type="submit" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
-        </form>
-
-        <h3 class="font-bold text-2xl text-center">{{ __('إضافة جلسة') }}</h3>
-        <div class="my-5">
-            <hr>
-        </div>
-
-        <form action="{{route("Sessions.store")}}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="grid grid-cols-1 gap-y-4">
-                <input type="hidden" name="case_id" value="{{$case->id}}">
-                <div>
-                    <label for="session_name" class="block text-sm font-medium text-gray-700">
-                        {{ __('اسم الجلسة') }} <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" id="session_name" name="session_name"
-                        placeholder="أدخل اسم الجلسة" value="{{ old('session_name') }}"
-                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                    @error('session_name')
-                    <p class="text-sm text-red-500 text-center">
-                        * {{ __($message) }}
-                    </p>
-                    @enderror
-                </div>
-
-                <div class="grid grid-cols-2 gap-x-5">
-                    <div>
-                        <label for="session_status" class="block text-sm font-medium text-gray-700">
-                            حالة الجلسة <span class="text-red-500">*</span>
-                        </label>
-                        <select id="session_status" name="session_status"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                            <option disabled selected></option>
-                            <option value="Scheduled">مجدولة</option>
-                            <option value="Finished">منتهية</option>
-                            <option value="Postponed">مؤجلة</option>
-                        </select>
-                        @error('session_status')
-                        <p class="text-sm text-red-500">
-                            * {{ __($message) }}
-                        </p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="session_Date" class="block text-sm font-medium text-gray-700">
-                            تاريخ الجلسة <span class="text-red-500">*</span>
-                        </label>
-                        <input type="datetime-local" id="session_Date" name="session_Date" value="{{ old('session_Date') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                        @error('session_Date')
-                        <p class="text-sm text-red-500">
-                            * {{ __($message) }}
-                        </p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-x-5">
-                    <div>
-                        <label for="Judge_name" class="block text-sm font-medium text-gray-700">
-                            إسم القاضي <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="Judge_name" name="Judge_name"
-                            placeholder="أدخل اسم القاضي" value="{{ old('Judge_name') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                        @error('Judge_name')
-                        <p class="text-sm text-red-500 text-center">
-                            * {{ __($message) }}
-                        </p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="session_location" class="block text-sm font-medium text-gray-700">
-                            المكان <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text" id="session_location" name="session_location"
-                            placeholder="المحكمة ورقم القاعة" value="{{ old('session_location') }}"
-                            class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                        @error('session_location')
-                        <p class="text-sm text-red-500 text-center">
-                            * {{ __($message) }}
-                        </p>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="border-2 border-dashed border-adel-Dark rounded-lg p-4">
-                    <input type="file" name="file" class="file-input-sm file-input-bordered w-full max-w-xs" />
-                </div>
-
-                <div class="modal-action">
+                <form method="dialog">
                     <button type="submit"
-                        class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">
-                        {{ __('Add') }}
-                    </button>
+                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
+                </form>
+
+                <h3 class="font-bold text-2xl text-center">{{ __('إضافة جلسة') }}</h3>
+                <div class="my-5">
+                    <hr>
                 </div>
+
+                <form action="{{ route('Sessions.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="grid grid-cols-1 gap-y-4">
+                        <input type="hidden" name="case_id" value="{{ $case->id }}">
+                        <div>
+                            <label for="session_name" class="block text-sm font-medium text-gray-700">
+                                {{ __('اسم الجلسة') }} <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="session_name" name="session_name"
+                                placeholder="أدخل اسم الجلسة" value="{{ old('session_name') }}"
+                                class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                            @error('session_name')
+                                <p class="text-sm text-red-500 text-center">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-x-5">
+                            <div>
+                                <label for="session_status" class="block text-sm font-medium text-gray-700">
+                                    حالة الجلسة <span class="text-red-500">*</span>
+                                </label>
+                                <select id="session_status" name="session_status"
+                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                    <option disabled selected></option>
+                                    <option value="Scheduled">مجدولة</option>
+                                    <option value="Finished">منتهية</option>
+                                    <option value="Postponed">مؤجلة</option>
+                                </select>
+                                @error('session_status')
+                                    <p class="text-sm text-red-500">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="session_Date" class="block text-sm font-medium text-gray-700">
+                                    تاريخ الجلسة <span class="text-red-500">*</span>
+                                </label>
+                                <input type="datetime-local" id="session_Date" name="session_Date"
+                                    value="{{ old('session_Date') }}"
+                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                @error('session_Date')
+                                    <p class="text-sm text-red-500">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-x-5">
+                            <div>
+                                <label for="Judge_name" class="block text-sm font-medium text-gray-700">
+                                    إسم القاضي <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="Judge_name" name="Judge_name"
+                                    placeholder="أدخل اسم القاضي" value="{{ old('Judge_name') }}"
+                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                @error('Judge_name')
+                                    <p class="text-sm text-red-500 text-center">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="session_location" class="block text-sm font-medium text-gray-700">
+                                    المكان <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="session_location" name="session_location"
+                                    placeholder="المحكمة ورقم القاعة" value="{{ old('session_location') }}"
+                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                @error('session_location')
+                                    <p class="text-sm text-red-500 text-center">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="border-2 border-dashed border-adel-Dark rounded-lg p-4">
+                            <input type="file" name="file"
+                                class="file-input-sm file-input-bordered w-full max-w-xs" />
+                        </div>
+
+                        <div class="modal-action">
+                            <button type="submit"
+                                class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">
+                                {{ __('Add') }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</dialog>
+        </dialog>
 </x-app-layout>

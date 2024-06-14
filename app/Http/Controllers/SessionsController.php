@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Session;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller
 {
@@ -24,12 +26,15 @@ class SessionsController extends Controller
         //
     }
 
-    private function uploadFile($newFile)
+    private function uploadFile($newFile, $S_name)
     {
-        $file =  'Doc-' . uniqid() . '.' . $newFile->extension();
-        $newFile->move(public_path('files'), $file);
+        if ($newFile) {
+            $file = $S_name . ' - ' . Carbon::now()->format('Y-m-d H-i-s') . '.' . $newFile->extension();
+            $newFile->move(public_path('files'), $file);
 
-        return $file;
+            return $file;
+        }
+        return null;
     }
 
     /**
@@ -52,18 +57,27 @@ class SessionsController extends Controller
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
         }
 
-        $data =  [
-            'case_id' => strip_tags($request->case_id),
-            'session_name' => strip_tags($request->session_name),
-            'session_status' => strip_tags($request->session_status),
-            'session_Date' => strip_tags($request->session_Date),
-            'Judge_name' => strip_tags($request->Judge_name),
-            'session_location' => strip_tags($request->session_location),
-            'file'=> $this->uploadFile($request->file)
-        ];
+        //to prevent access to othe Cases Sessions
+        $ImLawyer = Auth::user()->lawyer;
+        if ($ImLawyer) {
+            $caseBelongsToMe = $ImLawyer->legalCases->where('id', $request->case_id)->first();
+            if ($caseBelongsToMe) {
+                $data =  [
+                    'case_id' => strip_tags($request->case_id),
+                    'session_name' => strip_tags($request->session_name),
+                    'session_status' => strip_tags($request->session_status),
+                    'session_Date' => strip_tags($request->session_Date),
+                    'Judge_name' => strip_tags($request->Judge_name),
+                    'session_location' => strip_tags($request->session_location),
+                    'file' => $this->uploadFile($request->file, $request->session_name)
+                ];
 
-        Session::create($data);
-        return redirect()->back()->with('msg', 'Witness added successfully!');
+                Session::create($data);
+                return redirect()->back()->with('msg', 'Witness added successfully!');
+            }
+            return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'There is an attempt to manipulate the data.');
+        }
+        return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
     }
 
     /**
