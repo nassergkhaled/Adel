@@ -150,8 +150,8 @@
                     @foreach ($data['clients'] as $client)
                         <tr>
                             
-                                <td class="text-center py-2 text-black border-b">
-                                    <a href="{{ route('clients.show', $client->id) }}">{{ $client->full_name }}                            </a>
+                                <td class="text-center py-2 text-black border-b underline underline-offset-4">
+                                    <a class="hover:bg-adel-Light-active hover:text-adel-Dark-hover p-2 rounded-lg transition-all ease-in-out duration-150" href="{{ route('clients.show', $client->id) }}">{{ $client->full_name }}</a>
                                 </td>
                             <td class="text-center py-2 text-black border-b">{{ $client->id_number }}</td>
                             <td class="text-center py-2 text-black border-b" dir="ltr">

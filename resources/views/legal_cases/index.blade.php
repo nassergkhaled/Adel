@@ -89,7 +89,7 @@
                             @endphp
 
                             <tr class=" border-[#E6E8EB]">
-                                <td><a href="{{ route('legalCases.show', $case->id) }}">{{ $case->title }}</a></td>
+                                <td><a class="hover:bg-adel-Light-active hover:text-adel-Dark-hover p-2 rounded-lg transition-all ease-in-out duration-150 underline underline-offset-4" href="{{ route('legalCases.show', $case->id) }}">{{ $case->title }}</a></td>
                                 <td>{{ $name }}</td>
                                 <td><span class="{{ $class }}">{{ __($case->status) }}</span></td>
                                 <td>{{ $case->open_date }}</td>

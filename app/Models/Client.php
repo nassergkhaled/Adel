@@ -18,7 +18,7 @@ class Client extends Model
     }
     public function legalCases()
     {
-        return $this->hasMany(LegalCase::class);
+        return $this->hasMany(LegalCase::class)->where('lawyer_id', auth()->id());
     }
     public function offices()
     {

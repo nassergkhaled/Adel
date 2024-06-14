@@ -105,7 +105,8 @@
     "New Chat":"محادثة جديدة",
     "Click on Any Chat to Open it":"انقر على اي محادثة في الجانب لفتحها",
     "Client does not exist, you can add his information below":"الموكّل غير موجود، يمكنك إضافة معلوماته أدناه",
-    "The client already exists, click to add him":"العميل موجود بالفعل، انقر لإضافته",
+    "The client already exists, click to add him":"الموكّل موجود بالفعل، انقر لإضافته",
     "Witness added successfully!":"تم اضافة الشاهد بنجاح",
-    "The phone field must be a number.":"رقم الهاتف يجب ان يكون رقماً"
+    "The phone field must be a number.":"رقم الهاتف يجب ان يكون رقماً",
+    "The client is already registered.":"الموكّل مسجل بالفعل."
 }
