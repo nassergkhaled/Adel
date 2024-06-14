@@ -3,7 +3,7 @@
 <x-app-layout>
     <div class="my-3 px-4 space-y-4">
         <!-- request messages -->
-        @if (session()->has('msg'))
+        {{-- @if (session()->has('msg'))
             <div role="alert"
                 class="alert alert-success w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
@@ -33,7 +33,7 @@
                 </svg>
                 <span>{{ __(session()->get('errMsg')) }}</span>
             </div>
-        @endif
+        @endif --}}
 
 
 
