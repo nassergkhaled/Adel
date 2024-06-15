@@ -1,6 +1,9 @@
 @section('page_name', 'القضايا')
 @section('title', 'القضايا | ')
 <x-app-layout>
+    @php
+        $client = auth()->user()->client;
+    @endphp
     <div class="my-3 px-4 space-y-4">
         <!-- request messages -->
         {{-- @if (session()->has('msg'))
@@ -35,18 +38,19 @@
             </div>
         @endif --}}
 
-        @if ($data['isLowyer'])
-            <div class="flex justify-between">
-                <h1 class="text-xl flex items-center font-bold text-black">جميع القضايا</h1>
+
+        <div class="flex justify-between">
+            <h1 class="text-xl flex items-center font-bold text-black">جميع القضايا</h1>
+            @if ($data['isLowyer'])
                 <button type="button" onclick="addCase.showModal()"
                     class=" flex my-auto bg-[#BF9874] text-white px-8 py-2 rounded-md text-sm hover:bg-adel-Dark-hover">
                     {{ __('Add') }}
                 </button>
-            </div>
+            @endif
+        </div>
 
-            <hr>
-        @endif
-            
+        <hr>
+
         @if ($data['cases']->count() > 0)
             <button type="button"
                 class=" flex my-auto bg-transparent border text-[#999999] px-7 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#E6E8EB] transition ease-in-out duration-150">
@@ -58,7 +62,11 @@
                     <thead>
                         <tr class=" border-[#E6E8EB] text-[#999999] text-[15px] bg-[#DDDDDDDD]">
                             <th>اسم القضية</th>
-                            <th>صاحب القضية</th>
+                            @if ($client)
+                                <th>اسم المحامي</th>
+                            @else
+                                <th>صاحب القضية</th>
+                            @endif
                             <th>الحالة</th>
                             <th>تاريخ الفتح</th>
                             <th>تاريخ الاغلاق</th>
@@ -85,13 +93,23 @@
                                         break;
                                 }
 
-                                $name = $case->client->full_name;
+                                if ($client) {
+                                    $name = $case->lawyer->full_name;
+                                } else {
+                                    $name = $case->client->full_name;
+                                }
+
                             @endphp
 
                             <tr class=" border-[#E6E8EB]">
                                 <td><a class="hover:bg-adel-Light-active hover:text-adel-Dark-hover p-2 rounded-lg transition-all ease-in-out duration-150 underline underline-offset-4"
                                         href="{{ route('legalCases.show', $case->id) }}">{{ $case->title }}</a></td>
-                                <td>{{ $name }}</td>
+
+                                @if ($client)
+                                    <td>{{ $name }}</td>
+                                @else
+                                    <td>{{ $name }}</td>
+                                @endif
                                 <td><span class="{{ $class }}">{{ __($case->status) }}</span></td>
                                 <td>{{ $case->open_date }}</td>
                                 <td>{{ $case->close_date }}</td>

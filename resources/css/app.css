@@ -31,6 +31,11 @@
             contrast(0%);
     }
 }
+/* Target the pseudo-element for the calendar icon (Chrome specific) */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(0.5); /* Invert colors and adjust brightness */
+  }
+  
 
 /* ------------------scrollbar-------------------- */
 /* width */

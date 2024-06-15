@@ -1,6 +1,9 @@
 @section('page_name', 'القضايا')
 @section('title', 'القضايا | ')
 <x-app-layout>
+    @php
+        $lawyer = auth()->user()->lawyer;
+    @endphp
     <div class="overflow-scroll h-screen">
         <div class="flex m-5 justify-between items-center">
             <div class="text-black font-bold text-2xl tracking-wide">
@@ -50,14 +53,19 @@
                     @endphp
                     <div class="flex items-center space-x-2 gap-1">
                         <span class=" text-black ">صاحب القضية: </span>
-                        <a class="text-black hover:bg-adel-Light-active hover:text-adel-Dark-hover p-2 rounded-lg transition-all ease-in-out duration-150 flex"
-                            href="{{ route('clients.show', $case->client->id) }}">
-
+                        @if ($lawyer)
+                            <a class="text-black hover:bg-adel-Light-active hover:text-adel-Dark-hover p-2 rounded-lg transition-all ease-in-out duration-150 flex"
+                                href="{{ route('clients.show', $case->client->id) }}">
+                                <img src="{{ $avatar }}" alt="Owner Icon" class="w-8 h-8 rounded-full">
+                                &nbsp;
+                                <span class=" tracking-wide underline underline-offset-auto">
+                                    {{ $case->client->full_name }}</span>
+                            </a>
+                        @else
                             <img src="{{ $avatar }}" alt="Owner Icon" class="w-8 h-8 rounded-full">
-                            &nbsp;
-                            <span class=" tracking-wide underline underline-offset-auto">
+                            <span class=" tracking-wide text-black">
                                 {{ $case->client->full_name }}</span>
-                        </a>
+                        @endif
                     </div>
 
                     <div class="flex items-center space-x-4">
@@ -141,15 +149,16 @@
                     <hr>
                 @endif
             </div>
-
-            <div class="flex">
-                <button type="button" onclick="addWitness.showModal()"
-                    class=" flex mr-5 mt-5 mb-1 bg-transparent border text-[#BF9874] px-2 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#BF9874] transition ease-in-out duration-150">إضافة
-                    شاهد</button>
-                <button type="button"
-                    class=" flex mt-5 mb-1 mr-2 bg-transparent border text-[#BF9874] px-2 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#BF9874] transition ease-in-out duration-150">حذف
-                    شاهد</button>
-            </div>
+            @if ($lawyer)
+                <div class="flex">
+                    <button type="button" onclick="addWitness.showModal()"
+                        class=" flex mr-5 mt-5 mb-1 bg-transparent border text-[#BF9874] px-2 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#BF9874] transition ease-in-out duration-150">إضافة
+                        شاهد</button>
+                    <button type="button"
+                        class=" flex mt-5 mb-1 mr-2 bg-transparent border text-[#BF9874] px-2 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#BF9874] transition ease-in-out duration-150">حذف
+                        شاهد</button>
+                </div>
+            @endif
 
             <div class="text-black m-5 font-bold text-2xl tracking-wide">
                 <h1>الجلسات</h1>
@@ -189,11 +198,15 @@
                                             default:
                                                 break;
                                         }
+
+                                        $session_Date = \Carbon\Carbon::parse($session->session_Date);
+                                        $formattedDate = $session_Date->format('d/m/Y - h:i');
+                                        $amPm = $session_Date->format('A') === 'AM' ? 'ص' : 'م';
                                     @endphp
                                     <td>
                                         <span class="">{{ __($session->session_status) }}</span>
                                     </td>
-                                    <td>{{ $session->session_Date }}</td>
+                                    <td dir="">{{ $formattedDate . $amPm }}</td>
                                     <td>{{ $session->Judge_name }}</td>
                                     <td>{{ $session->session_location }}</td>
                                     @php
@@ -202,12 +215,12 @@
                                         $fileUrl = asset('files') . '/' . $file;
 
                                         if ($file) {
-                                            if(file_exists($filePath)){
-                                            $element =
-                                                '<a href="' .
-                                                $fileUrl .
-                                                '" target="_blank" rel=""><i class="fa-solid fa-file-pdf text-xl"></i></a>';
-                                            }else{
+                                            if (file_exists($filePath)) {
+                                                $element =
+                                                    '<a href="' .
+                                                    $fileUrl .
+                                                    '" target="_blank" rel=""><i class="fa-solid fa-file-pdf text-xl"></i></a>';
+                                            } else {
                                                 $element = '<span class="text-red-500">ملف محذوف</span>';
                                             }
                                         } else {
@@ -230,289 +243,350 @@
                     <hr>
                 @endif
             </div>
-            <button type="button" onclick="addSession.showModal()"
-                class=" flex mr-5 mt-4 mb-1 bg-transparent border text-[#BF9874] px-2 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#BF9874] transition ease-in-out duration-150">إضافة
-                جلسة</button>
+            @if ($lawyer)
+                <button type="button" onclick="addSession.showModal()"
+                    class=" flex mr-5 mt-4 mb-1 bg-transparent border text-[#BF9874] px-2 py-[0.6rem] rounded-md text-sm hover:bg-adel-Normal-hover hover:text-white hover:shadow-lg hover: border-[#BF9874] transition ease-in-out duration-150">إضافة
+                    جلسة</button>
+            @endif
         </div>
 
-        <style>
-            .modal-box {
-                width: 91.666667%;
-                max-width: 40rem
-                    /* 512px */
-                ;
-            }
+        @if ($lawyer)
+            <style>
+                .modal-box {
+                    width: 91.666667%;
+                    max-width: 40rem
+                        /* 512px */
+                    ;
+                }
 
-            .modal {
-                /* align-items: center; */
-                margin-left: auto;
-                margin-right: auto;
+                .modal {
+                    /* align-items: center; */
+                    margin-left: auto;
+                    margin-right: auto;
 
-            }
-        </style>
-        <dialog id="addWitness" class="modal modal-middle sm:modal-middle" style="width:90%;">
-            <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
-                <form method="dialog">
-                    <button type="submit"
-                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
-                </form>
-                <h3 class="font-bold text-2xl text-center">{{ __('إضافة شاهد') }}</h3>
-                <div class="my-5">
-                    <hr>
-                </div>
-
-                <form action="{{ route('witnesses.store') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="case_id" value="{{ $case->id }}">
-                    <div class="grid grid-flow-row gap-y-5">
-                        <div class="grid grid-flow-col gap-x-1">
-                            <div class="flex justify-center items-center row-span-1">
-                                <label for="witness_name"
-                                    class="text-sm font-medium text-gray-700">{{ __('اسم الشاهد') }}
-                                    <span class="text-red-500">*</span></label>
-                            </div>
-                            @error('witness_name')
-                                <p class="text-sm text-center text-red-500">
-                                    * {{ __($message) }}
-                                </p>
-                            @enderror
-                            <div class=" row-span-11">
-                                <input type="text" id="witness_name" name="witness_name"
-                                    placeholder="{{ __('اسم الشاهد') }}" value="{{ old('witness_name') }}"
-                                    class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                            </div>
-
-                        </div>
-
-                        <div class="grid grid-flow-col gap-x-2">
-                            <div class="flex justify-center items-center row-span-1">
-                                <label for="id_number"
-                                    class="text-sm font-medium text-gray-700">{{ __('رقم الهوية') }}
-                                    <span class="text-red-500">*</span></label>
-                            </div>
-                            @error('id_number')
-                                <p class="text-sm text-red-500 text-center">
-                                    * {{ __($message) }}
-                                </p>
-                            @enderror
-                            <div class=" row-span-11">
-                                <input type="text" id="id_number" name="id_number" inputmode="numeric"
-                                    placeholder="{{ __('رقم الهوية') }}" value="{{ old('id_number') }}"
-                                    class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                            </div>
-
-                        </div>
-
-                        <div class="grid grid-flow-col gap-x-2">
-                            <div class="flex justify-center items-center row-span-1">
-                                <label for="phone"
-                                    class="text-sm font-medium text-gray-700">{{ __('رقم الهاتف') }}
-                                    <span class="text-red-500">*</span></label>
-
-                            </div>
-                            @error('phone')
-                                <p class="text-sm text-red-500 text-center">
-                                    * {{ __($message) }}
-                                </p>
-                            @enderror
-                            <div class=" row-span-11">
-                                <input type="tel" id="phone" name="phone" inputmode="tel" dir="rtl"
-                                    placeholder="{{ __('رقم الهاتف') }}" value="{{ old('phone') }}"
-                                    class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                            </div>
-                        </div>
-
-                        <div class="grid grid-flow-col gap-x-2">
-                            <div class="flex justify-center items-center row-span-1">
-                                <label for="address" class="text-sm font-medium text-gray-700">{{ __('العنوان') }}
-                                    <span class="text-red-500">*</span></label>
-                            </div>
-                            @error('address')
-                                <p class="text-sm text-red-500 text-center">
-                                    * {{ __($message) }}
-                                </p>
-                            @enderror
-                            <div class=" row-span-11">
-                                <input type="text" id="address" name="address"
-                                    placeholder="{{ __('العنوان') }}" value="{{ old('address') }}"
-                                    class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                            </div>
-                        </div>
-
-                        <div class="grid grid-flow-col gap-x-2">
-                            <div class="flex justify-center items-center row-span-1">
-                                <label for="relationship"
-                                    class="text-sm font-medium text-gray-700">{{ __('العلاقة') }}
-                                    <span class="text-red-500">*</span></label>
-                            </div>
-                            @error('relationship')
-                                <p class="text-sm text-red-500 text-center">
-                                    * {{ __($message) }}
-                                </p>
-                            @enderror
-                            <div class=" row-span-11">
-                                <input type="text" id="relationship" name="relationship"
-                                    placeholder="{{ __('العلاقة') }}" value="{{ old('relationship') }}"
-                                    class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                            </div>
-                        </div>
-
-                        <div class="grid grid-flow-col gap-x-2">
-                            <div class="flex justify-center items-center row-span-1">
-                                <label for="oath_availability"
-                                    class="text-sm font-medium text-gray-700">{{ __('امكانية الحنث باليمين') }}
-                                    <span class="text-red-500">*</span></label>
-                            </div>
-                            @error('oath_availability')
-                                <p class="text-sm text-red-500 text-center">
-                                    * {{ __($message) }}
-                                </p>
-                            @enderror
-                            <div class=" row-span-11 grid grid-flow-col">
-                                <div>
-                                    <input type="radio" name="oath_availability" id="1" value="1"
-                                        class="peer hidden" @checked(old('oath_availability') === '1') />
-                                    <label for="1"
-                                        class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">نعم</label>
-                                </div>
-                                <div>
-                                    <input type="radio" name="oath_availability" id="2" value="0"
-                                        class="peer hidden" @checked(old('oath_availability') === '0') />
-                                    <label for="2"
-                                        class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">لا</label>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="modal-action ">
-
-                            <button type="submit"
-                                class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">{{ __('Add') }}</button>
-
-                        </div>
+                }
+            </style>
+            <dialog id="addWitness" class="modal modal-middle sm:modal-middle" style="width:90%;">
+                <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
+                    <form method="dialog">
+                        <button type="submit"
+                            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
+                    </form>
+                    <h3 class="font-bold text-2xl text-center">{{ __('إضافة شاهد') }}</h3>
+                    <div class="my-5">
+                        <hr>
                     </div>
-                </form>
-            </div>
-        </dialog>
 
-
-
-        {{-- ADD CASE-SESSION DIALOG/FORM START HERE --}}
-
-        <dialog id="addSession" class="modal modal-middle sm:modal-middle" style="width:90%;">
-            <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
-
-                <form method="dialog">
-                    <button type="submit"
-                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
-                </form>
-
-                <h3 class="font-bold text-2xl text-center">{{ __('إضافة جلسة') }}</h3>
-                <div class="my-5">
-                    <hr>
-                </div>
-
-                <form action="{{ route('Sessions.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="grid grid-cols-1 gap-y-4">
+                    <form action="{{ route('witnesses.store') }}" method="POST">
+                        @csrf
                         <input type="hidden" name="case_id" value="{{ $case->id }}">
-                        <div>
-                            <label for="session_name" class="block text-sm font-medium text-gray-700">
-                                {{ __('اسم الجلسة') }} <span class="text-red-500">*</span>
-                            </label>
-                            <input type="text" id="session_name" name="session_name"
-                                placeholder="أدخل اسم الجلسة" value="{{ old('session_name') }}"
-                                class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                            @error('session_name')
-                                <p class="text-sm text-red-500 text-center">
-                                    * {{ __($message) }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-x-5">
-                            <div>
-                                <label for="session_status" class="block text-sm font-medium text-gray-700">
-                                    حالة الجلسة <span class="text-red-500">*</span>
-                                </label>
-                                <select id="session_status" name="session_status"
-                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                                    <option disabled selected></option>
-                                    <option value="Scheduled">مجدولة</option>
-                                    <option value="Finished">منتهية</option>
-                                    <option value="Postponed">مؤجلة</option>
-                                </select>
-                                @error('session_status')
-                                    <p class="text-sm text-red-500">
+                        <div class="grid grid-flow-row gap-y-5">
+                            <div class="grid grid-flow-col gap-x-1">
+                                <div class="flex justify-center items-center row-span-1">
+                                    <label for="witness_name"
+                                        class="text-sm font-medium text-gray-700">{{ __('اسم الشاهد') }}
+                                        <span class="text-red-500">*</span></label>
+                                </div>
+                                @error('witness_name')
+                                    <p class="text-sm text-center text-red-500">
                                         * {{ __($message) }}
                                     </p>
                                 @enderror
+                                <div class=" row-span-11">
+                                    <input type="text" id="witness_name" name="witness_name"
+                                        placeholder="{{ __('اسم الشاهد') }}" value="{{ old('witness_name') }}"
+                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                                </div>
+
                             </div>
 
-                            <div>
-                                <label for="session_Date" class="block text-sm font-medium text-gray-700">
-                                    تاريخ الجلسة <span class="text-red-500">*</span>
-                                </label>
-                                <input type="datetime-local" id="session_Date" name="session_Date"
-                                    value="{{ old('session_Date') }}"
-                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                                @error('session_Date')
-                                    <p class="text-sm text-red-500">
-                                        * {{ __($message) }}
-                                    </p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-x-5">
-                            <div>
-                                <label for="Judge_name" class="block text-sm font-medium text-gray-700">
-                                    إسم القاضي <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" id="Judge_name" name="Judge_name"
-                                    placeholder="أدخل اسم القاضي" value="{{ old('Judge_name') }}"
-                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                                @error('Judge_name')
+                            <div class="grid grid-flow-col gap-x-2">
+                                <div class="flex justify-center items-center row-span-1">
+                                    <label for="id_number"
+                                        class="text-sm font-medium text-gray-700">{{ __('رقم الهوية') }}
+                                        <span class="text-red-500">*</span></label>
+                                </div>
+                                @error('id_number')
                                     <p class="text-sm text-red-500 text-center">
                                         * {{ __($message) }}
                                     </p>
                                 @enderror
+                                <div class=" row-span-11">
+                                    <input type="text" id="id_number" name="id_number" inputmode="numeric"
+                                        placeholder="{{ __('رقم الهوية') }}" value="{{ old('id_number') }}"
+                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                                </div>
+
                             </div>
 
-                            <div>
-                                <label for="session_location" class="block text-sm font-medium text-gray-700">
-                                    المكان <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" id="session_location" name="session_location"
-                                    placeholder="المحكمة ورقم القاعة" value="{{ old('session_location') }}"
-                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
-                                @error('session_location')
+                            <div class="grid grid-flow-col gap-x-2">
+                                <div class="flex justify-center items-center row-span-1">
+                                    <label for="phone"
+                                        class="text-sm font-medium text-gray-700">{{ __('رقم الهاتف') }}
+                                        <span class="text-red-500">*</span></label>
+
+                                </div>
+                                @error('phone')
                                     <p class="text-sm text-red-500 text-center">
                                         * {{ __($message) }}
                                     </p>
                                 @enderror
+                                <div class=" row-span-11">
+                                    <input type="tel" id="phone" name="phone" inputmode="tel"
+                                        dir="rtl" placeholder="{{ __('رقم الهاتف') }}"
+                                        value="{{ old('phone') }}"
+                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                                </div>
+                            </div>
+
+                            <div class="grid grid-flow-col gap-x-2">
+                                <div class="flex justify-center items-center row-span-1">
+                                    <label for="address"
+                                        class="text-sm font-medium text-gray-700">{{ __('العنوان') }}
+                                        <span class="text-red-500">*</span></label>
+                                </div>
+                                @error('address')
+                                    <p class="text-sm text-red-500 text-center">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                                <div class=" row-span-11">
+                                    <input type="text" id="address" name="address"
+                                        placeholder="{{ __('العنوان') }}" value="{{ old('address') }}"
+                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                                </div>
+                            </div>
+
+                            <div class="grid grid-flow-col gap-x-2">
+                                <div class="flex justify-center items-center row-span-1">
+                                    <label for="relationship"
+                                        class="text-sm font-medium text-gray-700">{{ __('العلاقة') }}
+                                        <span class="text-red-500">*</span></label>
+                                </div>
+                                @error('relationship')
+                                    <p class="text-sm text-red-500 text-center">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                                <div class=" row-span-11">
+                                    <input type="text" id="relationship" name="relationship"
+                                        placeholder="{{ __('العلاقة') }}" value="{{ old('relationship') }}"
+                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                                </div>
+                            </div>
+
+                            <div class="grid grid-flow-col gap-x-2">
+                                <div class="flex justify-center items-center row-span-1">
+                                    <label for="oath_availability"
+                                        class="text-sm font-medium text-gray-700">{{ __('امكانية الحنث باليمين') }}
+                                        <span class="text-red-500">*</span></label>
+                                </div>
+                                @error('oath_availability')
+                                    <p class="text-sm text-red-500 text-center">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                                <div class=" row-span-11 grid grid-flow-col">
+                                    <div>
+                                        <input type="radio" name="oath_availability" id="1" value="1"
+                                            class="peer hidden" @checked(old('oath_availability') === '1') />
+                                        <label for="1"
+                                            class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">نعم</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="oath_availability" id="2" value="0"
+                                            class="peer hidden" @checked(old('oath_availability') === '0') />
+                                        <label for="2"
+                                            class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">لا</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal-action ">
+
+                                <button type="submit"
+                                    class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">{{ __('Add') }}</button>
+
                             </div>
                         </div>
+                    </form>
+                </div>
+            </dialog>
 
-                        <div class="border-2 border-dashed border-adel-Dark rounded-lg p-4">
-                            <input type="file" name="file"
-                                class="file-input-sm file-input-bordered w-full max-w-xs" />
-                        </div>
 
-                        <div class="modal-action">
-                            <button type="submit"
-                                class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">
-                                {{ __('Add') }}
-                            </button>
-                        </div>
+
+            {{-- ADD CASE-SESSION DIALOG/FORM START HERE --}}
+
+            <dialog id="addSession" class="modal modal-middle sm:modal-middle" style="width:90%;">
+                <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
+
+                    <form method="dialog">
+                        <button type="submit"
+                            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
+                    </form>
+
+                    <h3 class="font-bold text-2xl text-center">{{ __('إضافة جلسة') }}</h3>
+                    <div class="my-5">
+                        <hr>
                     </div>
-                </form>
-            </div>
-        </dialog>
+
+                    <form action="{{ route('Sessions.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="grid grid-cols-1 gap-y-4">
+                            <input type="hidden" name="case_id" value="{{ $case->id }}">
+                            <div>
+                                <label for="session_name" class="block text-sm font-medium text-gray-700">
+                                    {{ __('اسم الجلسة') }} <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="session_name" name="session_name"
+                                    placeholder="أدخل اسم الجلسة" value="{{ old('session_name') }}"
+                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                @error('session_name')
+                                    <p class="text-sm text-red-500 text-center">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-x-5">
+                                <div>
+                                    <label for="session_status" class="block text-sm font-medium text-gray-700">
+                                        حالة الجلسة <span class="text-red-500">*</span>
+                                    </label>
+                                    <select id="session_status" name="session_status"
+                                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                        <option disabled selected></option>
+                                        <option value="Scheduled">مجدولة</option>
+                                        <option value="Finished">منتهية</option>
+                                        <option value="Postponed">مؤجلة</option>
+                                    </select>
+                                    @error('session_status')
+                                        <p class="text-sm text-red-500">
+                                            * {{ __($message) }}
+                                        </p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="session_Date" class="block text-sm font-medium text-gray-700">
+                                        تاريخ الجلسة <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="datetime-local" id="session_Date" name="session_Date"
+                                        value="{{ old('session_Date') }}"
+                                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                    @error('session_Date')
+                                        <p class="text-sm text-red-500">
+                                            * {{ __($message) }}
+                                        </p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-x-5">
+                                <div>
+                                    <label for="Judge_name" class="block text-sm font-medium text-gray-700">
+                                        إسم القاضي <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" id="Judge_name" name="Judge_name"
+                                        placeholder="أدخل اسم القاضي" value="{{ old('Judge_name') }}"
+                                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                    @error('Judge_name')
+                                        <p class="text-sm text-red-500 text-center">
+                                            * {{ __($message) }}
+                                        </p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="session_location" class="block text-sm font-medium text-gray-700">
+                                        المكان <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" id="session_location" name="session_location"
+                                        placeholder="المحكمة ورقم القاعة" value="{{ old('session_location') }}"
+                                        class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active transition-colors duration-300">
+                                    @error('session_location')
+                                        <p class="text-sm text-red-500 text-center">
+                                            * {{ __($message) }}
+                                        </p>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="border-2 border-dashed border-adel-Dark rounded-lg p-4  flex justify-between">
+                                <label class="">
+                                    <span
+                                        class=" flex my-auto bg-[#BF9874] text-white px-4 py-1 rounded-lg text-sm hover:bg-adel-Light-hover hover:text-adel-Dark hover:border-adel-Dark border border-transparent transition-all ease-in-out duration-150">
+                                        اضغط لإرفاق ملف
+                                    </span>
+                                    <input type="file" onchange="loadFile(event)" name="file" id="file_input"
+                                        accept=""
+                                        class=" w-full text-sm text-slate-500
+                                                file:mr-4 file:py-2 file:px-4 hidden
+                                                file:rounded-full file:border-0
+                                                file:text-sm file:font-semibold
+                                                 file:bg-adel-Normal file:text-white
+                                                 hover:file:bg-adel-Dark-hover
+                                                file:transition file:ease-in-out file:duration-100
+                                                " />
+                                </label>
+                                <span id="file-name"
+                                    class="text-sm text-slate-900 flex items-center justify-center">لم يتم اختيار
+                                    ملف</span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <button type="button" id="clearButton" hidden class=""
+                                    onclick="clearFile(this)"><i
+                                        class="fa-solid fa-eraser  rounded-full hover:bg-black hover:bg-opacity-5 p-1 text-adel-Dark hover:text-adel-Normal-hover transition-all duration-100 ease-in-out"></i></button>
+
+                                @error('Avatar')
+                                    <p class="text-sm text-red-500">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
+
+
+                            <script>
+                                var loadFile = function(event) {
+                                    var input = event.target;
+                                    var file = input.files[0];
+                                    var type = file.type;
+                                    var output = document.getElementById('preview_img');
+                                    // output.src = URL.createObjectURL(event.target.files[0]);
+                                    // output.onload = function() {
+                                    //     URL.revokeObjectURL(output.src) // free memory
+                                    // }
+                                    const fileNameElement = document.getElementById('file-name');
+                                    fileNameElement.textContent = file.name;
+                                    document.getElementById('clearButton').hidden = false;
+
+
+                                };
+                                const clearFile = function(button) {
+                                    document.getElementById('file_input').value = '';
+                                    document.getElementById('file-name').innerHTML = "لم يتم اختيار ملف";
+                                    button.hidden = true;
+
+                                }
+                            </script>
+
+                            <div class="modal-action">
+                                <button type="submit"
+                                    class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">
+                                    {{ __('Add') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </dialog>
+        @endif
 </x-app-layout>

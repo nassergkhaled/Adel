@@ -40,8 +40,7 @@ class LegalCasesController extends Controller
         }
         else if ($user->role == 'Client') {
 
-            $legalCases = $user->client->legalCases;
-
+             $legalCases =LegalCase::where('client_id',$user->client->id)->get();
             $data = [
                 'clients' => [],
                 'cases' => $legalCases,
@@ -200,7 +199,7 @@ class LegalCasesController extends Controller
         $user = Auth::user();
         $case = LegalCase::findOrFail($id);
 
-        if ($case->lawyer->id !== $user->id)
+        if ($case->lawyer->id !== $user->id && $case->client->id !== $user->client->id)
             abort(404);
 
         return view('legal_cases.show', compact('case'));
