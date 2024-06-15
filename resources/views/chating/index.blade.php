@@ -362,32 +362,37 @@
                     })
                 }).then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    newSessioID = session_id = data;
+                    let newSessioID = data;
+
+                    const newChatCount = document.querySelector("#newChatCount");
+                    const oldChatCount = document.querySelector("#oldChatCount");
+                    const currentChat = document.querySelector("#currentChat");
+                    let newClient = client.cloneNode(true);
+                    newClient.removeAttribute('data-needed');
+                    newClient.setAttribute('onclick', 'openChat(this)');
+                    newClient.setAttribute('id', newSessioID);
+                    currentChat.insertBefore(newClient, currentChat.firstChild);
+                    openChat(newClient); // to open chat after create a sission
+
+
+
+                    client.style.opacity = 0;
+                    oldChatCount.innerHTML = parseInt(oldChatCount.textContent) + 1;
+                    newChatCount.innerHTML = parseInt(newChatCount.textContent) - 1;
+                    setTimeout(function() {
+                        client.parentNode.removeChild(client)
+                    }, 300);
+
+
+
                 })
                 .catch((error) => console.error('Error:', error));
             // console.log(api_token);
 
-            const newChatCount = document.querySelector("#newChatCount");
-            const oldChatCount = document.querySelector("#oldChatCount");
-            const currentChat = document.querySelector("#currentChat");
-
-
-            let newClient = client.cloneNode(true);
-            newClient.removeAttribute('data-needed');
-            newClient.setAttribute('onclick', 'openChat(this)');
-            newClient.setAttribute('id', newSessioID);
-            currentChat.insertBefore(newClient, currentChat.firstChild);
-            openChat(newClient); // to open chat after create a sission
 
 
 
-            client.style.opacity = 0;
-            oldChatCount.innerHTML = parseInt(oldChatCount.textContent) + 1;
-            newChatCount.innerHTML = parseInt(newChatCount.textContent) - 1;
-            setTimeout(function() {
-                client.parentNode.removeChild(client)
-            }, 300);
+
 
         }
 
