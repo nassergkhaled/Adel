@@ -126,6 +126,8 @@
                     <span class="ms-3">الموكلين</span>
                 </x-nav-link>
             </div>
+            @endif
+
 
             <div class="">
                 <x-nav-link :href="route('billings.index')" :active="request()->routeIs('billings.index')"
@@ -136,7 +138,7 @@
                     <span class="ms-3">الإجراءات المالية</span>
                 </x-nav-link>
             </div>
-            @endif
+
 
 
             <div class="">
