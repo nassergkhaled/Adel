@@ -73,9 +73,7 @@
                         @foreach ($chatSessions as $chatSession)
                             <button class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2 chat_item"
                                 onclick="openChat(this)" id="{{ $chatSession->id }}">
-                                <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                                    A
-                                </div>
+                                
                                 @php
                                     if ($chatSession->user1_id != auth()->id()) {
                                         $id = $chatSession->user1_id;
@@ -83,10 +81,19 @@
                                         $id = $chatSession->user2_id;
                                     }
                                     $user = \App\Models\User::find($id);
+                                    if ($user->role == 'Lawyer') {
+                                        $user = $user->lawyer;
+                                    } elseif ($user->role == 'Client') {
+                                        $user = $user->client;
+                                    }
+                                    $name = $user->full_name;
 
                                 @endphp
+                                <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
+                                    {{ mb_substr($name, 0, 1, 'UTF-8') }}
+                                </div>
                                 <div class="ml-2 text-sm font-semibold" id="user_name">
-                                    {{ $user->first_name . ' ' . $user->last_name }}</div>
+                                    {{ $name }}</div>
                             </button>
                         @endforeach
 
