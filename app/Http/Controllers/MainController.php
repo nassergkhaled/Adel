@@ -240,20 +240,36 @@ class MainController extends Controller
         }
         $my_id = Auth::id();
         $chatSessions = ChatSession::where('user1_id', $my_id)->orWhere('user2_id', $my_id)->orderByDesc('created_at')->get();
-        $clients = null;
-        $lawyer = Auth::user()->lawyer;
+        $newChats = [];
+        $user = Auth::user();
+        $lawyer = $user->lawyer;
         if ($lawyer) {
-            $clients = $lawyer->clients()
+            $newChats = $lawyer->clients()
                 ->whereNotNull('user_id')
                 ->whereNotExists(function ($query) use ($lawyer) {
                     $query->select(DB::raw(1))
                         ->from('chat_sessions')
-                        ->whereRaw('((user1_id = ? AND user2_id = clients.id) OR (user2_id = ? AND user1_id = clients.id))', [$lawyer->id, $lawyer->id]);
+                        ->whereRaw('((user1_id = ? AND user2_id = clients.user_id) OR (user2_id = ? AND user1_id = clients.user_id))', [$lawyer->id, $lawyer->id]);
                 })->get();
+        }
+        if ($user->client) {
+            $newChats = Lawyer::whereNotExists(function ($query) use ($user) {
+                $query->select(DB::raw(1))
+                    ->from('chat_sessions')
+                    ->where(function ($query) use ($user) {
+                        $query->where('user1_id', $user->id)
+                            ->where('user2_id', '=', DB::raw('lawyers.id'));
+                    })
+                    ->orWhere(function ($query) use ($user) {
+                        $query->where('user2_id', $user->id)
+                            ->where('user1_id', '=', DB::raw('lawyers.id'));
+                    });
+            })->get();
+            
         }
         $data = [
             'chatSessions' => $chatSessions,
-            'clients' => $clients,
+            'newChats' => $newChats,
             'api_token' => $token,
         ];
         return view('chating.index', compact('data'));

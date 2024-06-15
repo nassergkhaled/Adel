@@ -22,13 +22,22 @@ class ChatSessionController extends Controller
 
     public function newClientSission(Request $request)
     {
+        $user1_id = $request->user_id;
 
-        $data =[
-            'user1_id' => $request->user_id,
-            'user2_id'=> Client::where('phone_number',$request->phone)->first()->id
+        if ($request->role == "Lawyer")
+            $user2_id = Client::where('phone_number', $request->data)->first()->user_id;
+        elseif ($request->role == "Client") //No Securety //We Should change it
+            $user2_id = $request->data;
+
+
+
+        $data = [
+            'user1_id' => $user1_id,
+            'user2_id' => $user2_id,
         ];
 
-        $session = ChatSession::create($data);
+        $session = ChatSession::createOrFirst($data);
+
         return response()->json($session->id, 201);
     }
 

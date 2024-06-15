@@ -5,7 +5,7 @@
 
     @php
         $chatSessions = $data['chatSessions'];
-        $clients = $data['clients'];
+        $newChats = $data['newChats'];
     @endphp
     <div class="flex antialiased text-gray-800 m-3 ">
         <div class="flex flex-row  h-[80vh] w-full overflow-x-hidden">
@@ -136,7 +136,7 @@
                         </div>
 
                         <span class="flex items-center justify-center bg-adel-Dark text-white h-4 w-4 rounded-full"
-                            id="newChatCount">{{ $clients->count() }}</span>
+                            id="newChatCount">{{ $newChats ? $newChats->count() : 0 }}</span>
 
                     </div>
                     <div x-show="isOpen" x-transition:enter="transition ease-out duration-300 transform"
@@ -146,15 +146,16 @@
                         x-transition:leave-start="opacity-100 translate-y-0"
                         x-transition:leave-end="opacity-0 translate-y-[-2%]"
                         class="flex flex-col space-y-1 mt-4 -mx-2 overflow-x-hidden ">
-                        @foreach ($clients as $client)
+                        @foreach ($newChats as $chatUser)
                             <button
                                 class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2 transition-all duration-300 ease-in-out chat_item"
-                                onclick="createSession(this)" data-phone="{{ $client->phone_number }}">
+                                onclick="createSession(this)"
+                                data-needed="{{ $chatUser->phone_number ? $chatUser->phone_number : $chatUser->id }}">
                                 <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                                    {{ mb_substr($client->full_name, 0, 1, 'UTF-8') }}
+                                    {{ mb_substr($chatUser->full_name, 0, 1, 'UTF-8') }}
                                 </div>
                                 <div class="ml-2 text-sm font-semibold" id="user_name">
-                                    {{ $client->full_name }}</div>
+                                    {{ $chatUser->full_name }}</div>
                             </button>
                         @endforeach
                     </div>
@@ -163,12 +164,13 @@
             </div>
 
             <script>
+                {{--
                 // const currentSession = @json($chatSessions);
                 // const newSession = @json($clients);
                 // const all = @json(array_merge($chatSessions->toArray(), $clients->toArray()));
                 // console.log(all);
                 // const chat_results = document.querySelector("#chat_results");
-
+                --}}
 
                 const chatSearch = document.querySelector("#chatSearch");
                 const chat_items = document.querySelectorAll(".chat_item");
@@ -356,7 +358,7 @@
             //to prevent create multi session by multi clicks
             client.removeAttribute('onclick');
 
-            const client_phone = client.getAttribute('data-phone');
+            const dataNeeded = client.getAttribute('data-needed');
             let newSessioID;
             fetch(`/api/newClientSission`, {
                     method: 'POST',
@@ -366,12 +368,13 @@
                     },
                     body: JSON.stringify({
                         token: api_token,
-                        phone: client_phone,
+                        data: dataNeeded,
+                        role: "{{ auth()->user()->role }}"
                     })
                 }).then(response => response.json())
                 .then(data => {
-                    // console.log(data);
-                    newSessioID = data;
+                    console.log(data);
+                    newSessioID = session_id = data;
                 })
                 .catch((error) => console.error('Error:', error));
             // console.log(api_token);
@@ -382,7 +385,7 @@
 
 
             let newClient = client.cloneNode(true);
-            newClient.removeAttribute('data-phone');
+            newClient.removeAttribute('data-needed');
             newClient.setAttribute('onclick', 'openChat(this)');
             newClient.setAttribute('id', newSessioID);
             currentChat.insertBefore(newClient, currentChat.firstChild);

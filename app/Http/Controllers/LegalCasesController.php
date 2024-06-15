@@ -38,6 +38,16 @@ class LegalCasesController extends Controller
                 'isLowyer' => true,
             ];
         }
+        else if ($user->role == 'Client') {
+
+            $legalCases = $user->client->legalCases;
+
+            $data = [
+                'clients' => [],
+                'cases' => $legalCases,
+                'isLowyer' => false,
+            ];
+        }
 
         return $data;
     }
