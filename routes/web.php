@@ -6,11 +6,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Middleware\CompleteRegistration;
 use App\Http\Middleware\RegistrationComplete;
+use Google\Api\Billing\BillingDestination;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\witnessesController;
+use App\Http\Controllers\BillingsController;
 use App\Models\ChatSession;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -47,14 +49,15 @@ Route::get('/cases/{id}', [LegalCasesController::class, 'show'])->name('legal_ca
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
+
 Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(function () {
     Route::get('/profile', [MainController::class, 'profile'])->name('profile');
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
     Route::get('/calendar', [MainController::class, 'calendar'])->name('calendar');
     Route::resource('/legalCases', LegalCasesController::class);
-
     Route::resource('/witnesses', witnessesController::class);
     Route::resource('/Sessions', SessionsController::class);
+    Route::resource('/billings',BillingsController::class);
 
 
     // Route::get('/chating', function () {
