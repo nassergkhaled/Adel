@@ -238,12 +238,12 @@ class MainController extends Controller
             $token = $user->createToken('API Token', ['expires_in' => 120])->plainTextToken;
             session(['auth_token' => $token]);
         }
-        $my_id = Auth::id();
+        $my_id = $user->id;
         $chatSessions = ChatSession::where('user1_id', $my_id)->orWhere('user2_id', $my_id)->orderByDesc('created_at')->get();
         $newChats = [];
-        $user = Auth::user();
-        $lawyer = $user->lawyer;
-        if ($lawyer) {
+
+        if ($user->role === "Lawyer") {
+            $lawyer = $user->lawyer;
             $newChats = $lawyer->clients()
                 ->whereNotNull('user_id')
                 ->whereNotExists(function ($query) use ($lawyer) {
@@ -252,16 +252,17 @@ class MainController extends Controller
                         ->whereRaw('((user1_id = ? AND user2_id = clients.user_id) OR (user2_id = ? AND user1_id = clients.user_id))', [$lawyer->id, $lawyer->id]);
                 })->get();
         }
-        if ($user->client) {
-            $newChats = Lawyer::whereNotExists(function ($query) use ($user) {
+        if ($user->role === "Lawyer") {
+            $client = $user->client;
+            $newChats = Lawyer::whereNotExists(function ($query) use ($client) {
                 $query->select(DB::raw(1))
                     ->from('chat_sessions')
-                    ->where(function ($query) use ($user) {
-                        $query->where('user1_id', $user->id)
+                    ->where(function ($query) use ($client) {
+                        $query->where('user1_id', $client->user_id)
                             ->where('user2_id', '=', DB::raw('lawyers.id'));
                     })
-                    ->orWhere(function ($query) use ($user) {
-                        $query->where('user2_id', $user->id)
+                    ->orWhere(function ($query) use ($client) {
+                        $query->where('user2_id', $client->user_id)
                             ->where('user1_id', '=', DB::raw('lawyers.id'));
                     });
             })->get();

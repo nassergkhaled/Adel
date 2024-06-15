@@ -230,18 +230,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-start-1 col-end-8 px-3 rounded-lg">
-                                    <div class="flex flex-row items-center gap-2">
-                                        <div
-                                            class="relative ml-3 text-sm text-white bg-[#BF9874] py-2 px-4 shadow rounded-xl">
-                                            <div>
-                                                مرحباً أحمد، موعد جلستك القادمة في السابع من أيار الساعة الحادية عشر
-                                                صباحاً يرجى الحضور مبكرأ لإخبارك باخر المستجدات قبل موعد الجلسة
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                 --}}
                             </div>
                         </div>
                     </div>
