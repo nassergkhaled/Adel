@@ -91,13 +91,14 @@ class ClientsController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function storeById($id)
+    public function storeById($id_number)
     {
-        if (Client::all()->pluck('id_number')->contains(strip_tags($id))) {
-            if (LawyerClient::where('client_id', strip_tags($id))->where('lawyer_id', Auth::id())) {
+        if (Client::all()->pluck('id_number')->contains(strip_tags($id_number))) {
+            $id = Client::where('id_number', $id_number)->first()->id;
+            if (LawyerClient::where('client_id', $id)->where('lawyer_id', Auth::id())->get()->count()) {
                 return redirect()->back()->with('ValError', 'You already have this client!');
             } else {
-                $client_id = Client::where('id_number', strip_tags($id))->first()->id;
+                $client_id = $id;
                 $lawyer_client = new LawyerClient();
                 $lawyer_client->lawyer_id = Auth::id();
                 $lawyer_client->client_id = $client_id;
@@ -171,7 +172,7 @@ class ClientsController extends Controller
      */
     public function show(string $id)
     {
-        $data=[
+        $data = [
             'client' => Client::find($id)
         ];
         return view('clients.show', compact("data"));

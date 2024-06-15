@@ -47,7 +47,9 @@
     <div>
         <ul class="  text-[#9F9E9E] font-bold text-sm font-Almarai space-y-4">
 
-            <div class="" {{$sideBar["dashboard"]?"":"hidden"}}>
+
+            @if ($sideBar['dashboard'])
+            <div class="" >
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
                     class="p-[0.60rem] flex items-center  {{ request()->routeIs('dashboard') ? 'text-yourActiveColor' : 'text-gray-400' }}">
                     <svg width="22" height="22" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -58,8 +60,11 @@
                     <span class="ms-3">الرئيسـية</span>
                 </x-nav-link>
             </div>
-            <div class="" {{$sideBar["calendar"]?"":"hidden"}}>
+            @endif
 
+
+            @if ($sideBar['calendar'])
+            <div class="">
                 <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')"
                     class="p-[0.60rem] flex items-center {{ request()->routeIs('calendar.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -70,41 +75,43 @@
                     <span class="ms-4" class="">التقويم</span>
                 </x-nav-link>
             </div>
-            <div class="" {{$sideBar["legalCases"]?"":"hidden"}}>
+            @endif
 
 
+            @if ($sideBar['legalCases'])
+            <div class="">
                 <x-nav-link :href="route('legalCases.index')" :active="request()->routeIs('legalCases.index')"
                     class="p-[0.60rem] flex items-center  {{ request()->routeIs('legalCases.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
-
                     <svg width="22" height="20" viewBox="0 0 22 19" fill="none"
                         xmlns="http://www.w3.org/2000/svg" class="inline-block mr-5 fill-current">
                         <path
                             d="M11.9985 0L11.9979 1.278L16.9985 2.94591L20.631 1.73509L21.2634 3.63246L18.2319 4.643L21.3272 13.1549C20.2353 14.2921 18.6996 15 16.9985 15C15.2975 15 13.7618 14.2921 12.6699 13.1549L15.7639 4.643L11.9979 3.387V17H15.9985V19H5.99854V17H9.9979V3.387L6.23192 4.643L9.3272 13.1549C8.23528 14.2921 6.69957 15 4.99854 15C3.2975 15 1.76179 14.2921 0.669922 13.1549L3.76392 4.643L0.733632 3.63246L1.36608 1.73509L4.99854 2.94591L9.9979 1.278L9.9985 0H11.9985ZM16.9985 7.10267L15.5809 11H18.4159L16.9985 7.10267ZM4.99854 7.10267L3.58092 11H6.41592L4.99854 7.10267Z" />
                     </svg>
                     <span class="ms-4">القضايا</span>
-
                 </x-nav-link>
             </div>
-            <div class="" {{$sideBar["chating"]?"":"hidden"}}>
+            @endif
 
+
+            @if ($sideBar['chating'])
+            <div class="" {{$sideBar["chating"]?"":"hidden"}}>
                 <x-nav-link :href="route('chating.index')" :active="request()->routeIs('chating.index')"
                     class="p-[0.60rem] flex items-center {{ request()->routeIs('chating.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
-
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                         xmlns="http://www.w3.org/2000/svg" class="inline-block mr-5 fill-current">
                         <path
                             d="M6 9C6.28333 9 6.52083 8.90417 6.7125 8.7125C6.90417 8.52083 7 8.28333 7 8C7 7.71667 6.90417 7.47917 6.7125 7.2875C6.52083 7.09583 6.28333 7 6 7C5.71667 7 5.47917 7.09583 5.2875 7.2875C5.09583 7.47917 5 7.71667 5 8C5 8.28333 5.09583 8.52083 5.2875 8.7125C5.47917 8.90417 5.71667 9 6 9ZM10 9C10.2833 9 10.5208 8.90417 10.7125 8.7125C10.9042 8.52083 11 8.28333 11 8C11 7.71667 10.9042 7.47917 10.7125 7.2875C10.5208 7.09583 10.2833 7 10 7C9.71667 7 9.47917 7.09583 9.2875 7.2875C9.09583 7.47917 9 7.71667 9 8C9 8.28333 9.09583 8.52083 9.2875 8.7125C9.47917 8.90417 9.71667 9 10 9ZM14 9C14.2833 9 14.5208 8.90417 14.7125 8.7125C14.9042 8.52083 15 8.28333 15 8C15 7.71667 14.9042 7.47917 14.7125 7.2875C14.5208 7.09583 14.2833 7 14 7C13.7167 7 13.4792 7.09583 13.2875 7.2875C13.0958 7.47917 13 7.71667 13 8C13 8.28333 13.0958 8.52083 13.2875 8.7125C13.4792 8.90417 13.7167 9 14 9ZM0 20V2C0 1.45 0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H18C18.55 0 19.0208 0.195833 19.4125 0.5875C19.8042 0.979167 20 1.45 20 2V14C20 14.55 19.8042 15.0208 19.4125 15.4125C19.0208 15.8042 18.55 16 18 16H4L0 20ZM3.15 14H18V2H2V15.125L3.15 14Z" />
                     </svg>
-
                     <span class="ms-4">الدردشة</span>
-
                 </x-nav-link>
             </div>
-            <div class="" {{$sideBar["clients"]?"":"hidden"}}>
+            @endif
 
+
+            @if ($sideBar['clients'])
+            <div>
                 <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')"
                     class="px-3 py-2 flex items-center {{ request()->routeIs('clients.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
-
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
                         class="inline-block mr-4 fill-current" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_397_845" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
@@ -129,9 +136,10 @@
                     <span class="ms-3">الإجراءات المالية</span>
                 </x-nav-link>
             </div>
+            @endif
 
-            <div class="" {{$sideBar["dashboard"]?"":"hidden"}}>
 
+            <div class="">
                 <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')"
                     class="p-[0.60rem] flex items-center {{ request()->routeIs('profile') ? 'text-yourActiveColor' : 'text-gray-400' }}">
 
@@ -145,7 +153,6 @@
                             style="stroke: {{ request()->routeIs('profile') ? config('app.activeColor', '#BF9874') : '#9F9E9E' }}; stroke-width: 2;" />
                     </svg>
                     <span class="ms-4">الملف الشخصي</span>
-
                 </x-nav-link>
             </div>
 
