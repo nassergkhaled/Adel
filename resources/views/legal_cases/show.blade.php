@@ -40,7 +40,7 @@
                 <div class=" flex justify-around items-center text-lg">
 
                     @php
-                        $avatar = Auth::user()->avatar;
+                        $avatar = $case->client->user->avatar;
                         if ($avatar) {
                             $avatar = 'images/avatars/' . $avatar;
 
