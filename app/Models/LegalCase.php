@@ -12,7 +12,7 @@ class LegalCase extends Model
 
     public function witnesses()
     {
-        return $this->belongsToMany(Witness::class, 'case_witness', 'legal_case_id');
+        return $this->belongsToMany(Witness::class, 'case_session_witness', 'legal_case_id');
     }
     public function tasks()
     {
@@ -31,5 +31,10 @@ class LegalCase extends Model
     public function lawyer()
     {
         return $this->belongsTo(Lawyer::class, 'lawyer_id', 'id');
+    }
+
+    public function CaseSessionWitness()
+    {
+        return $this->hasMany(Case_Session_Witness::class, 'legal_case_id', 'id');
     }
 }

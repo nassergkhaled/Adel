@@ -26,7 +26,7 @@ class CustomMigrateCommand extends Command
             'database/migrations/2024_04_07_000008_create_case_role_table.php',
             'database/migrations/2024_04_07_000009_create_sessions_table.php',
             'database/migrations/2024_04_07_000010_create_witnesses_table.php',
-            'database/migrations/2024_04_07_000011_create_case_witness_table.php',
+            'database/migrations/2024_04_07_000011_create_case_session_witness_table.php',
             'database/migrations/2024_04_07_000012_create_tasks_table.php',
             'database/migrations/2024_04_07_000013_create_user_task_table.php',
             'database/migrations/2024_04_09_063001_add_office_foreign_key.php',

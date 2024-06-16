@@ -18,6 +18,15 @@ class Witness extends Model
     ];
     public function legalCases()
     {
-        return $this->belongsToMany(Witness::class, 'case_witness', 'legal_case_id');
+        return $this->belongsToMany(LegalCase::class, 'case_session_witness', 'witness_id');
+    }
+    public function sessions()
+    {
+        return $this->belongsToMany(Session::class, 'case_session_witness', 'witness_id', 'case_session_id');
+    }
+
+    public function CaseSessionWitness()
+    {
+        return $this->hasMany(Case_Session_Witness::class, 'witness_id', 'id');
     }
 }
