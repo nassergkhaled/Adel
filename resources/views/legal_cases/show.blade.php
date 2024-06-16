@@ -40,8 +40,8 @@
                 <div class=" flex justify-around items-center text-lg">
 
                     @php
-                        $avatar = Auth::user()->avatar;
-                        if ($avatar) {
+                        $user = $case->client->user;
+                        if ($user && $user->avatar) {
                             $avatar = 'images/avatars/' . $avatar;
 
                             if (!file_exists($avatar)) {
@@ -120,6 +120,7 @@
                         <thead>
                             <tr class=" border-[#E6E8EB] text-[#999999] text-[15px] bg-[#DDDDDDDD]">
                                 <th>اسم الشاهد</th>
+                                <th>اسم الجلسة</th>
                                 <th>رقم الهاتف</th>
                                 <th>رقم الهوية</th>
                                 <th>الموقع</th>
@@ -129,9 +130,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($case->witnesses as $witness)
+                            @foreach ($case->witnesses->unique() as $witness)
                                 <tr class=" border-[#E6E8EB]">
                                     <td>{{ $witness->full_name }}</td>
+                                    <td>
+                                        @php
+                                            $witnessSessions = $witness->CaseSessionWitness->where('legal_case_id',$case->id)
+                                                ->map(function ($item) {
+                                                    return $item->case_session_id
+                                                        ? $item->session->session_name
+                                                        : 'الجلسة الأساسية';
+                                                })
+                                                ->implode(', ');
+                                        @endphp
+                                        {{ $witnessSessions }}
+                                    </td>
                                     <td>{{ data_get(json_decode($witness->contact_info), 'phone', 'N/A') }}</td>
                                     <td>{{ $witness->ID_no }}</td>
                                     <td>{{ data_get(json_decode($witness->contact_info), 'address', 'N/A') }}</td>
@@ -281,6 +294,34 @@
                         @csrf
                         <input type="hidden" name="case_id" value="{{ $case->id }}">
                         <div class="grid grid-flow-row gap-y-5">
+
+                            <div class="grid grid-flow-col gap-x-1">
+                                <div class="flex justify-center items-center row-span-1 col-span-4">
+                                    <label for="session_id"
+                                        class="text-sm font-medium text-gray-700">{{ __('الجلسة') }}
+                                        <span class="text-red-500">*</span></label>
+                                </div>
+                                @error('session_id')
+                                    <p class="text-sm text-center text-red-500">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                                <div class=" row-span-11 w-full col-span-8">
+                                    <select type="text" id="session_id" name="session_id"
+                                        value="{{ old('session_id') }}"
+                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                                        <option value="" selected>لا يوجد</option>
+
+                                        @foreach ($case->sessions as $session)
+                                            <option value="{{ $session->id }}">{{ $session->session_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                            <hr>
+
+
                             <div class="grid grid-flow-col gap-x-1">
                                 <div class="flex justify-center items-center row-span-1">
                                     <label for="witness_name"

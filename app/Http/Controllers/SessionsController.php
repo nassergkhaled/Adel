@@ -85,7 +85,11 @@ class SessionsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $session = Session::findOrFail($id);
+        $data =[
+            'session' => $session,
+        ];
+        return view("case_sessions.show", compact('data'));
     }
 
     /**
