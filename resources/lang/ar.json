@@ -113,6 +113,7 @@
     "Your account is not authorized to perform this operation.":"حسابك غير مصرح له بإجراء هذه العملية.",
     "Signup Token":"كود تسجيل موكّل",
     "This witness is already linked to this case session":"هذا الشاهد مرتبط بالفعل بجلسة القضية هذه",
+    "Wrong Session ID !":"خطأ في الرقم التعريفي للجلسة !",
 
 
     "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another." :"شكرا لتسجيلك! قبل البدء، هل يمكنك التحقق من عنوان بريدك الإلكتروني عن طريق النقر على الرابط الذي أرسلناه إليك للتو عبر البريد الإلكتروني؟ إذا لم تتلق رسالة البريد الإلكتروني، فسنرسل لك بكل سرور رسالة أخرى.",
