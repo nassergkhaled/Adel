@@ -9,7 +9,6 @@
         $inputClass = $mainClass . ' border-green-500';
     }
 @endphp
-
 <div>
     <div class="mx-5 my-1">
         <div class="grid grid-flow-col gap-x-2">
@@ -40,34 +39,45 @@
     @if ($state !== 'start')
         @if ($witness)
             <br>
-            <form action="{{ route('witnesses.storeById',$witness->ID_no) }}" method="POST">
+            <form action="{{ route('witnesses.storeById', $witness->ID_no) }}" method="POST">
                 @csrf
                 <input type="hidden" name="case_id" value="{{ $case->id }}">
                 <div class="grid grid-flow-row gap-y-5">
+                    @if ($sessionId)
+                        <input type="hidden" name="session_id" value="{{ $sessionId }}">
 
-                    <div class="grid grid-flow-col gap-x-1">
-                        <div class="flex justify-center items-center row-span-1 col-span-4">
-                            <label for="session_id" class="text-sm font-medium text-gray-700">{{ __('الجلسة') }}
-                                <span class="text-red-500">*</span></label>
+
+                        {{-- if I want to add Witness from LegalCase show page (unknown Sission ID) --}}
+                    @else
+                        <div class="grid grid-flow-col gap-x-1">
+                            <div class="flex justify-center items-center row-span-1 col-span-4">
+                                <label for="session_id" class="text-sm font-medium text-gray-700">{{ __('الجلسة') }}
+                                    <span class="text-red-500">*</span></label>
+                            </div>
+                            @error('session_id')
+                                <p class="text-sm text-center text-red-500">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
+                            <div class=" row-span-11 w-full col-span-8">
+                                <select type="text" id="session_id" name="session_id" value="{{ old('session_id') }}"
+                                    class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                                    @if ($sessionId)
+                                        <option value="{{ $sessionId }}" selected>{{ $session_name }}</option>
+                                    @else
+                                        <option value="" selected>لا يوجد</option>
+
+                                        @foreach ($case->sessions as $session)
+                                            <option value="{{ $session->id }}">{{ $session->session_name }}</option>
+                                        @endforeach
+
+                                    @endif
+                                </select>
+                            </div>
+
                         </div>
-                        @error('session_id')
-                            <p class="text-sm text-center text-red-500">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                        <div class=" row-span-11 w-full col-span-8">
-                            <select type="text" id="session_id" name="session_id" value="{{ old('session_id') }}"
-                                class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                                <option value="" selected>لا يوجد</option>
-
-                                @foreach ($case->sessions as $session)
-                                    <option value="{{ $session->id }}">{{ $session->session_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                    </div>
-                    <hr>
+                        <hr>
+                    @endif
 
 
                     <div class="grid grid-flow-col gap-x-1">
@@ -193,30 +203,42 @@
                 <input type="hidden" name="case_id" value="{{ $case->id }}">
                 <div class="grid grid-flow-row gap-y-5">
 
-                    <div class="grid grid-flow-col gap-x-1">
-                        <div class="flex justify-center items-center row-span-1 col-span-4">
-                            <label for="session_id" class="text-sm font-medium text-gray-700">{{ __('الجلسة') }}
-                                <span class="text-red-500">*</span></label>
-                        </div>
-                        @error('session_id')
-                            <p class="text-sm text-center text-red-500">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
-                        <div class=" row-span-11 w-full col-span-8">
-                            <select type="text" id="session_id" name="session_id"
-                                value="{{ old('session_id') }}"
-                                class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                                <option value="" selected>لا يوجد</option>
+                    {{-- if I want to add Witness from Session show page (known Sission ID) --}}
+                    @if ($sessionId)
+                        <input type="hidden" name="session_id" value="{{ $sessionId }}">
 
-                                @foreach ($case->sessions as $session)
-                                    <option value="{{ $session->id }}">{{ $session->session_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
-                    </div>
-                    <hr>
+                        {{-- if I want to add Witness from LegalCase show page (unknown Sission ID) --}}
+                    @else
+                        <div class="grid grid-flow-col gap-x-1">
+                            <div class="flex justify-center items-center row-span-1 col-span-4">
+                                <label for="session_id" class="text-sm font-medium text-gray-700">{{ __('الجلسة') }}
+                                    <span class="text-red-500">*</span></label>
+                            </div>
+                            @error('session_id')
+                                <p class="text-sm text-center text-red-500">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
+
+                            <div class=" row-span-11 w-full col-span-8">
+                                <select type="text" id="session_id" name="session_id"
+                                    value="{{ old('session_id') }}"
+                                    class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+                                    <option value="" selected>لا يوجد</option>
+
+                                    @foreach ($case->sessions as $session)
+                                        <option value="{{ $session->id }}">{{ $session->session_name }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <hr>
+                    @endif
+
 
 
                     <div class="grid grid-flow-col gap-x-1">
@@ -250,8 +272,9 @@
                             </p>
                         @enderror
                         <div class=" row-span-11">
-                            <input type="text" id="id_number" name="id_number" inputmode="numeric" value="{{$Witness_id_number}}"
-                                placeholder="{{ __('رقم الهوية') }}" value="{{ old('id_number') }}"
+                            <input type="text" id="id_number" name="id_number" inputmode="numeric"
+                                value="{{ $Witness_id_number }}" placeholder="{{ __('رقم الهوية') }}"
+                                value="{{ old('id_number') }}"
                                 class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
 
                         </div>

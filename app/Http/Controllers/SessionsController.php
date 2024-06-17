@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LegalCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Session;
@@ -85,11 +86,21 @@ class SessionsController extends Controller
      */
     public function show(string $id)
     {
+
         $session = Session::findOrFail($id);
-        $data =[
-            'session' => $session,
-        ];
-        return view("case_sessions.show", compact('data'));
+        $belongsToMeAsLawyer = $session->lagalCase->lawyer->id === Auth::id();
+        $belongsToMeAsClient = $session->lagalCase->client->user_id === Auth::id();
+
+        if ($belongsToMeAsLawyer || $belongsToMeAsClient) {
+
+            $prevSessions = LegalCase::find($session->case_id)->sessions->where('session_Date', "<", $session->session_Date);
+            $data = [
+                'session' => $session,
+                'prevSessions' => $prevSessions,
+            ];
+            return view("case_sessions.show", compact('data'));
+        }
+        return redirect()->back()->with(['errMsg' => 'Wrong Session ID !']);
     }
 
     /**

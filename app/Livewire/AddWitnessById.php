@@ -13,16 +13,20 @@ class AddWitnessById extends Component
     public $Witness_id_number = null;
     public $witness = false;
     public $valError = false;
+    public $sessionId = null;
+    public $session_name;
 
     public function changeState($newState)
     {
         $this->state = $newState;
     }
-    public function mount($case, $valError)
+    public function mount($case, $valError, $sessionId)
     {
         $this->case = $case;
         if ($valError === true)
             $this->state = null;
+        $this->sessionId = $sessionId;
+        $this->session_name = session()->get('session_name');
     }
 
     public function existWitness()
