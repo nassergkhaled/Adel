@@ -215,14 +215,14 @@ class MainController extends Controller
 
         $client = Client::where('signupToken', $request->signupToken)->first();
 
+        $client->user_id = Auth::id();
+        $client->signupToken = null;
+        $client->save();
+
         User::where('id', Auth::id())->update([
             'completeRegistration' => true,
             'role' => 'Client'
         ]);
-
-        $client->user_id = Auth::id();
-        $client->signupToken = null;
-        $client->save();
 
         return redirect('dashboard')->with('msg', 'You have been registered successfully.');
     }

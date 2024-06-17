@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->string('signupToken'); // to link the client to the user if he make a signup
+            $table->string('signupToken')->nullable(); // to link the client to the user if he make a signup
 
             $table->string('full_name');
             $table->unsignedInteger('id_number')->unique();
