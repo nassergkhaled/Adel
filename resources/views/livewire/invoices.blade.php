@@ -64,7 +64,7 @@
         <div class="border-l border-gray-200 h-16 mr-8"></div>
 
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
-            <span class="text-xs bg-red-600 font-bold rounded-2xl text-white px-2 py-1">تأخــرت</span>
+            <span class="text-xs bg-red-600 font-bold rounded-2xl text-white px-2 py-1">مستحقات/ذمم</span>
             <span class="text-black text-2xl">290.00 ₪</span>
         </div>
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
@@ -88,7 +88,7 @@
             <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">مرسلة</div>
             <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">مدفوع</div>
             <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">جزئي</div>
-            <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">تأخرت</div>
+            <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">مستحقات/ذمم</div>
         </div>
         <div class="flex gap-2">
             <button
