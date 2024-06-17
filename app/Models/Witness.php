@@ -12,9 +12,6 @@ class Witness extends Model
         'full_name',
         'ID_no',
         'contact_info',
-        'relationship',
-        'oath_availability',
-        'testimony',
     ];
     public function legalCases()
     {

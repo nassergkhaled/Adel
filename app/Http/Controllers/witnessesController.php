@@ -65,9 +65,7 @@ class witnessesController extends Controller
                         'full_name' => strip_tags($request->witness_name),
                         'ID_no' => strip_tags($request->id_number),
                         'contact_info' => json_encode($contact_info),
-                        'relationship' => strip_tags($request->relationship),
-                        'oath_availability' => strip_tags($request->oath_availability),
-                        'testimony' => null,
+
                     ];
 
                     $witness = Witness::create($data);
@@ -85,6 +83,62 @@ class witnessesController extends Controller
                     'legal_case_id' => strip_tags($request->case_id),
                     'case_session_id' => $session_id,
                     'witness_id' => $witness->id,
+                    'relationship' => strip_tags($request->relationship),
+                    'oath_availability' => strip_tags($request->oath_availability),
+                ];
+                $case_witness = Case_Session_Witness::create($case_witness);
+
+
+                // $case_witness = new Case_Session_Witness();
+                // $case_witness->legal_case_id = strip_tags($request->case_id);
+                // $case_witness->witness_id = $witness->id;
+                // $case_witness->case_session_id = strip_tags($request->session_id) ?? null;
+                // $case_witness->save();
+
+                return redirect()->back()->with('msg', 'Witness added successfully!');
+            }
+            return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'There is an attempt to manipulate the data.');
+        }
+        return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
+    }
+
+    public function storeById(Request $request, $id_number)
+    {
+        $validated = Validator::make($request->all(), [
+            'case_id' => 'required|string|exists:legal_cases,id',
+            'relationship' => 'required|string|max:30',
+            'oath_availability' => 'required|boolean',
+        ]);
+
+
+        if ($validated->fails()) {
+            return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
+        }
+
+        $ImLawyer = Auth::user()->lawyer;
+        if ($ImLawyer) {
+            $caseBelongsToMe = $ImLawyer->legalCases->where('id', $request->case_id)->first();
+            if ($caseBelongsToMe) {
+
+                $witness = Witness::where('ID_no', $id_number)->first();
+                if (!$witness) {
+                    return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Verify the entered data!');
+                }
+
+
+
+                $session_id = strip_tags($request->session_id) == "" ? null : strip_tags($request->session_id);
+                $isLinkedBefore = Case_Session_Witness::where('legal_case_id', strip_tags($request->case_id))->where('witness_id', $witness->id)->where('case_session_id', $session_id)->first();
+                if ($isLinkedBefore) {
+                    return redirect()->back()->with('ValError', 'This witness is already linked to this case session');
+                }
+
+                $case_witness = [
+                    'legal_case_id' => strip_tags($request->case_id),
+                    'case_session_id' => $session_id,
+                    'witness_id' => $witness->id,
+                    'relationship' => strip_tags($request->relationship),
+                    'oath_availability' => $request->oath_availability,
                 ];
                 $case_witness = Case_Session_Witness::create($case_witness);
 

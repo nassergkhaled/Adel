@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,10 @@ return new class extends Migration
 
             $table->unique(['legal_case_id', 'witness_id', 'case_session_id'], 'unique_case_witness_session');
 
+
+            $table->string('relationship'); // between  witness()->case()->client()->get();
+            $table->boolean('oath_availability')->default('0');
+            
             // $table->date('testimony_date'); // The date of the witness's testimony
             // $table->timestamps();
         });

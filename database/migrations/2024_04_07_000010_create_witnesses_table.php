@@ -16,15 +16,13 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('ID_no', 15)->unique();
             $table->json('contact_info'); // Phone, Email
-            $table->string('relationship'); // between  witness()->case()->client()->get();
-
+            
             
 
             // $table->string('email')->unique();
             // $table->string('phone');
 
-            $table->boolean('oath_availability')->default('0');
-            $table->text('testimony')->nullable();
+            
             $table->timestamps();
         });
     }

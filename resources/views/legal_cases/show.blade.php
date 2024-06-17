@@ -135,7 +135,8 @@
                                     <td>{{ $witness->full_name }}</td>
                                     <td>
                                         @php
-                                            $witnessSessions = $witness->CaseSessionWitness->where('legal_case_id',$case->id)
+                                            $witnessSessions = $witness->CaseSessionWitness
+                                                ->where('legal_case_id', $case->id)
                                                 ->map(function ($item) {
                                                     return $item->case_session_id
                                                         ? $item->session->session_name
@@ -290,173 +291,11 @@
                         <hr>
                     </div>
 
-                    <form action="{{ route('witnesses.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="case_id" value="{{ $case->id }}">
-                        <div class="grid grid-flow-row gap-y-5">
-
-                            <div class="grid grid-flow-col gap-x-1">
-                                <div class="flex justify-center items-center row-span-1 col-span-4">
-                                    <label for="session_id"
-                                        class="text-sm font-medium text-gray-700">{{ __('الجلسة') }}
-                                        <span class="text-red-500">*</span></label>
-                                </div>
-                                @error('session_id')
-                                    <p class="text-sm text-center text-red-500">
-                                        * {{ __($message) }}
-                                    </p>
-                                @enderror
-                                <div class=" row-span-11 w-full col-span-8">
-                                    <select type="text" id="session_id" name="session_id"
-                                        value="{{ old('session_id') }}"
-                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                                        <option value="" selected>لا يوجد</option>
-
-                                        @foreach ($case->sessions as $session)
-                                            <option value="{{ $session->id }}">{{ $session->session_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
-                            <hr>
-
-
-                            <div class="grid grid-flow-col gap-x-1">
-                                <div class="flex justify-center items-center row-span-1">
-                                    <label for="witness_name"
-                                        class="text-sm font-medium text-gray-700">{{ __('اسم الشاهد') }}
-                                        <span class="text-red-500">*</span></label>
-                                </div>
-                                @error('witness_name')
-                                    <p class="text-sm text-center text-red-500">
-                                        * {{ __($message) }}
-                                    </p>
-                                @enderror
-                                <div class=" row-span-11">
-                                    <input type="text" id="witness_name" name="witness_name"
-                                        placeholder="{{ __('اسم الشاهد') }}" value="{{ old('witness_name') }}"
-                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                                </div>
-
-                            </div>
-
-                            <div class="grid grid-flow-col gap-x-2">
-                                <div class="flex justify-center items-center row-span-1">
-                                    <label for="id_number"
-                                        class="text-sm font-medium text-gray-700">{{ __('رقم الهوية') }}
-                                        <span class="text-red-500">*</span></label>
-                                </div>
-                                @error('id_number')
-                                    <p class="text-sm text-red-500 text-center">
-                                        * {{ __($message) }}
-                                    </p>
-                                @enderror
-                                <div class=" row-span-11">
-                                    <input type="text" id="id_number" name="id_number" inputmode="numeric"
-                                        placeholder="{{ __('رقم الهوية') }}" value="{{ old('id_number') }}"
-                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                                </div>
-
-                            </div>
-
-                            <div class="grid grid-flow-col gap-x-2">
-                                <div class="flex justify-center items-center row-span-1">
-                                    <label for="phone"
-                                        class="text-sm font-medium text-gray-700">{{ __('رقم الهاتف') }}
-                                        <span class="text-red-500">*</span></label>
-
-                                </div>
-                                @error('phone')
-                                    <p class="text-sm text-red-500 text-center">
-                                        * {{ __($message) }}
-                                    </p>
-                                @enderror
-                                <div class=" row-span-11">
-                                    <input type="tel" id="phone" name="phone" inputmode="tel"
-                                        dir="rtl" placeholder="{{ __('رقم الهاتف') }}"
-                                        value="{{ old('phone') }}"
-                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                                </div>
-                            </div>
-
-                            <div class="grid grid-flow-col gap-x-2">
-                                <div class="flex justify-center items-center row-span-1">
-                                    <label for="address"
-                                        class="text-sm font-medium text-gray-700">{{ __('العنوان') }}
-                                        <span class="text-red-500">*</span></label>
-                                </div>
-                                @error('address')
-                                    <p class="text-sm text-red-500 text-center">
-                                        * {{ __($message) }}
-                                    </p>
-                                @enderror
-                                <div class=" row-span-11">
-                                    <input type="text" id="address" name="address"
-                                        placeholder="{{ __('العنوان') }}" value="{{ old('address') }}"
-                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                                </div>
-                            </div>
-
-                            <div class="grid grid-flow-col gap-x-2">
-                                <div class="flex justify-center items-center row-span-1">
-                                    <label for="relationship"
-                                        class="text-sm font-medium text-gray-700">{{ __('العلاقة') }}
-                                        <span class="text-red-500">*</span></label>
-                                </div>
-                                @error('relationship')
-                                    <p class="text-sm text-red-500 text-center">
-                                        * {{ __($message) }}
-                                    </p>
-                                @enderror
-                                <div class=" row-span-11">
-                                    <input type="text" id="relationship" name="relationship"
-                                        placeholder="{{ __('العلاقة') }}" value="{{ old('relationship') }}"
-                                        class="w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-
-                                </div>
-                            </div>
-
-                            <div class="grid grid-flow-col gap-x-2">
-                                <div class="flex justify-center items-center row-span-1">
-                                    <label for="oath_availability"
-                                        class="text-sm font-medium text-gray-700">{{ __('امكانية الحنث باليمين') }}
-                                        <span class="text-red-500">*</span></label>
-                                </div>
-                                @error('oath_availability')
-                                    <p class="text-sm text-red-500 text-center">
-                                        * {{ __($message) }}
-                                    </p>
-                                @enderror
-                                <div class=" row-span-11 grid grid-flow-col">
-                                    <div>
-                                        <input type="radio" name="oath_availability" id="1" value="1"
-                                            class="peer hidden" @checked(old('oath_availability') === '1') />
-                                        <label for="1"
-                                            class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">نعم</label>
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="oath_availability" id="2" value="0"
-                                            class="peer hidden" @checked(old('oath_availability') === '0') />
-                                        <label for="2"
-                                            class=" cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-adel-Normal peer-checked:font-bold peer-checked:text-white w-full border-adel-Light-hover transition-all ease-in-out duration-100 hover:bg-adel-Light-hover px-8 border">لا</label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="modal-action ">
-
-                                <button type="submit"
-                                    class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-border-adel-Normal transition-colors duration-300">{{ __('Add') }}</button>
-
-                            </div>
-                        </div>
-                    </form>
+                    @if (session()->has('ValError') && session()->get('ValError') == 'Verify the entered data!')
+                        @livewire('addWitnessById', ['case' => $case, 'valError' => true])
+                    @else
+                        @livewire('addWitnessById', ['case' => $case, 'valError' => false])
+                    @endif
                 </div>
             </dialog>
 

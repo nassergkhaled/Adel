@@ -15,6 +15,8 @@ class Case_Session_Witness extends Model
         'legal_case_id',
         'case_session_id',
         'witness_id',
+        'relationship',
+        'oath_availability',
     ];
 
 
