@@ -6,11 +6,14 @@ use Livewire\Component;
 
 class BillingsNavbar extends Component
 {
-    public $page = "invoices";
 
-    public function changePage($page)
+    public $Tab = "invoices";
+    protected $queryString = ['Tab'];
+
+
+    public function changeTab($Tab)
     {
-        $this->page = $page;
+        $this->Tab = $Tab;
     }
     public function render()
     {

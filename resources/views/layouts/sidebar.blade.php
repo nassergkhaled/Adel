@@ -133,7 +133,7 @@
 
             {{-- ADD SUBMENU HERE --}}
             @if ($sideBar['billings'])
-                <x-nav-link :href="route('billings.index')" :active="request()->routeIs('billings.index')"
+                <x-nav-link :href="route('billings.index',['Tab'=>'invoices'])" :active="request()->routeIs('billings.index')"
                     class="px-3 py-3 flex items-center {{ request()->routeIs('billings.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
 
                     <svg width="18" height="18" class="inline-block mr-3.5 fill-current"
