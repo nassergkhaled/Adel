@@ -312,7 +312,7 @@
 
             // console.log(session_id);
             if (!firstOpen) {
-                console.log("im in");
+                // console.log("im in");
                 const enableIt = document.querySelectorAll('.enableIt'); // elements to enable after open chat
                 const removeHidden = document.querySelectorAll(
                     '.removeHidden'); // elements to make it visable after open chat
@@ -447,7 +447,7 @@
                             return response.json();
                         }
                     })
-                    .then(message => console.log(message))
+                    .then(message => message)
                     .catch(error => console.error('Error:', error));
                 inputField.value = '';
 

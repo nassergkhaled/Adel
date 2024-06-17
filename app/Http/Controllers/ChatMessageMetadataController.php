@@ -46,7 +46,12 @@ class ChatMessageMetadataController extends Controller
                 'timestamp' => now()->toISOString(),
             ]);
 
-            $message = ChatMessageMetadata::create($request->all());
+            $message = ChatMessageMetadata::create([
+                'session_id' => $request->session_id,
+                'sender_id' => $user->id,
+                'message_type' => "text",
+                'created_at' => now()->toISOString(),
+            ]);
 
             return response()->json($message, 201);
         } else {
