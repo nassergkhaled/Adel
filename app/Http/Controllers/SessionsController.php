@@ -88,8 +88,10 @@ class SessionsController extends Controller
     {
 
         $session = Session::findOrFail($id);
-        $belongsToMe = $session->lagalCase->lawyer->id === Auth::id();
-        if ($belongsToMe) {
+        $belongsToMeAsLawyer = $session->lagalCase->lawyer->id === Auth::id();
+        $belongsToMeAsClient = $session->lagalCase->client->user_id === Auth::id();
+
+        if ($belongsToMeAsLawyer || $belongsToMeAsClient) {
 
             $prevSessions = LegalCase::find($session->case_id)->sessions->where('session_Date', "<", $session->session_Date);
             $data = [
@@ -98,7 +100,7 @@ class SessionsController extends Controller
             ];
             return view("case_sessions.show", compact('data'));
         }
-        return redirect()->back()->withErrors(['errMsg' => 'Wrong Session ID !']);
+        return redirect()->back()->with(['errMsg' => 'Wrong Session ID !']);
     }
 
     /**

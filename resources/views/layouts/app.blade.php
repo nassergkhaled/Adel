@@ -37,7 +37,7 @@
             <main>
                 <div class="mt-2">
                     @if (session()->has('msg'))
-                        <div role="alert"
+                        <div role="alert" id="alert_message"
                             class="alert alert-success w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6"
                                 fill="none" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@
                             <span>{{ __(session()->get('msg')) }}</span>
                         </div>
                     @elseif (session()->has('ValError'))
-                        <div role="alert"
+                        <div role="alert" id="alert_message"
                             class="alert alert-warning w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6"
                                 fill="none" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@
                             <span>{{ __(session()->get('ValError')) }}</span>
                         </div>
                     @elseif (session()->has('errMsg'))
-                        <div role="alert"
+                        <div role="alert" id="alert_message"
                             class="alert alert-error w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6"
                                 fill="none" viewBox="0 0 24 24">
@@ -73,6 +73,22 @@
         </div>
     </div>
     @livewireScripts
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                var alertElement = document.getElementById('alert_message');
+                if (alertElement) {
+                    alertElement.style.opacity = '0';
+                    // alertElement.style.height = '0';
+                    // alertElement.style.padding = '0';
+                    setTimeout(function() {
+                        alertElement.style.display =
+                            'none';
+                    }, 200);
+                }
+            }, 1000);
+        }
+    </script>
 </body>
 
 </html>
