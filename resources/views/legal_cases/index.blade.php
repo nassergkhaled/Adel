@@ -223,6 +223,13 @@
                                     <option disabled selected></option>
                                     <option value="1">{{ __('جنائية') }}</option>
                                     <option value="2">{{ __('مدنية') }}</option>
+                                    <option value="3">{{ __('تجارية') }}</option>
+                                    <option value="4">{{ __('إدارية') }}</option>
+                                    <option value="5">{{ __('عمالية') }}</option>
+                                    <option value="6">{{ __('هجرة') }}</option>
+                                    <option value="7">{{ __('أسريّة') }}</option>
+                                    <option value="8">{{ __('دستورية') }}</option>
+                                    <option value="9">{{ __('بيئية') }}</option>
                                 </select>
                                 @error('case_type')
                                     <p class="text-sm text-red-500">
@@ -286,7 +293,6 @@
                                 @enderror
                             </div>
                         </div>
-
                     </div>
 
                     <div class="modal-action ">

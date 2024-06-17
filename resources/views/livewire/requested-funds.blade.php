@@ -11,22 +11,17 @@
             <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">مستحقات/ذمم</div>
         </div>
         <div class="flex gap-2 items-center">
-            <button id="printButton">
-                <i class="fas fa-print mr-2"></i>
+            <button id="printButton" onclick="{window.print();}" title="Print Page">
+                <i class="fas fa-print mr-2 text-black mt-2"></i>
             </button>
             <button
                 class="rounded-full bg-adel-Dark text-white text-sm font-bold px-5 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-adel-Dark-active ">طلب دفعة</button>
         </div>
     </div>
 
-    <script>
-        document.getElementById('printButton').addEventListener('click', function() {
-            window.print();
-        });
-    </script>
 
     <div class="flex items-center justify-center ">
-        <table class="border-collapse w-full md:w-3/4 lg:w-full mx-4 border">
+        <table class="border-collapse w-auto md:w-3/4 lg:w-full mx-4 border">
             <thead>
                 <tr>
                     <th class="bg-gray-100 px-4 py-2" colspan="11">
@@ -103,3 +98,9 @@
         </table>
     </div>
 </div>
+
+<script>
+    function printPage(){
+        window.print();
+    }
+</script>

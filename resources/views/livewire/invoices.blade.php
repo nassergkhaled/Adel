@@ -79,6 +79,10 @@
             <span class="text-xs bg-blue-800 font-bold rounded-2xl text-white px-3 py-1">جزئي</span>
             <span class="text-black text-2xl">60.00 ₪</span>
         </div>
+        <div class="flex flex-col items-center justify-center mx-auto gap-1">
+            <span class="text-xs bg-black font-bold rounded-2xl text-white px-3 py-1">مسودة</span>
+            <span class="text-black text-2xl">60.00 ₪</span>
+        </div>
     </div>
 
     <div class="flex justify-between items-center mx-5 my-4">
@@ -92,7 +96,7 @@
         </div>
         <div class="flex gap-2">
             <button
-                class="rounded-full bg-[#3A3B3C] text-white text-sm font-bold px-3 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-[#B0B3B8]">تعديل <span class="triangle bf-red-500 mr-1"></span></button>
+                class="rounded-full bg-[#B0B3B8] text-white text-sm font-bold px-3 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-[#3A3B3C]">تعديل <span class="triangle bf-red-500 mr-1"></span></button>
             <button
                 class="rounded-full bg-adel-Dark text-white text-sm font-bold px-5 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-adel-Dark-active ">أنشئ
                 فاتورة</button>
@@ -112,6 +116,10 @@
                     </th>
                 </tr>
                 <tr class="bg-white border-t border-b border-[#e1e1e1]">
+                    <th class="px-4 py-2">
+                        <input type="checkbox"
+                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                    </th>
                     <th class="px-4 py-2">
                         <button>الرقم <span class="triangle"></span></button>
                     </th>
@@ -142,14 +150,15 @@
                     <th class="px-4 py-2">
                         <button>تم مشاهدتها <span class="triangle"></span></button>
                     </th>
-                    <th class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                    </th>
+                    <th class="px-4 py-2"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
+                    <td class="px-4 py-2">
+                        <input type="checkbox"
+                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                    </td>
                     <td>01001</td>
                     <td>زهير مدموج</td>
                     <td>Nescafeh Co. Taxes</td>
@@ -160,12 +169,16 @@
                     <td>Jun 14, 2024</td>
                     <td><span class="text-xs bg-green-500 font-bold rounded-2xl text-white px-3 py-1">مدفوع</span></td>
                     <td>Jun 14, 2024</td>
-                    <td class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                    <td class="">
+                        <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
+                        <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
                     </td>
                 </tr>
                 <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
+                    <td class="px-4 py-2">
+                        <input type="checkbox"
+                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                    </td>
                     <td>01002</td>
                     <td>عمرو قبها</td>
                     <td>AJAX Co. Taxes</td>
@@ -178,9 +191,33 @@
                         <span class="text-xs bg-red-600 font-bold rounded-2xl text-white px-3 py-1">تأخــرت</span>
                     </td>
                     <td>Jun 17, 2024</td>
+                    <td class="">
+                        <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
+                        <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
+                    </td>
+                </tr>
+                <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
                     <td class="px-4 py-2">
                         <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-[#f59d5d] focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                    </td>
+                    <td>01002</td>
+                    <td>مصعب صالح</td>
+                    <td>Chicken Co. Taxes</td>
+                    <td>66000 ₪</td>
+                    <td>5000 ₪</td>
+                    <td>-- ₪</td>
+                    <td>Jun 12, 2024</td>
+                    <td>Jun 5, 2023</td>
+                    <td>
+                        <span class="text-xs bg-black font-bold rounded-2xl text-white px-3 py-1">مسودة</span>
+                    </td>
+                    <td>Jun 17, 2024</td>
+                    <td class="">
+                        <button><i class="fa-solid fa-dollar-sign ml-2"></i></button>
+                        <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
+                        <button><i class="fa-solid fa-trash-can ml-1"></i></button>
+
                     </td>
                 </tr>
             </tbody>
