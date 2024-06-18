@@ -64,6 +64,8 @@
                     <th class="px-4 py-2">
                         <button>الحالة<span class="triangle"></span></button>
                     </th>
+                    <th class="px-5 py-2">
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -79,6 +81,12 @@
                     <td>Jun 14, 2024</td>
                     <td>تم فتح الطلب</td>
                     <td>تم الإرسال</td>
+                    <td class="">
+                        <button><i class="fa-regular fa-bell ml-1"></i></button>
+                        <button><i class="fa-solid fa-pen-to-square ml-1"></i></button>
+                        <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
+
+                    </td>
 
                 </tr>
                 <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
@@ -93,6 +101,12 @@
                     <td>Jun 10, 2024</td>
                     <td>تم فتح الطلب</td>
                     <td>تم الإرسال</td>
+                    <td class="">
+                        <button><i class="fa-regular fa-bell ml-1"></i></button>
+                        <button><i class="fa-solid fa-pen-to-square ml-1"></i></button>
+                        <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
+
+                    </td>
                 </tr>
             </tbody>
         </table>

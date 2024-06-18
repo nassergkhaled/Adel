@@ -121,5 +121,8 @@
     "Resend Verification Email":"إعادة ارسال بريد التحقق",
     "Finished":"منتهية",
     "Scheduled":"مجدولة",
-    "Postponed":"مؤجلة"
+    "Postponed":"مؤجلة",
+    "Case:":"القضية :",
+    "Select a case":"اختر قضية"
+
 }
