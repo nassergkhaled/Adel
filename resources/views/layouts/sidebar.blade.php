@@ -69,7 +69,7 @@
             @if ($sideBar['calendar'])
                 <div class="">
                     <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')"
-                        class="p-[0.60rem] flex items-center {{ request()->routeIs('calendar.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+                        class="p-[0.60rem] flex items-center {{ request()->routeIs('calendar.*') ? 'text-yourActiveColor' : 'text-gray-400' }}">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                             xmlns="http://www.w3.org/2000/svg" class="inline-block mr-5 fill-current">
                             <path
@@ -83,8 +83,8 @@
 
             @if ($sideBar['legalCases'])
                 <div class="">
-                    <x-nav-link :href="route('legalCases.index')" :active="request()->routeIs('legalCases.index')"
-                        class="p-[0.60rem] flex items-center  {{ request()->routeIs('legalCases.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+                    <x-nav-link :href="route('legalCases.index')" :active="request()->routeIs('legalCases.*')"
+                        class="p-[0.60rem] flex items-center  {{ request()->routeIs('legalCases.*') ? 'text-yourActiveColor' : 'text-gray-400' }}">
                         <svg width="22" height="20" viewBox="0 0 22 19" fill="none"
                             xmlns="http://www.w3.org/2000/svg" class="inline-block mr-5 fill-current">
                             <path
@@ -98,8 +98,8 @@
 
             @if ($sideBar['chating'])
                 <div class="" {{ $sideBar['chating'] ? '' : 'hidden' }}>
-                    <x-nav-link :href="route('chating.index')" :active="request()->routeIs('chating.index')"
-                        class="p-[0.60rem] flex items-center {{ request()->routeIs('chating.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+                    <x-nav-link :href="route('chating.index')" :active="request()->routeIs('chating.*')"
+                        class="p-[0.60rem] flex items-center {{ request()->routeIs('chating.*') ? 'text-yourActiveColor' : 'text-gray-400' }}">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                             xmlns="http://www.w3.org/2000/svg" class="inline-block mr-5 fill-current">
                             <path
@@ -113,8 +113,8 @@
 
             @if ($sideBar['clients'])
                 <div>
-                    <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')"
-                        class="px-3 py-2 flex items-center {{ request()->routeIs('clients.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+                    <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.*')"
+                        class="px-3 py-2 flex items-center {{ request()->routeIs('clients.*') ? 'text-yourActiveColor' : 'text-gray-400' }}">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
                             class="inline-block mr-4 fill-current" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0_397_845" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
@@ -133,8 +133,8 @@
 
             {{-- ADD SUBMENU HERE --}}
             @if ($sideBar['billings'])
-                <x-nav-link :href="route('billings.index',['Tab'=>'invoices'])" :active="request()->routeIs('billings.index')"
-                    class="px-3 py-3 flex items-center {{ request()->routeIs('billings.index') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+                <x-nav-link :href="route('billings.index',['Tab'=>'invoices'])" :active="request()->routeIs('billings.*')"
+                    class="px-3 py-3 flex items-center {{ request()->routeIs('billings.*') ? 'text-yourActiveColor' : 'text-gray-400' }}">
 
                     <svg width="18" height="18" class="inline-block mr-3.5 fill-current"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none">

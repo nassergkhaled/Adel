@@ -11,10 +11,11 @@
                     </a>
                 </div>
             </div>
-            <div class="flex justify-between w-[85%]">
+            <div class="flex justify-between w-[85%] items-center">
                 <div class=" flex items-center justify-start text-xl font-bold text-black">
                     @yield('page_name')
                 </div>
+
                 <div class=" relative flex items-center">
                     <!-- Search bar -->
                     <div class="absolute max-md:hidden inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -30,6 +31,7 @@
                                 placeholder="ابحث">
                         </div>
                     </div>
+                    {{-- <button @click="darkMode=!darkMode" type="button" class=" py-1 px-3 h-[50%] transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer bg-zinc-200 dark:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-neutral-700 focus:ring-offset-2" role="switch" aria-checked="false">Dark</button> --}}
 
 
 
@@ -55,7 +57,7 @@
 
                     @endphp
 
-                    <div class="flex items-center">
+                    <div class="flex items-center ms-10">
 
                         <div class="avatar w-12">
                             <div class="rounded-full">
