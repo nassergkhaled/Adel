@@ -17,3 +17,6 @@ yarn-error.log
 /.idea
 /.vscode
 .env
+
+/public/files
+/public/images/avatars
