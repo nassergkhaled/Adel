@@ -1,5 +1,8 @@
 @section('page_name', 'القضايا')
 @section('title', 'القضايا | ')
+@section('navbarSearchBar')
+    <x-navbarSearchBar />
+@endsection
 <x-app-layout>
     @php
         $client = auth()->user()->client;
@@ -75,7 +78,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="text-start">
+                    <tbody class="text-start" id="table_body">
                         @foreach ($data['cases'] as $case)
                             @php
                                 $class;
@@ -306,4 +309,8 @@
         </dialog>
     @endif
 
+    <script>
+        const legal_cases = @json($data['cases']);
+    </script>
+    <script src="{{ asset('js\search_bar\legalCase_index.js') }}"></script>
 </x-app-layout>

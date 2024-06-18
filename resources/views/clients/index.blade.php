@@ -1,5 +1,8 @@
 @section('page_name', 'الموكلين')
 @section('title', 'الموكلين | ')
+@section('navbarSearchBar')
+    <x-navbarSearchBar />
+@endsection
 <x-app-layout>
     <div class="mt-4 mb-3 grid grid-cols-2 items-center">
         <div class="font-bold text-black text-2xl mr-5 ">
@@ -110,13 +113,14 @@
                     </tr>
                 </thead>
 
-                <tbody class="bg-white text-md ">
+                <tbody class="bg-white text-md " id="table_body">
                     @foreach ($data['clients'] as $client)
                         <tr>
-                            
-                                <td class="text-center py-2 text-black border-b underline underline-offset-4">
-                                    <a class="hover:bg-adel-Light-active hover:text-adel-Dark-hover p-2 rounded-lg transition-all ease-in-out duration-150" href="{{ route('clients.show', $client->id) }}">{{ $client->full_name }}</a>
-                                </td>
+
+                            <td class="text-center py-2 text-black border-b underline underline-offset-4">
+                                <a class="hover:bg-adel-Light-active hover:text-adel-Dark-hover p-2 rounded-lg transition-all ease-in-out duration-150"
+                                    href="{{ route('clients.show', $client->id) }}">{{ $client->full_name }}</a>
+                            </td>
                             <td class="text-center py-2 text-black border-b">{{ $client->id_number }}</td>
                             <td class="text-center py-2 text-black border-b" dir="ltr">
                                 {{ $client->phone_number }}
@@ -136,6 +140,8 @@
             </div>
         @endif
     </div>
-
-
+    <script>
+        const clients = @json($data['clients']);
+    </script>
+    <script src="{{ asset('js\search_bar\client_index.js') }}"></script>
 </x-app-layout>

@@ -1,5 +1,8 @@
 @section('page_name', 'الموكلين')
 @section('title', 'الموكلين | ')
+@section('navbarSearchBar')
+    <x-navbarSearchBar />
+@endsection
 @php
     $client = $data['client'];
 @endphp
@@ -272,7 +275,7 @@
 
                                 </tr>
                             </thead>
-                            <tbody class="text-start">
+                            <tbody class="text-start" id="table_body">
                                 @foreach ($client->legalCases as $case)
                                     @php
                                         $class;
@@ -315,5 +318,10 @@
             </div>
 
         </div>
+
+        <script>
+            const client_cases = (@json($client).legal_cases);
+        </script>
+        <script src="{{ asset('js\search_bar\client_show.js') }}"></script>
 
 </x-app-layout>
