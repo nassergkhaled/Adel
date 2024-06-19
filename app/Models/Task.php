@@ -12,7 +12,8 @@ class Task extends Model
     protected $table = "tasks";
 
     protected $fillable = [
-        'case_id',
+        'relatedCase_id',
+        'relatedClient_id',
         'created_by',
         'title',
         'due_date',
@@ -37,7 +38,7 @@ class Task extends Model
 
     public function legalCase()
     {
-        return $this->belongsTo(LegalCase::class, 'case_id', 'id');
+        return $this->belongsTo(LegalCase::class, 'relatedCase_id', 'id');
     }
     public function assignedTo()
     {
@@ -47,5 +48,9 @@ class Task extends Model
     public function created_by()
     {
         return $this->belongsTo(User::class);
+    }
+    public function clientUser()
+    {
+        return $this->belongsTo(User::class,'relatedClient_id','id');
     }
 }

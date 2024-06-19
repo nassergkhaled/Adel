@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('case_id')->nullable(); // the task can be with no case
-            $table->foreign('case_id')->references('id')->on('legal_cases');
+            $table->unsignedBigInteger('relatedCase_id')->nullable(); // the task can be with no case
+            $table->foreign('relatedCase_id')->references('id')->on('legal_cases');
+
+            $table->unsignedBigInteger('relatedClient_id')->nullable(); // the task can be with no case
+            $table->foreign('relatedClient_id')->references('id')->on('users');
+
 
             $table->unsignedBigInteger('created_by'); //user who created the task
             $table->foreign('created_by')->references('id')->on('users');
