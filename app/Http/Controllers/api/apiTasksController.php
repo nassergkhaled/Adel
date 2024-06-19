@@ -16,6 +16,22 @@ class apiTasksController extends Controller
      * Display a listing of the resource.
      */
 
+    public function getApiTasks(Request $request)
+    {
+        // $user_id = $this->checkToken($api_token);
+        $user_id = $request->user()->id;
+
+        $tasks = Task::where('created_by', $user_id)->get(); // Fetch all tasks, consider adding pagination or filters as needed
+        return response()->json($tasks->map(function ($task) {
+            return [
+                'id' => $task->id,
+                'title' => $task->title,
+                'start' => $task->due_date,
+                'end' => $task->due_date,
+                'priority' => $task->priority['name'],
+            ];
+        }));
+    }
     private function checkToken($api_token)
     {
         $accessToken = PersonalAccessToken::findToken($api_token);

@@ -27,6 +27,7 @@ Route::post('/login', [ApiAuthController::class, 'login'])->name("apiLogin");
 use App\Http\Controllers\ChatSessionController;
 use App\Http\Controllers\ChatMessageMetadataController;
 use App\Http\Controllers\LegalCasesController;
+use App\Http\Controllers\TasksController;
 use App\Http\Middleware\CheckApiTokenByAdel;
 use App\Http\Middleware\CheckApiTokenByAdelV2;
 use Illuminate\Support\Facades\Hash;
@@ -61,6 +62,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/chat_messages', [ChatMessageMetadataController::class, 'sendMessage']);
     Route::get('/chat_messages/{id}', [ChatMessageMetadataController::class, 'fetchMessages']);
+
+    Route::get('/getTasks',[apiTasksController::class,"getApiTasks"]);
 });
 
 Route::post('/hash', function (Request $request) {
