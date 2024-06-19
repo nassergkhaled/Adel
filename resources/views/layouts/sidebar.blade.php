@@ -8,6 +8,7 @@
         'chating' => 1,
         'clients' => 1,
         'billings' => 1,
+        'tasks' => 1,
     ];
     switch ($role) {
         case 'Client':
@@ -18,6 +19,7 @@
                 'chating' => 1,
                 'clients' => 0,
                 'billings' => 0,
+                'tasks' => 1,
             ];
             break;
         case 'Lawyer':
@@ -28,6 +30,7 @@
                 'chating' => 1,
                 'clients' => 1,
                 'billings' => 1,
+                'tasks' => 1,
             ];
             break;
         case 'Manager':
@@ -38,6 +41,7 @@
                 'chating' => 0,
                 'clients' => 1,
                 'billings' => 1,
+                'tasks' => 1,
             ];
             break;
 
@@ -76,6 +80,30 @@
                                 d="M7 0V2H13V0H15V2H19C19.5523 2 20 2.44772 20 3V19C20 19.5523 19.5523 20 19 20H1C0.44772 20 0 19.5523 0 19V3C0 2.44772 0.44772 2 1 2H5V0H7ZM18 10H2V18H18V10ZM9 12V16H4V12H9ZM5 4H2V8H18V4H15V6H13V4H7V6H5V4Z" />
                         </svg>
                         <span class="ms-4" class="">التقويم</span>
+                    </x-nav-link>
+                </div>
+            @endif
+
+            @if ($sideBar['tasks'])
+                <div class="">
+                    <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.*')"
+                        class="p-[0.60rem] flex items-center {{ request()->routeIs('tasks.*') ? 'text-yourActiveColor' : 'text-gray-400' }}">
+                        <svg width="24" height="24" viewBox="0 0 32 32" class="icon inline-block ms-[1.15rem] fill-current" fill="#9CA3AF" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <defs>
+                                <style>.cls-1{fill:none;}</style>
+                              </defs>
+                              <title>task</title>
+                              <polygon points="14 20.18 10.41 16.59 9 18 14 23 23 14 21.59 12.58 14 20.18"></polygon>
+                              <path d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z" transform="translate(0 0)"></path>
+                              <rect id="_Transparent_Rectangle_" data-name="<Transparent Rectangle>" class="cls-1" width="32" height="32"></rect>
+                            </g>
+                          </svg>
+                          
+                          
+                        <span class="ms-4" class="">المهام</span>
                     </x-nav-link>
                 </div>
             @endif
@@ -133,7 +161,7 @@
 
             {{-- ADD SUBMENU HERE --}}
             @if ($sideBar['billings'])
-                <x-nav-link :href="route('billings.index',['Tab'=>'invoices'])" :active="request()->routeIs('billings.*')"
+                <x-nav-link :href="route('billings.index', ['Tab' => 'invoices'])" :active="request()->routeIs('billings.*')"
                     class="px-3 py-3 flex items-center {{ request()->routeIs('billings.*') ? 'text-yourActiveColor' : 'text-gray-400' }}">
 
                     <svg width="18" height="18" class="inline-block mr-3.5 fill-current"
