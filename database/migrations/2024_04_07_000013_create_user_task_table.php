@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->primary(['task_id', 'user_id']);
-            $table->date('assigned_date'); //for each user
             $table->timestamps();
         });
     }

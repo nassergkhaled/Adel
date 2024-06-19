@@ -38,7 +38,7 @@
             <main>
                 <div class="mt-2">
                     @if (session()->has('msg'))
-                        <div class="w-[85%] absolute flex justify-center">
+                        <div class="w-[85%] flex justify-center">
                             <div role="alert" id="alert_message"
                                 class="alert alert-success w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6"
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     @elseif (session()->has('ValError'))
-                        <div class="w-[85%] absolute flex justify-center">
+                        <div class="w-[85%] flex justify-center">
                             <div role="alert" id="alert_message"
                                 class="alert alert-warning w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6"
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                     @elseif (session()->has('errMsg'))
-                        <div class="w-[85%] absolute flex justify-center">
+                        <div class="w-[85%] flex justify-center">
                             <div role="alert" id="alert_message"
                                 class="alert alert-error w-[20%] mx-auto text-center shadow-lg transition ease-in-out duration-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6"

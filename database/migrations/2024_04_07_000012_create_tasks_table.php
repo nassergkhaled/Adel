@@ -21,12 +21,11 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users');
 
             $table->string('title');
-            $table->text('description');
-            $table->date('start_date');
-            $table->date('completion_date')->nullable();
             $table->date('due_date');
-            $table->string('status');
-            $table->string('priority');
+            $table->unsignedTinyInteger('priority');
+            $table->text('description');
+            $table->boolean('status'); // 0:incomplete 1:complete
+            $table->boolean('reminder'); // 0:off 1:on
 
             $table->timestamps();
         });

@@ -60,6 +60,23 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    public function getFullNameAttribute()
+    {
+        if ($this->role === 'Client') {
+            return $this->client ? $this->client->full_name : $this->first_name . " " . $this->last_name;
+        }
+        if ($this->role === 'Lawyer') {
+            return $this->lawyer ? $this->lawyer->full_name : $this->first_name . " " . $this->last_name;
+        }
+        if ($this->role === 'Manager') {
+            return $this->manager ? $this->manager->full_name : $this->first_name . " " . $this->last_name;
+        }
+        if ($this->role === 'Secretary') {
+            return $this->secretary ? $this->secretary->full_name : $this->first_name . " " . $this->last_name;
+        }
+
+        return 'N/A';
+    }
     public function office()
     {
         return $this->belongsTo(Office::class);
@@ -84,7 +101,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function tasks_assigned()
     {
         return $this->belongsToMany(Task::class, 'user_task', 'user_id', 'task_id')
-            ->withPivot('assigned_date')
             ->withTimestamps();
     }
     public function tasks_created()

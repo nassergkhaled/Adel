@@ -9,27 +9,39 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $table = "tasks";
 
     protected $fillable = [
         'case_id',
         'created_by',
         'title',
-        'description',
-        'start_date',
-        'completion_date',
         'due_date',
-        'status',
         'priority',
+        'description',
+        'status',
+        'reminder',
     ];
+    public function getPriorityAttribute($value)
+    {
+        switch ($value) {
+            case '1':
+                return ['name' => 'High', 'class' => 'bg-[#f9c6c6] px-2 py-1 rounded-md text-[#EA1B1B]'];
+            case '2':
+                return ['name' => 'Medium', 'class' => 'bg-[#e9e2c0] px-2 py-1 rounded-md text-[#A78D06]'];
+            case '3':
+                return ['name' => 'Low', 'class' => 'bg-[#c1ebd7] px-2 py-1 rounded-md text-[#06A759]'];
+            default:
+                break;
+        };
+    }
 
     public function legalCase()
     {
-        return $this->belongsTo(LegalCase::class);
+        return $this->belongsTo(LegalCase::class, 'case_id', 'id');
     }
-    public function users_assigned_to()
+    public function assignedTo()
     {
         return $this->belongsToMany(User::class, 'user_task', 'task_id', 'user_id')
-            ->withPivot('assigned_date')
             ->withTimestamps();
     }
     public function created_by()

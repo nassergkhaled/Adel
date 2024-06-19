@@ -115,26 +115,33 @@
                 </thead>
                 <tbody class="text-start" id="table_body">
 
-                    <tr class=" border-[#E6E8EB]">
-                        <td class="text-start"><input type="checkbox" id="" name=""
-                                class="rounded-sm border-[#E1E1E1] text-adel-Normal focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
-                        </td>
+                    @foreach ($data['tasks_created'] as $task)
+                        <tr class=" border-[#E6E8EB]">
 
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td>
-                            <div class="flex justify-start gap-x-4">
-                                <button><i class="fa-regular fa-trash-can"></i></button>
-                                <button><i class="fa-solid fa-pen"></i></button>
-                                <button><i class="fa-regular fa-bell"></i></button>
-                            </div>
+                            <td class="text-start"><input type="checkbox" id="task-{{ $task->id }}"
+                                    name="selectTask"
+                                    class="rounded-sm border-[#E1E1E1] text-adel-Normal focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active shadow-sm size-5">
+                            </td>
+                            <td>{{ $task->title }}</td>
+                            <td><span class="{{ $task->priority['class'] }} ">{{ __($task->priority['name']) }}</span>
+                            </td>
+                            <td>{{ $task->due_date }}</td>
+                            <td>{{ $task->case_id ? $task->legalCase->title : $task->client->full_name ?? 'N/A' }}</td>
 
-                        </td>
+                            <td>{{ $task->assignedTo->first() ? $task->assignedTo->first()->full_name : ($task->case_id ? 'جميع اعضاء القضية' : 'لي فقط') }}
+                            </td>
+                            <td>
+                                <div class="flex justify-start gap-x-4">
+                                    <button><i class="fa-regular fa-trash-can"></i></button>
+                                    <button><i class="fa-solid fa-pen"></i></button>
+                                    <button><i class="fa-regular fa-bell"></i></button>
+                                </div>
 
-                    </tr>
+                            </td>
+                        </tr>
+                    @endforeach
+
+
 
                 </tbody>
             </table>
@@ -159,127 +166,168 @@
     <dialog id="addTask" class="modal modal-middle sm:modal-middle" style="width:90%;">
         <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
             <form method="dialog">
-                <button type="submit" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
+                <button type="submit"
+                    class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
             </form>
             <h3 class="font-bold text-2xl text-center">{{ __('مهمة جديدة') }}</h3>
             <div class="my-5">
                 <hr class="border-gray-300">
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('tasks.store') }}" method="POST">
                 @csrf
                 <div class="grid grid-flow-row gap-y-5">
                     <div class="grid grid-flow-col gap-x-1 items-center">
-                        <div class="col-span-4">
-                            <label for="client-case-id"
+                        <div class="col-span-4 flex flex-col items-center">
+                            <label for="client_case_id"
                                 class="text-sm font-medium text-gray-700">{{ __('القضية/الموكل') }}
                                 <span class="text-red-500">*</span>
                             </label>
+                            @error('client_case_id')
+                                <p class="text-sm text-red-500 text-start">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
                         </div>
-                        @error('client-case-id')
-                            <p class="text-sm text-red-500 col-span-12 text-center mt-1">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
+
                         <div class="col-span-8">
-                            <select id="client-case-id" name="client-case-id" value="{{ old('client-case-id') }}"
+                            <select id="client_case_id" name="client_case_id" value="{{ old('client_case_id') }}"
                                 class="w-full border rounded-md border-gray-300 focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-300">
+
+                                <option value="" selected>-- {{ __('اختر القضية/الموكل') }}</option>
                                 <optgroup label="قضايا">
-                                    <option value="" selected>قضية 1</option>
+                                    @foreach ($data['lawyer']->legalCases as $case)
+                                        <option value="case-{{ $case->id }}"
+                                            {{ !old('TaskforMe') && old('client_case_id') == 'case-' . $case->id ? 'selected' : '' }}>
+                                            {{ $case->title }}</option>
+                                    @endforeach
                                 </optgroup>
                                 <optgroup label="موكلين">
-                                    <option value="">موكل 1</option>
+                                    @foreach ($data['lawyer']->clients as $client)
+                                        <option value="client-{{ $client->id }}"
+                                            {{ !old('TaskforMe') && old('client_case_id') == 'client-' . $client->id ? 'selected' : '' }}>
+                                            {{ $client->full_name }}</option>
+                                    @endforeach
                                 </optgroup>
                             </select>
                         </div>
                     </div>
+
                     <div class="form-control">
                         <label class="label cursor-pointer mx-auto flex items-center">
-                            <input type="checkbox" name="forMe" class="checkbox border-gray-300">
-                            <span class="label-text ms-2">{{ __('هذه المهمة ليست مرتبطة بقضية أو موكّل') }}</span>
+                            <input type="checkbox" name="TaskforMe" class="checkbox border-gray-300"
+                                @checked(old('TaskforMe'))>
+                            <span
+                                class="label-text ms-2  text-gray-700">{{ __('هذه المهمة ليست مرتبطة بقضية أو موكّل') }}</span>
                         </label>
+                        @error('TaskforMe')
+                            <p class="text-sm text-red-500 text-center">
+                                * {{ __($message) }}
+                            </p>
+                        @enderror
                     </div>
+
+
                     <hr class="border-gray-300">
 
                     <div class="grid grid-flow-col gap-x-1 items-center">
-                        <div class="col-span-4">
-                            <label for="task_title" class="text-sm font-medium text-gray-700">{{ __('عنوان المهمة') }}
+                        <div class="col-span-4 flex flex-col items-center">
+                            <label for="task_title"
+                                class="text-sm font-medium text-gray-700">{{ __('عنوان المهمة') }}
                                 <span class="text-red-500">*</span>
                             </label>
+                            @error('task_title')
+                                <p class="text-sm text-red-500 text-start">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
                         </div>
-                        @error('task_title')
-                            <p class="text-sm text-red-500 col-span-12 text-center mt-1">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
+
                         <div class="col-span-8">
                             <input type="text" id="task_title" name="task_title"
                                 placeholder="{{ __('عنوان المهمة') }}" value="{{ old('task_title') }}"
-                                class="w-full border rounded-md border-gray-300 focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-300">
+                                class="w-full border text-lg rounded-md border-gray-300 focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-300">
                         </div>
+
                     </div>
 
+
                     <div class="grid grid-flow-col gap-x-1 items-center">
-                        <div class="col-span-4">
+                        <div class="col-span-4 flex flex-col items-center">
                             <label for="due_date" class="text-sm font-medium text-gray-700">{{ __('لغاية تاريخ') }}
                                 <span class="text-red-500">*</span>
                             </label>
+                            @error('due_date')
+                                <p class="text-sm text-red-500 text-start">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
                         </div>
-                        @error('due_date')
-                            <p class="text-sm text-red-500 col-span-12 text-center mt-1">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
+
                         <div class="col-span-8">
                             <input type="date" id="due_date" name="due_date" value="{{ old('due_date') }}"
                                 class="w-full border rounded-md border-gray-300 focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-300">
                         </div>
+
                     </div>
 
+
                     <div class="grid grid-flow-col gap-x-1 items-center">
-                        <div class="col-span-4">
+                        <div class="col-span-4 flex flex-col items-center">
                             <label for="priority" class="text-sm font-medium text-gray-700">{{ __('الأولوية') }}
                                 <span class="text-red-500">*</span>
                             </label>
+                            @error('priority')
+                                <p class="text-sm text-red-500 text-start">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
                         </div>
-                        @error('priority')
-                            <p class="text-sm text-red-500 col-span-12 text-center mt-1">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
+
                         <div class="col-span-8">
                             <select id="priority" name="priority"
                                 class="w-full border rounded-md border-gray-300 focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-300">
                                 <option value="" disabled selected></option>
-                                <option value="1">قصوى</option>
-                                <option value="2">متوسطة</option>
-                                <option value="3">عادية</option>
+                                <option value="1" @selected(old('priority') == 1)>{{ __('High') }}</option>
+                                <option value="2" @selected(old('priority') == 2)>{{ __('Medium') }}</option>
+                                <option value="3" @selected(old('priority') == 3)>{{ __('Low') }}</option>
                             </select>
                         </div>
+
                     </div>
 
+
                     <div class="grid grid-flow-col gap-x-1 items-center">
-                        <div class="col-span-4">
+                        <div class="col-span-4 flex flex-col items-center">
                             <label for="description" class="text-sm font-medium text-gray-700">{{ __('الوصف') }}
                                 <span class="text-red-500">*</span>
                             </label>
+                            @error('description')
+                                <p class="text-sm text-red-500 text-start">
+                                    * {{ __($message) }}
+                                </p>
+                            @enderror
                         </div>
-                        @error('description')
-                            <p class="text-sm text-red-500 col-span-12 text-center mt-1">
-                                * {{ __($message) }}
-                            </p>
-                        @enderror
+
                         <div class="col-span-8">
-                            <textarea id="description" name="description" placeholder="{{ __('الوصف') }}" value="{{ old('description') }}"
-                                class="w-full border rounded-md border-gray-300 focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-300"></textarea>
+                            <textarea id="description" name="description" placeholder="{{ __('الوصف') }}"
+                                class="w-full border rounded-md border-gray-300 focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-300">{{ old('description') }}</textarea>
                         </div>
+
                     </div>
+
 
                     <div class="form-control">
                         <label class="label cursor-pointer mx-auto flex items-center">
-                            <input type="checkbox" name="Reminder" class="checkbox border-gray-300">
-                            <span class="label-text ms-2">{{ __('تلقي تنبيه بشأن هذه المهمة') }}</span>
+                            <input type="checkbox" name="Reminder" class="checkbox border-gray-300"
+                                @checked(old('Reminder'))>
+                            <span class="label-text ms-2  text-gray-700">{{ __('تلقي تنبيه بشأن هذه المهمة') }}</span>
                         </label>
                     </div>
+                    @error('Reminder')
+                        <p class="text-sm text-red-500 text-center">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
 
                     <div class="modal-action">
                         <button type="submit"
