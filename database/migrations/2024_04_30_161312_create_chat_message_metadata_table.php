@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('chat_message_metadata', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('session_id');
+            $table->string('session_id');
             $table->unsignedBigInteger('sender_id');
             $table->string('message_type');
             $table->timestamp('created_at')->useCurrent();

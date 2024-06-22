@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('chat_sessions', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->primary();
             $table->unsignedBigInteger('user1_id');
             $table->unsignedBigInteger('user2_id');
             $table->timestamps();
