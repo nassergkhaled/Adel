@@ -40,7 +40,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 /* ------------------scrollbar-------------------- */
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 0px;
+    height: 5px;
 }
 
 /* Track */
