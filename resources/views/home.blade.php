@@ -125,8 +125,7 @@
     </header>
 
     <div class="relative w-full" id="main">
-        <img src="{{ asset('images/Rectangle 5.jpg') }}" alt="photo"
-            class="w-full h-auto min-[1024px]:h-screen object-cover">
+        <img src="{{ asset('images/Rectangle 5.jpg') }}" alt="photo" class="w-full h-auto min-[1024px]:h-screen object-cover">
 
         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-center justify-start ">
 
@@ -480,31 +479,6 @@
     </button>
 
     <script src="{{ asset('js/app.js') }}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const scrollTopBtn = document.getElementById("scrollTopBtn");
-
-            // Show button when page is scrolled more than 500px
-            window.onscroll = function() {
-                if (
-                    document.body.scrollTop > 500 ||
-                    document.documentElement.scrollTop > 500
-                ) {
-                    scrollTopBtn.classList.remove("hidden");
-                } else {
-                    scrollTopBtn.classList.add("hidden");
-                }
-            };
-
-            // Scroll to top when button is clicked
-            scrollTopBtn.addEventListener("click", function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth",
-                });
-            });
-        });
-    </script>
 
 </body>
 
