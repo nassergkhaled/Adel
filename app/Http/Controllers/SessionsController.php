@@ -73,8 +73,27 @@ class SessionsController extends Controller
                     'file' => $this->uploadFile($request->file, $request->session_name)
                 ];
 
-                Session::create($data);
-                return redirect()->back()->with('msg', 'Witness added successfully!');
+                $newSession = Session::create($data);
+
+                if ($newSession->lagalCase->client->user_id) {
+                    $notifications = [
+                        [
+                            'title' => 'جلسة جديدة',
+                            'body' => 'تم بدء جلسة جديدة بعنوان ' . $newSession->session_name . ' في قضيّة ' . $newSession->lagalCase->title . ' الخاصة بك',
+                            'user_id' => $newSession->lagalCase->client->user_id,
+                        ],
+                        [
+                            'title' => 'جلسة جديدة',
+                            'body' => 'تم بدء جلسة جديدة بعنوان ' . $newSession->session_name . ' في قضيّة ' . $newSession->lagalCase->title . ' الخاصة بالموكل '.$newSession->lagalCase->client->full_name,
+                            'user_id' => Auth::id(),
+                        ],
+                    ];
+                    $notificationsController = new NotificationsController();
+                    $notificationsController->pushNotification($notifications);
+                }
+
+
+                return redirect()->back()->with('msg', 'Session added successfully!');
             }
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'There is an attempt to manipulate the data.');
         }
