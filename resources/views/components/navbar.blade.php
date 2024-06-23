@@ -1,4 +1,4 @@
-<nav class="bg-white py-2 w-full fixed">
+<nav class="bg-white py-2 w-full fixed z-50">
     <div class="px-5 mx-auto">
         <div class="flex justify-between py-2">
             <!-- Logo and profile on the left -->
