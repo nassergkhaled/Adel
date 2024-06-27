@@ -11,6 +11,7 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\witnessesController;
 use App\Http\Controllers\BillingsController;
+use App\Http\Controllers\OCRController;
 
 /* Route::get('/', function () {
     return view('welcome');
@@ -38,7 +39,7 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
 
     Route::get('/chating', [MainController::class, 'fetchChatSessions'])->name('chating.index');
 
-    Route::resource('tasks',TasksController::class);
+    Route::resource('tasks', TasksController::class);
     Route::resource('clients', ClientsController::class);
     Route::post('/clients/storeById/{id}', [ClientsController::class, 'storeById'])->name('clients.storeById');
     Route::post('/witnesses/storeById/{id}', [witnessesController::class, 'storeById'])->name('witnesses.storeById');
@@ -46,6 +47,10 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
 
     Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');
     Route::post('/Update_Avatar_Email', [ProfileController::class, 'Update_Avatar_Email'])->name('UpdateAvatarEmail');
+
+
+
+    // Route::post('/ocr', [OCRController::class, 'parseImage'])->name('ocr');
 });
 
 Route::middleware(['auth', CompleteRegistration::class, 'verified'])->group(function () {
@@ -63,14 +68,4 @@ Route::middleware(['auth', CompleteRegistration::class, 'verified'])->group(func
         return view('newUser/joinOffice');
     })->name('joinOffice');
 });
-require __DIR__ . '/auth.php';
-
-
-
-
-
-
-
-
-
 require __DIR__ . '/auth.php';
