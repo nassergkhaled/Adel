@@ -8,9 +8,18 @@
                     @yield('page_name')
                 </div>
 
+
                 <div class=" relative flex items-center">
                     <!-- Search bar -->
                     @yield('navbarSearchBar')
+
+                    @if (auth()->user()->role !== 'Client')
+                        <button type="button" onclick="ocr_scan.showModal()"
+                            class=" rounded-full p-2 bg-transparent size-10 flex items-center justify-center border border-adel-Normal hover:bg-adel-Light-active cursor-pointer transition-all duration-100 ease-in-out">
+                            <i class="fa-solid fa-file-contract text-xl text-adel-Normal"></i>
+                        </button>
+                        <x-ocr-dialog />
+                    @endif
                     @php
                         $role = auth()->user()->role;
                         if ($role === null) {

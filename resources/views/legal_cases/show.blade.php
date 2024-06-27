@@ -394,7 +394,7 @@
                                     onclick="clearFile(this)"><i
                                         class="fa-solid fa-eraser  rounded-full hover:bg-black hover:bg-opacity-5 p-1 text-adel-Dark hover:text-adel-Normal-hover transition-all duration-100 ease-in-out"></i></button>
 
-                                @error('Avatar')
+                                @error('file')
                                     <p class="text-sm text-red-500">
                                         * {{ __($message) }}
                                     </p>
