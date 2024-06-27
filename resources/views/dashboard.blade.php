@@ -198,19 +198,19 @@
                             </div> --}}
                             <ul>
                                 <li class="flex items-center space-x-4 text-black ">
-                                    <span class="bg-[#F9F5F1] rounded-full w-4 h-4 ml-2"></span>
+                                    <span class="bg-[#e6f0f8] rounded-full w-4 h-4 ml-2"></span>
                                     <span>القضايا الجنائية</span>
-                                    <span class="text-[#9F9E9E] font-bold">60%</span>
+                                    <span class="text-black font-bold">60%</span>
                                 </li>
                                 <li class="flex items-center space-x-4 text-black">
-                                    <span class="bg-[#775635] rounded-full w-4 h-4 ml-2"></span>
+                                    <span class="bg-[#3b5998] rounded-full w-4 h-4 ml-2"></span>
                                     <span>القضايا الحقوقية</span>
-                                    <span class="text-[#9F9E9E] font-bold">40%</span>
+                                    <span class="text-black font-bold">40%</span>
                                 </li>
                                 <li class="flex items-center space-x-4 text-black">
-                                    <span class="bg-[#553818] rounded-full w-4 h-4 ml-2"></span>
+                                    <span class="bg-[#1d2b50] rounded-full w-4 h-4 ml-2"></span>
                                     <span>القضايا الإنهائية</span>
-                                    <span class="text-[#9F9E9E] font-bold">20%</span>
+                                    <span class="text-black font-bold">20%</span>
                                 </li>
                             </ul>
                         </div>
@@ -224,9 +224,9 @@
                             label: "Number",
                             data: [230, 75, 100],
                             backgroundColor: [
-                                "rgba(85, 56, 24, 1)",
-                                "rgba(119, 86, 53, 1)",
-                                "rgba(249, 245, 241, 1)"
+                                "rgba(29, 43, 80, 1)",
+                                "rgba(43, 89, 152, 1)",
+                                "rgba(230, 240, 248, 1)"
                             ],
                             hoverOffset: 4
                         }]
@@ -318,7 +318,7 @@
                                     borderRadius: 6,
                                     borderSkipped: false,
                                     barThickness: 27,
-                                    hoverBackgroundColor: '#BF9874',
+                                    hoverBackgroundColor: '#1d2b50',
                                 }]
                             },
                             options: {

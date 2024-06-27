@@ -1,4 +1,17 @@
 <style>
+.modal-box {
+        width: 91.666667%;
+        max-width: 60rem
+            /* 512px */
+        ;
+    }
+
+    .modal {
+        /* align-items: center; */
+        margin-left: auto;
+        margin-right: auto;
+
+    }
     th button {
         background: none;
         border: none;
@@ -97,7 +110,7 @@
         <div class="flex gap-2">
             <button
                 class="rounded-full bg-[#B0B3B8] text-white text-sm font-bold px-3 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-[#3A3B3C]">تعديل <span class="triangle bf-red-500 mr-1"></span></button>
-            <button
+            <button onclick="addEnvoice.showModal()"
                 class="rounded-full bg-adel-Dark text-white text-sm font-bold px-5 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-adel-Dark-active ">أنشئ
                 فاتورة</button>
         </div>
@@ -224,4 +237,60 @@
         </table>
     </div>
 
+
+    <dialog id="addEnvoice" class="modal modal-middle sm:modal-middle" style="width: 90%;">
+        <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
+            <form method="dialog">
+                <button type="submit" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
+            </form>
+            <h3 class="font-bold text-2xl text-center">{{ __('تفاصيل الفاتورة') }}</h3>
+            <div class="my-5">
+                <hr>
+            </div>
+            <div class="bg-gray-100 p-6 flex justify-center items-center w-auto border border-gray-200">
+                <div class="flex w-1/2">
+                    <div class="flex items-center gap-6">
+                        <label for="form_select_cost" class="font-bold text-black ">{{ __('الجهة المعنية:') }}</label>
+                        <select id="form_select_cost" name="form_select_cost"
+                            class=" py-2 pl-20 border rounded-md focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active">
+                            <option value="" class="hover:none" disabled selected>{{ __('اختر اسم القضية-الموكل ') }}</option>
+                            <option value="case1">{{ __('قضية سرقة-محمد سالم') }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 flex justify-center">
+                <div class="mb-4 w-1/2">
+                    <!-- Separator line before Total Amount -->
+
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-black">المبلغ كامل:</span>
+                        <span class="font-bold text-3xl text-black">$000</span>
+                    </div>
+                    <div class="flex justify-end items-center my-2">
+                        <span class="font-bold text-black -ml-5">-</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-black">المبلغ المدفوع:</span>
+                        <span class="font-bold text-3xl text-green-600">$000</span>
+                    </div>
+                    <hr class="my-4 border-black ">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-black">المبلغ المتبقي للدفع:</span>
+                        <span class="font-bold text-3xl text-red-600">$000</span>
+                    </div>
+                </div>
+            </div>
+
+            <form action="" method="POST">
+                @csrf
+                <div class="flex justify-center w-full mt-3 border-b border-[#e1e1e1]"></div>
+                <div class="modal-action mt-4">
+                    <button type="submit" class="w-[20%] bg-[#3B5998] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#2d4373] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">
+                        {{ __('Add') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </dialog>
 </div>
