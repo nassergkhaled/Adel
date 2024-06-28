@@ -34,7 +34,7 @@ class existCLientOrCase implements Rule
                 }
             } elseif (strpos($value, 'client-') === 0) {
                 $id = str_replace('client-', '', $value);
-                if (DB::table('clients')->where('user_id', $id)->exists()) {
+                if (DB::table('clients')->where('id', $id)->exists()) {
                     $this->result = ['type' => 'client', 'id' => (int)$id];
                     return true;
                 } else {

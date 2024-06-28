@@ -22,6 +22,6 @@ class Client extends Model
     }
     public function offices()
     {
-        return $this->belongsToMany(Office::class);
+        return $this->belongsToMany(Office::class,'client_offices');
     }
 }

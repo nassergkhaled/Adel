@@ -21,9 +21,10 @@
                 class=" flex my-auto bg-adel-Normal text-adel-bg border border-adel-Normal px-8 py-2 rounded-md text-sm hover:bg-transparent hover:text-adel-Normal transition-all ease-in-out duration-100">
                 {{ __('Add') }}
             </button>
-
         </div>
         <hr>
+
+        {{-- filters --}}
         <form action="{{ route('tasks.index') }}" method="GET">
             <div class=" flex justify-start items-end gap-x-5">
                 <label class="form-control w-full max-w-xs">
@@ -73,8 +74,8 @@
                         </optgroup>
                         <optgroup label="موكلين">
                             @foreach ($data['lawyer']->clients as $client)
-                                <option value="client-{{ $client->user_id }}"
-                                    {{ old('Case_Client', $request['Case_Client']) == "client-$client->user_id" ? 'selected' : '' }}>
+                                <option value="client-{{ $client->id }}"
+                                    {{ old('Case_Client', $request['Case_Client']) == "client-$client->id" ? 'selected' : '' }}>
                                     {{ $client->full_name }}</option>
                             @endforeach
                         </optgroup>
@@ -109,7 +110,8 @@
                 <button type="submit" class="btn btn-outline btn-success">تطبيق الفلاتر</button>
                 <button type="reset" class="btn btn-outline">حذف الفلاتر</button>
             </div>
-            <div class=" justify-center gap-3 {{ old('duration', $request['duration']) == 'date' ? 'flex' : 'hidden' }}" id="dateSelect_div">
+            <div class=" justify-center gap-3 {{ old('duration', $request['duration']) == 'date' ? 'flex' : 'hidden' }}"
+                id="dateSelect_div">
                 <label class="form-control">
                     <div class="label">
                         <span class="label-text text-black">من تاريخ :</span>
@@ -247,7 +249,7 @@
                                 </optgroup>
                                 <optgroup label="موكلين">
                                     @foreach ($data['lawyer']->clients as $client)
-                                        <option value="client-{{ $client->user_id }}"
+                                        <option value="client-{{ $client->id }}"
                                             {{ !old('TaskforMe') && old('client_case_id') == 'client-' . $client->id ? 'selected' : '' }}>
                                             {{ $client->full_name }}</option>
                                     @endforeach
@@ -325,17 +327,45 @@
                                 </p>
                             @enderror
                         </div>
-
                         <div class="col-span-8">
                             <select id="assignTo" name="assignTo"
                                 class="w-full border rounded-md border-gray-300 focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-300">
-                                <option value="" disabled selected>اختر موكل لإسناد المهمة له</option>
-                                @foreach ($data['lawyer']->clients as $client)
-                                    <option value="{{ $client->user_id }}"
-                                        {{ old('assignTo') == $client->user_id ? 'selected' : '' }}>
+                                <option value="" disabled selected>اختر مستخدم لإسناد المهمة له</option>
+                                @php
+                                    $officeClients = $data['lawyer']->clients;
+                                    $officeLawyers = $data['lawyer']->user->office->users
+                                        ->where('role', 'Lawyer')
+                                        ->where('id', '!=', auth()->id());
+                                @endphp
+                                <optgroup label="محامين">
+                                    @if ($officeLawyers->count())
+                                        @foreach ($officeLawyers as $user)
+                                            <option value="{{ $user->id }}"
+                                                {{ old('assignTo') == $user->id ? 'selected' : '' }}>
 
-                                        {{ $client->full_name }}</option>
-                                @endforeach
+                                                {{ $user->full_name }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="" disabled>لا يوجد محامين في مكتبك</option>
+                                    @endif
+
+                                </optgroup>
+                                <optgroup label="موكلين">
+                                    @if ($officeClients->count())
+                                        @foreach ($officeClients as $client)
+                                            @if ($client->user_id)
+                                                <option value="{{ $client->user_id }}"
+                                                    {{ old('assignTo') == $client->user_id ? 'selected' : '' }}>
+
+                                                    {{ $client->full_name }}</option>
+                                            @else
+                                                <option disabled>{{ $client->full_name }} - (لم يسجّل بعد)</option>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <option value="" disabled>لا يوجد موكلين في مكتبك</option>
+                                    @endif
+                                </optgroup>
                             </select>
                         </div>
 

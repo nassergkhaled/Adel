@@ -119,7 +119,6 @@ class TasksController extends Controller
 
 
         //$tasks = $user->tasks_assigned;
-
         return view("tasks.index", compact("data"))->with('request', $request->all());
     }
 
@@ -160,7 +159,7 @@ class TasksController extends Controller
             // 'client_case_id' => ['required_without', 'string', new existCLientOrCase],
             'TaskforMe' => 'nullable',
             'task_title' => 'required|string',
-            'assignTo' => 'exists:clients,user_id',
+            'assignTo' => 'exists:users,id',
             'due_date' => 'required|date',
             'priority' => 'required|integer|in:1,2,3',
             'description' => 'required|string',
@@ -188,7 +187,7 @@ class TasksController extends Controller
                     'relatedClient_id' => null,
                 ];
             } elseif ($client_case_id['type'] == 'client') {
-                $client = Client::where('user_id', $client_case_id['id'])->first();
+                $client = Client::where('id', $client_case_id['id'])->first();
                 if (!$client && $client->lawyer->id !== $user->id) {
                     return redirect()->back()->withErrors($validated)->withInput()->with('errMsg', 'UnAutharized');
                 }
@@ -222,7 +221,7 @@ class TasksController extends Controller
         //     $task->assignedTo()->attach([$user->id]);
         // } elseif ($client_case_id['type'] == 'client') {
         //     $client = Client::find($client_case_id['id']);
-        //     $task->assignedTo()->attach([$client->user_id]);
+        //     $task->assignedTo()->attach([$client->id]);
         // }
         $task->assignedTo()->attach([$request->assignTo]);
         return redirect()->back()->with('msg', 'Task added successfully!');

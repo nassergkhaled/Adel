@@ -63,16 +63,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getFullNameAttribute()
     {
         if ($this->role === 'Client') {
-            return $this->client ? $this->client->full_name : $this->first_name . " " . $this->last_name;
+            return $this->client ? ($this->client->full_name ?? $this->first_name . " " . $this->last_name) : $this->first_name . " " . $this->last_name;
         }
         if ($this->role === 'Lawyer') {
-            return $this->lawyer ? $this->lawyer->full_name : $this->first_name . " " . $this->last_name;
+            return $this->lawyer ? ($this->lawyer->full_name ?? $this->first_name . " " . $this->last_name) : $this->first_name . " " . $this->last_name;
         }
         if ($this->role === 'Manager') {
-            return $this->manager ? $this->manager->full_name : $this->first_name . " " . $this->last_name;
+            return $this->manager ? ($this->manager->full_name ?? $this->first_name . " " . $this->last_name) : $this->first_name . " " . $this->last_name;
         }
         if ($this->role === 'Secretary') {
-            return $this->secretary ? $this->secretary->full_name : $this->first_name . " " . $this->last_name;
+            return $this->secretary ? ($this->secretary->full_name ?? $this->first_name . " " . $this->last_name) : $this->first_name . " " . $this->last_name;
         }
 
         return 'N/A';
@@ -83,7 +83,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function lawyer()
     {
-        return $this->hasOne(Lawyer::class, 'id');
+        return $this->hasOne(Lawyer::class, 'id', 'id');
     }
     public function client()
     {
@@ -91,11 +91,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function secretary()
     {
-        return $this->hasOne(Secretary::class);
+        return $this->hasOne(Secretary::class, 'id', 'id');
     }
     public function manager()
     {
-        return $this->hasOne(Manager::class);
+        return $this->hasOne(Manager::class, 'id', 'id');
     }
 
     public function tasks_assigned()

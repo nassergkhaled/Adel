@@ -51,6 +51,6 @@ class Task extends Model
     }
     public function clientUser()
     {
-        return $this->belongsTo(User::class,'relatedClient_id','id');
+        return $this->belongsTo(Client::class,'relatedClient_id','id');
     }
 }
