@@ -61,20 +61,21 @@
                             <ul tabindex="0"
                                 class="mt-0 z-[1] p-2 shadow-lg transition ease-in-out duration-200 menu menu-sm dropdown-content border bg-slate-50 text-black rounded-box w-52 ">
                                 <li class=" hover:bg-adel-Light-hover rounded-lg">
-                                    <a class="justify-between" href="{{ route('profile') }}">
+                                    <a class="justify-between w-full" href="{{ route('profile') }}">
                                         {{ __('Profile') }}
                                         {{-- <span class="badge">جديد</span> --}}
                                     </a>
                                 </li>
-                                <li class=" hover:bg-adel-Light-hover rounded-lg"><a>{{ __('Settings') }}</a></li>
-                                <li class="hover:bg-adel-Light-hover rounded-lg">
-                                    <form method="POST" action="{{ route('logout') }}">
+                                {{-- <li class=" hover:bg-adel-Light-hover rounded-lg"><a>{{ __('Settings') }}</a></li> --}}
+                                <form method="POST" class="w-full" action="{{ route('logout') }}">
+
+                                    <li class="hover:bg-adel-Light-hover rounded-lg">
                                         @csrf
-                                        <button type="submit">
-                                            <a class="">{{ __('Log Out') }}</a>
+                                        <button type="submit" class="w-full">
+                                            {{ __('Log Out') }}
                                         </button>
-                                    </form>
-                                </li>
+                                    </li>
+                                </form>
                             </ul>
                         </div>
                     </div>
