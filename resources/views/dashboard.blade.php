@@ -121,25 +121,29 @@
 
                             @endphp
                             <li class="flex justify-between items-center py-2">
-                                <div class="flex items-center">
+                                <a href="{{ route('clients.show', $client->id) }}" class="hover:underline ">
+                                    <div class="flex items-center">
 
-                                    @if ($clientAvatar)
-                                        <div class="avatar w-12">
-                                            <div class="rounded-full">
-                                                <img alt="Tailwind CSS Navbar component" src="{{ $clientAvatar }}" />
+                                        @if ($clientAvatar)
+                                            <div class="avatar w-12">
+                                                <div class="rounded-full">
+                                                    <img alt="Tailwind CSS Navbar component"
+                                                        src="{{ $clientAvatar }}" />
+                                                </div>
                                             </div>
-                                        </div>
-                                    @else
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2"
-                                            viewBox="0 0 448 512">
-                                            <path
-                                                d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
-                                        </svg>
-                                    @endif
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-2"
+                                                viewBox="0 0 448 512">
+                                                <path
+                                                    d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
+                                            </svg>
+                                        @endif
 
 
-                                    <span class="text-black  text-md">{{ $client->full_name }}</span>
-                                </div>
+                                        <span
+                                            class="text-black hover:text-adel-Dark-hover  text-md">{{ $client->full_name }}</span>
+                                    </div>
+                                </a>
                                 <div class="text-left">
                                     <span>{{ $print }}</span>
                                 </div>
@@ -178,7 +182,8 @@
                         <canvas id="chartPie"></canvas>
                     </div>
                     <div class="flex justify-center items-center"> <!-- This container centers everything inside it -->
-                        <div class=" p-4 leading-10 text-center"> <!-- Added text-center for text alignment within each flex item -->
+                        <div class=" p-4 leading-10 text-center">
+                            <!-- Added text-center for text alignment within each flex item -->
                             {{-- <div class="text-black flex justify-center items-center my-2 space-x-4"> <!-- justify-center aligns children horizontally center -->
                                 <span class="bg-[#F9F5F1] rounded-full w-4 h-4 ml-2"></span>
                                 <p class="ml-2">القضايا الجنائية</p>
@@ -255,19 +260,21 @@
                     @if ($upcomingCases->count() > 0)
                         @foreach ($upcomingCases as $case)
                             <li class="flex justify-between items-center px-2 py-1 ">
-                                <div class="flex items-center">
+                                <a href="{{ route('legalCases.show', $case->id) }}" class="hover:underline">
+                                    <div class="flex items-center">
 
-                                    {{-- <svg width="36" height="36" viewBox="0 0 40 40" fill="none"
+                                        {{-- <svg width="36" height="36" viewBox="0 0 40 40" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="20" cy="20" r="20" fill="#F5F0EA" />
                                     <path
                                         d="M21.3378 14.48C21.5898 14.48 21.8044 14.5687 21.9818 14.746C22.1591 14.9233 22.2478 15.138 22.2478 15.39C22.2478 15.6327 22.1591 15.8427 21.9818 16.02C21.8044 16.1973 21.5898 16.286 21.3378 16.286C21.0951 16.286 20.8851 16.1973 20.7078 16.02C20.5304 15.8427 20.4418 15.6327 20.4418 15.39C20.4418 15.138 20.5304 14.9233 20.7078 14.746C20.8851 14.5687 21.0951 14.48 21.3378 14.48ZM23.4798 14.48C23.7318 14.48 23.9418 14.5687 24.1098 14.746C24.2871 14.9233 24.3758 15.138 24.3758 15.39C24.3758 15.642 24.2871 15.8567 24.1098 16.034C23.9418 16.202 23.7318 16.286 23.4798 16.286C23.2278 16.286 23.0131 16.1973 22.8358 16.02C22.6584 15.8427 22.5698 15.6327 22.5698 15.39C22.5698 15.138 22.6584 14.9233 22.8358 14.746C23.0131 14.5687 23.2278 14.48 23.4798 14.48ZM23.4798 23.944C23.1064 24.0467 22.7378 24.098 22.3738 24.098C21.3564 24.098 20.5398 23.7293 19.9238 22.992C19.4011 22.3573 19.1398 21.5873 19.1398 20.682C19.1398 19.646 19.4758 18.8247 20.1478 18.218C20.7264 17.6673 21.4778 17.392 22.4018 17.392C23.1204 17.392 23.7178 17.5647 24.1938 17.91C24.8844 18.3767 25.2298 19.0673 25.2298 19.982V23.664C25.2298 24.8307 24.8564 25.7313 24.1098 26.366C23.4004 27.0193 22.4484 27.346 21.2538 27.346H19.8678C18.6544 27.346 17.6931 27.024 16.9838 26.38C16.2558 25.7453 15.8918 24.84 15.8918 23.664V22.11L16.7598 21.41H17.5998V23.51C17.5998 24.3873 17.8191 25.0033 18.2578 25.358C18.7058 25.722 19.4711 25.904 20.5538 25.904C21.5151 25.904 22.2011 25.7827 22.6118 25.54C23.1158 25.2413 23.4051 24.7093 23.4798 23.944ZM23.5218 19.982C23.5218 19.646 23.4144 19.3613 23.1998 19.128C22.9758 18.9227 22.7051 18.82 22.3878 18.82C21.9211 18.82 21.5478 18.9833 21.2678 19.31C20.9784 19.646 20.8338 20.1127 20.8338 20.71C20.8338 21.3073 20.9924 21.7833 21.3098 22.138C21.6271 22.4927 22.0518 22.67 22.5838 22.67C22.8824 22.67 23.1951 22.614 23.5218 22.502V19.982Z"
                                         fill="#BF9874" />
                                 </svg> --}}
-                                    <h1 class="text-center rounded-full p-2 size-9 text-[#BF9874] bg-[#F5F0EA]">
-                                        {{ mb_substr($case->title, 0, 1, 'UTF-8') }}</h1>
-                                    <span class="text-black mr-2 ">{{ $case->title }}</span>
-                                </div>
+                                        <h1 class="text-center rounded-full p-2 size-9 text-[#BF9874] bg-[#F5F0EA]">
+                                            {{ mb_substr($case->title, 0, 1, 'UTF-8') }}</h1>
+                                        <span class="text-black mr-2 ">{{ $case->title }}</span>
+                                    </div>
+                                </a>
                                 <div class="text-[#9F9E9E] font-bold text-sm">{{ $case->open_date }}</div>
                             </li>
                         @endforeach
@@ -308,7 +315,9 @@
                         const profitChart = new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // Default to monthly
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                                    'Dec'
+                                ], // Default to monthly
                                 datasets: [{
                                     label: 'Monthly Profit',
                                     data: [800, 190, 300, 500, 200, 300, 450, 520, 610, 700, 670, 530],
@@ -377,7 +386,9 @@
                                 profitChart.data.datasets[0].label = 'Daily Profit';
                                 profitChart.data.datasets[0].data = [30, 60, 90, 20, 50, 70, 40]; // Example data for daily
                             } else if (timeframe === 'monthly') {
-                                profitChart.data.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                                profitChart.data.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+                                    'Nov', 'Dec'
+                                ];
                                 profitChart.data.datasets[0].label = 'Monthly Profit';
                                 profitChart.data.datasets[0].data = [120, 190, 300, 500, 200, 300, 450, 520, 610, 700, 670, 530];
                             } else if (timeframe === 'yearly') {

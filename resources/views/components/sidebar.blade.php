@@ -50,7 +50,7 @@
     }
 
 @endphp
-<div class="flex flex-col w-[15%] h-screen bg-white py-3 fixed">
+<div class="flex flex-col w-[15%] h-screen bg-white py-3 pb-0 fixed">
     <!-- Logo -->
     <div class=" ms-5">
         <a href="{{ route('dashboard') }}" class="flex items-start py-2 ms-5">
@@ -58,7 +58,7 @@
                 class="flex h-14 filter-none grayscale hover:filter transition duration-200">
         </a>
     </div>
-    <div class="flex flex-col justify-between h-full bg-white py-3">
+    <div class="flex flex-col justify-between h-full bg-white py-3 border border-y-0 border-s-0">
         <div class="">
             <ul class="  text-[#9F9E9E] font-bold text-sm font-Almarai space-y-4 flex flex-col justify-between ">
 
