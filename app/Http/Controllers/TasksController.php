@@ -144,6 +144,7 @@ class TasksController extends Controller
 
         return $data;
     }
+
     public function store(Request $request)
     {
         if ($request->TaskforMe) {
@@ -224,6 +225,34 @@ class TasksController extends Controller
         //     $task->assignedTo()->attach([$client->id]);
         // }
         $task->assignedTo()->attach([$request->assignTo]);
+
+
+        if ($task->reminder) {
+            $notifications = [];
+            foreach ($task->assignedTo as $assignedUser) {
+
+                $notifications[] = [
+                    'title' => 'مهمة جديدة',
+                    'body' => 'تم اسناد مهمة جديدة لك بعنوان '
+                        . $task->title .
+                        ' ذات اولوية '
+                        . __($task->priority['name']) . ' ممتدة حتى تاريخ ' . $task->due_date,
+                    'user_id' => $assignedUser->id,
+                ];
+            };
+
+            $notifications[] = [
+                'title' => 'مهمة جديدة',
+                'body' => 'تم انشاء مهمة جديدة من قبلك بعنوان '
+                    . $task->title .
+                    'ذات اولوية '
+                    . __($task->priority['name']) . ' ممتدة حتى تاريخ ' . $task->due_date,
+                'user_id' => $user->id,
+            ];
+            $notificationsController = new NotificationsController();
+            $notificationsController->pushNotification($notifications);
+        }
+
         return redirect()->back()->with('msg', 'Task added successfully!');
     }
 
