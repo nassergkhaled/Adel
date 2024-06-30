@@ -203,17 +203,17 @@
                             </div> --}}
                             <ul>
                                 <li class="flex items-center space-x-4 text-black ">
-                                    <span class="bg-[#e6f0f8] rounded-full w-4 h-4 ml-2"></span>
+                                    <span class="bg-[#f9f5f1] rounded-full w-4 h-4 ml-2"></span>
                                     <span>القضايا الجنائية</span>
                                     <span class="text-black font-bold">60%</span>
                                 </li>
                                 <li class="flex items-center space-x-4 text-black">
-                                    <span class="bg-[#3b5998] rounded-full w-4 h-4 ml-2"></span>
+                                    <span class="bg-[#775635] rounded-full w-4 h-4 ml-2"></span>
                                     <span>القضايا الحقوقية</span>
                                     <span class="text-black font-bold">40%</span>
                                 </li>
                                 <li class="flex items-center space-x-4 text-black">
-                                    <span class="bg-[#1d2b50] rounded-full w-4 h-4 ml-2"></span>
+                                    <span class="bg-[#553818] rounded-full w-4 h-4 ml-2"></span>
                                     <span>القضايا الإنهائية</span>
                                     <span class="text-black font-bold">20%</span>
                                 </li>
@@ -229,9 +229,9 @@
                             label: "Number",
                             data: [230, 75, 100],
                             backgroundColor: [
-                                "rgba(29, 43, 80, 1)",
-                                "rgba(43, 89, 152, 1)",
-                                "rgba(230, 240, 248, 1)"
+                                "rgb(85, 56, 24)",
+                                "rgb(119, 86, 53)",
+                                "rgb(249, 245, 241)"
                             ],
                             hoverOffset: 4
                         }]
@@ -307,7 +307,8 @@
                     <h1 class="text-[#9F9E9E]">الأرباح الكليّة</h1>
                     <h1 class="text-black font-bold">4200$</h1>
                 </div>
-                <div class="h-72 w-full pb-3"> <!-- Ensure the container is full width -->
+                <div class="h-72 w-full pb-3">
+                    <!-- Ensure the container is full width -->
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <canvas id="profitChart"></canvas>
                     <script>
@@ -315,19 +316,23 @@
                         const profitChart = new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                                    'Dec'
-                                ], // Default to monthly
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // Default to monthly
                                 datasets: [{
                                     label: 'Monthly Profit',
                                     data: [800, 190, 300, 500, 200, 300, 450, 520, 610, 700, 670, 530],
-                                    backgroundColor: '#F6F6F3',
-                                    borderColor: '#F6F6F3',
+                                    backgroundColor: [
+                                        '#bf9874', '#F6F6F3', '#bf9874', '#F6F6F3', '#bf9874', '#F6F6F3',
+                                        '#bf9874', '#F6F6F3', '#bf9874', '#F6F6F3', '#bf9874', '#F6F6F3'
+                                    ],
+                                    borderColor: [
+                                        '#bf9874', '#F6F6F3', '#bf9874', '#F6F6F3', '#bf9874', '#F6F6F3',
+                                        '#bf9874', '#F6F6F3', '#bf9874', '#F6F6F3', '#bf9874', '#F6F6F3'
+                                    ],
                                     borderWidth: 1,
                                     borderRadius: 6,
                                     borderSkipped: false,
                                     barThickness: 27,
-                                    hoverBackgroundColor: '#1d2b50',
+                                    hoverBackgroundColor: '#bf9874',
                                 }]
                             },
                             options: {
@@ -350,19 +355,6 @@
                                         }
                                     }
                                 },
-                                /* onClick: (e) => {
-                                    const activePoints = profitChart.getElementsAtEventForMode(e, 'nearest', {
-                                        intersect: true
-                                    }, true);
-                                    if (activePoints.length > 0) {
-                                        const { index } = activePoints[0];
-                                        profitChart.data.datasets.forEach((dataset) => {
-                                            dataset.backgroundColor = dataset.backgroundColor.map((color, colorIndex) =>
-                                                colorIndex === index ? '#A52A2A' : '#F6F6F3');
-                                        });
-                                        profitChart.update();
-                                    }
-                                }, */
                                 plugins: {
                                     legend: {
                                         display: false
