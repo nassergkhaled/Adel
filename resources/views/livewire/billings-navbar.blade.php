@@ -21,11 +21,11 @@
 
     <div class="">
         @if ($Tab === 'invoices')
-            @livewire('invoices')
+            @livewire('invoices',['data'=>$data])
         @elseif($Tab === 'requestedFunds')
-            @livewire('requestedFunds')
+            @livewire('requestedFunds',['data'=>$data])
         @elseif($Tab === 'expenses')
-            @livewire('expenses')
+            @livewire('expenses',['data'=>$data])
         @endif
     </div>
 </div>

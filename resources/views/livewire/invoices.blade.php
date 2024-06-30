@@ -247,14 +247,28 @@
             <div class="my-5">
                 <hr>
             </div>
+            <form action="" method="POST">
+                @csrf
             <div class="bg-gray-100 p-6 flex justify-center items-center w-auto border border-gray-200">
                 <div class="flex w-1/2">
                     <div class="flex items-center gap-6">
-                        <label for="form_select_cost" class="font-bold text-black ">{{ __('الجهة المعنية:') }}</label>
-                        <select id="form_select_cost" name="form_select_cost"
+                        <label for="label_select_invoice" class="font-bold text-black ">{{ __('الجهة المعنية:') }}</label>
+                        <select id="form_select_invoice" name="form_select_invoice" value="{{ old('form_select_invoice') }}"
                             class=" py-2 pl-20 border rounded-md focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active">
-                            <option value="" class="hover:none" disabled selected>{{ __('اختر اسم القضية-الموكل ') }}</option>
-                            <option value="case1">{{ __('قضية سرقة-محمد سالم') }}</option>
+                            <option value="hover:none" selected disabled>-- {{ __('اختر القضية/الموكل') }}</option>
+                           {{--  <optgroup label="قضايا">
+                                    <option value="case-{{ $case->id }}"
+                                        {{ !old('TaskforMe') && old('form_select_invoice') == 'case-' . $case->id ? 'selected' : '' }}>
+                                        {{ $case->title }}</option>
+                                @endforeach
+                            </optgroup>
+                            <optgroup label="موكلين">
+                                @foreach ($data['lawyer']->clients as $client)
+                                    <option value="client-{{ $client->user_id }}"
+                                        {{ !old('TaskforMe') && old('form_select_invoice') == 'client-' . $client->id ? 'selected' : '' }}>
+                                        {{ $client->full_name }}</option>
+                                @endforeach --}}
+                            </optgroup>
                         </select>
                     </div>
                 </div>
@@ -282,8 +296,7 @@
                 </div>
             </div>
 
-            <form action="" method="POST">
-                @csrf
+
                 <div class="flex justify-center w-full mt-3 border-b border-[#e1e1e1]"></div>
                 <div class="modal-action mt-4">
                     <button type="submit" class="w-[20%] bg-[#3B5998] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#2d4373] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">

@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class Invoices extends Component
 {
+    public $data;
+
 
     public function render()
     {

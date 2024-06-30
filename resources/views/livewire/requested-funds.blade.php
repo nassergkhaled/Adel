@@ -185,8 +185,8 @@
                         </div>
 
                         <div class="flex items-center mb-5">
-                            <label for="form_select_user" class="w-1/4 text-right pr-2">{{ __('إيداع في:') }}</label>
-                            <select id="form_select_user" name="form_select_user" class="w-3/4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 border-black focus:ring-adel-Normal-active">
+                            <label for="form_select_bank" class="w-1/4 text-right pr-2">{{ __('إيداع في:') }}</label>
+                            <select id="form_select_bank" name="form_select_bank" class="w-3/4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 border-black focus:ring-adel-Normal-active">
                                 <option value="" disabled selected>{{ __('إختر حساب بنكي') }}</option>
                                 <option value="case1">{{ __('بنك 1') }}</option>
                                 <option value="case1">{{ __('بنك 2') }}</option>
@@ -194,8 +194,8 @@
                         </div>
 
                         <div class="flex items-center ">
-                            <label for="form_select_cost" class="w-1/4 text-right pr-2">{{ __('رسالة الإيميل:') }}</label>
-                            <textarea class="textarea textarea-bordered focus:ring-2 focus:ring-adel-Normal-active placeholder:text-black bg-white w-3/4 border-black" placeholder="أدخل الرسالة هنا..."></textarea>
+                            <label for="form_email_message" class="w-1/4 text-right pr-2">{{ __('رسالة الإيميل:') }}</label>
+                            <textarea name="form_email_message" class="textarea textarea-bordered focus:ring-2 focus:ring-adel-Normal-active placeholder:text-black bg-white w-3/4 border-black" placeholder="أدخل الرسالة هنا..."></textarea>
                         </div>
                     </form>
                 </div>

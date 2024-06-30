@@ -173,30 +173,33 @@
                 <hr>
             </div>
 
-            <form action="" method="POST">
+            <form action="{{ route('expenses.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <div class="flex items-center">
                         <label for="case" class="w-1/4 text-right pr-2">{{ __('Case:') }}</label>
                         <select id="case" name="case"
                             class="w-3/4 p-2 border rounded-md focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active">
-                            <option value="" disabled selected>{{ __('Select a case') }}</option>
+                            <option value="{{ old('case') }}" disabled selected>{{ __('Select a case') }}</option>
                             <option value="case1">{{ __('هنا يجب عرض قضايا المحامي') }}</option>
+                            <optgroup label="قضايا">
+                                @foreach ($data['lawyer']->legalCases as $case)
+                                    <option value="{{ $case->id }}"
+                                        {{ old('case') == $case->id ? 'selected' : '' }}>
+                                        {{ $case->title }}</option>
+                                @endforeach
+                            </optgroup>
                         </select>
                     </div>
-                    <div class="flex justify-end mt-2">
+                    {{--  <div class="flex justify-end mt-2">
                         <button class="text-sm text-adel-Dark hover:text-adel-Dark-hover hover:underline">أضف قضية
                             جديدة</button>
-                    </div>
-                </div>
-
-                <div class="flex items-center mb-5">
-                    <label for="form_select_user" class="w-1/4 text-right pr-2">{{ __('مستخدم:') }}</label>
-                    <select id="form_select_user" name="form_select_user"
-                        class="w-3/4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active">
-                        <option value="" disabled selected>{{ __('اختر موطف/مستخدم') }}</option>
-                        <option value="case1">{{ __('زهير مدموج(مدير المكتب)') }}</option>
-                    </select>
+                    </div> --}}
+                    @error('case')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
                 </div>
 
 
@@ -205,34 +208,49 @@
                     <select id="form_select_activity" name="form_select_activity"
                         class="w-2/4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active">
                         <option value="" disabled selected>{{ __('اختر نوع النشاط') }}</option>
-                        <option value="case1">{{ __('قراءة ملف') }}</option>
-                        <option value="case1">{{ __('زيارة طرف اخر') }}</option>
+                        <option value="قراءة ملف">قراءة ملف</option>
+                        <option value="زيارة طرف اخر">زيارة طرف اخر</option>
                     </select>
                     <div class="justify-end mr-4">
-                        <button id="add_new_activity" class="text-sm text-adel-Dark hover:text-adel-Dark-hover hover:underline">أضف نشاط
+                        <button id="add_new_activity"
+                            class="text-sm text-adel-Dark hover:text-adel-Dark-hover hover:underline">أضف نشاط
                             جديد</button>
                     </div>
+                    @error('form_select_activity')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
                 </div>
 
-                <div class="flex items-center mb-5 ">
+               {{--  <div class="flex items-center mb-5 ">
                     <label for="form_select_cost" class="w-1/4 text-right pr-2">{{ __('نوع التكلفة:') }}</label>
                     <select id="form_select_cost" name="form_select_cost"
                         class="w-3/4 p-2 border rounded-md focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active">
                         <option value="" disabled selected>{{ __('اختر نوع التكلفة') }}</option>
-                        <option value="case1">{{ __('تكلفة ثابتة') }}</option>
-                        <option value="case1">{{ __('تكلفة متغيرة') }}</option>
+                        <option value="1">{{ __('تكلفة ثابتة') }}</option>
                     </select>
-                </div>
+                    @error('form_select_cost')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
+                </div> --}}
 
                 {{-- <div class="form-control w-52">
                     <input type="checkbox" class="toggle" checked style="background-color: #8f7257;"/>
                 </div> --}}
 
                 <div class="flex items-center mb-5 ">
-                    <label for="form_select_cost" class="w-1/4 text-right pr-2">{{ __('الوصف :') }}</label>
+                    <label for="form_description" class="w-1/4 text-right pr-2">{{ __('الوصف :') }}</label>
                     <textarea
                         class="textarea textarea-bordered focus:ring-2 focus:ring-adel-Normal-active placeholder:text-black bg-white w-3/4 border-black"
-                        placeholder="أدخل الوصف هنا..."></textarea>
+                        placeholder="أدخل الوصف هنا..." name="form_description"></textarea>
+                        @error('form_description')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
                 </div>
 
                 <div class="bg-gray-100 p-6 flex justify-center items-center w-auto border border-gray-200">
@@ -275,7 +293,7 @@
                         <div class="relative">
                             <label for="form_quantity"
                                 class="absolute top-0 right-0 text-sm text-black ml-1 -mt-1">{{ __('الكمية') }}</label>
-                            <input type="text" id="form_quantity" value="{{ old('form_quantity') }}"
+                            <input type="text" id="form_quantity" value="{{ old('form_quantity') }}" name="form_quantity"
                                 class="mt-5 w-full p-2 border border-[#cacaca] rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                         </div>
                         @error('form_quantity')

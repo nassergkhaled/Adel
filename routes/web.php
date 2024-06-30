@@ -3,6 +3,7 @@
 use App\Http\Controllers\LegalCasesController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RequestedFundController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Middleware\CompleteRegistration;
 use App\Http\Middleware\RegistrationComplete;
@@ -10,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\witnessesController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ExpenseController;
+
 use App\Http\Controllers\BillingsController;
 use App\Http\Controllers\OCRController;
 
@@ -35,6 +39,17 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
     Route::resource('/witnesses', witnessesController::class);
     Route::resource('/Sessions', SessionsController::class);
     Route::resource('/billings', BillingsController::class);
+    Route::resource('/invoices', InvoiceController::class);
+    Route::resource('/expenses', ExpenseController::class);
+    Route::resource('/requestedfunds', RequestedFundController::class);
+
+/* Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store'); */
+
+
+
+
 
 
     Route::get('/chating', [MainController::class, 'fetchChatSessions'])->name('chating.index');
