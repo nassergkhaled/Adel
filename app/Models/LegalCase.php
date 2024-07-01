@@ -22,7 +22,6 @@ class LegalCase extends Model
     {
         // return $this->hasMany(Session::class,'case_id','case_sessions');
         return $this->hasMany(Session::class, 'case_id', 'id');
-
     }
     public function client()
     {
@@ -36,5 +35,13 @@ class LegalCase extends Model
     public function CaseSessionWitness()
     {
         return $this->hasMany(Case_Session_Witness::class, 'legal_case_id', 'id');
+    }
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class, 'case_id', 'id');
+    }
+    public function requestedFunds()
+    {
+        return $this->hasMany(requestedFund::class, 'case_id', 'id');
     }
 }

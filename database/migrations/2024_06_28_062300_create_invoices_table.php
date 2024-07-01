@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('paid_amount', 10, 4)->nullable();
             $table->string('pay_method')->nullable();
             $table->date('pay_date')->nullable();
-            $table->date('due_date');
+            $table->date('due_date')->nullable();
             //send data can take it from timestamps (created_at)
 
             $table->timestamps();
