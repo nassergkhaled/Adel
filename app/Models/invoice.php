@@ -37,4 +37,8 @@ class invoice extends Model
     {
         return $this->hasMany(expense::class);
     }
+    public function legalCase()
+    {
+        return $this->belongsTo(LegalCase::class, 'case_id', 'id');
+    }
 }

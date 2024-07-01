@@ -172,72 +172,51 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
-                    <td class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                    </td>
-                    <td>01001</td>
-                    <td>زهير مدموج</td>
-                    <td>Nescafeh Co. Taxes</td>
-                    <td>110550 ₪</td>
-                    <td>1000 ₪</td>
-                    <td>-- ₪</td>
-                    <td>Jun 29, 2024</td>
-                    <td>Jun 14, 2024</td>
-                    <td><span class="text-xs bg-green-500 font-bold rounded-2xl text-white px-3 py-1">مدفوع</span></td>
-                    <td>Jun 14, 2024</td>
-                    <td class="">
-                        <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
-                        <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
-                    </td>
-                </tr>
-                <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
-                    <td class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                    </td>
-                    <td>01002</td>
-                    <td>عمرو قبها</td>
-                    <td>AJAX Co. Taxes</td>
-                    <td>20000 ₪</td>
-                    <td>1542 ₪</td>
-                    <td>-- ₪</td>
-                    <td>Jun 30, 2024</td>
-                    <td>Jun 10, 2023</td>
-                    <td>
-                        <span class="text-xs bg-red-600 font-bold rounded-2xl text-white px-3 py-1">تأخــرت</span>
-                    </td>
-                    <td>Jun 17, 2024</td>
-                    <td class="">
-                        <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
-                        <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
-                    </td>
-                </tr>
-                <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
-                    <td class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                    </td>
-                    <td>01002</td>
-                    <td>مصعب صالح</td>
-                    <td>Chicken Co. Taxes</td>
-                    <td>66000 ₪</td>
-                    <td>5000 ₪</td>
-                    <td>-- ₪</td>
-                    <td>Jun 12, 2024</td>
-                    <td>Jun 5, 2023</td>
-                    <td>
-                        <span class="text-xs bg-black font-bold rounded-2xl text-white px-3 py-1">مسودة</span>
-                    </td>
-                    <td>Jun 17, 2024</td>
-                    <td class="">
-                        <button><i class="fa-solid fa-dollar-sign ml-2"></i></button>
-                        <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
-                        <button><i class="fa-solid fa-trash-can ml-1"></i></button>
+                @foreach ($data['invoices'] as $invoice)
+                    <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
+                        <td class="px-4 py-2">
+                            <input type="checkbox"
+                                class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                        </td>
+                        <td>{{ $invoice->id }}</td>
+                        <td>{{ $invoice->legalCase->client->full_name }}</td>
+                        <td>{{ $invoice->legalCase->title }}</td>
+                        <td>{{ number_format($invoice->expenses_amount - $invoice->paidFunds_amount, 2) }} ₪</td>
+                        <td>{{ number_format($invoice->paid_amount, 2) }} ₪</td>
+                        <td>-- ₪</td>
+                        <td>--</td>
+                        <td>{{ $invoice->created_at }}</td>
+                        @php
+                            $status = $invoice->status;
+                            $class;
+                            switch ($status) {
+                                case 0:
+                                    $status = 'غير مدفوعة';
+                                    $class = 'bg-red-600';
+                                    break;
+                                case 1:
+                                    $status = 'مدفوعة';
+                                    $class = 'bg-green-500';
+                                    break;
+                                case 2:
+                                    $status = 'مدفوعة جزئياً';
+                                    $class = 'bg-black';
+                                    break;
+                                default:
+                                    break;
+                            }
+                        @endphp
+                        <td><span
+                                class="text-xs {{ $class }} font-bold rounded-2xl text-white px-3 py-1">{{ $status }}</span>
+                        </td>
+                        <td>---</td>
+                        <td class="">
+                            <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
+                            <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
+                        </td>
+                    </tr>
+                @endforeach
 
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
@@ -253,7 +232,7 @@
             <div class="my-5">
                 <hr>
             </div>
-            <livewire:invoiceDialogForm :data="$data"/>
+            <livewire:invoiceDialogForm :data="$data" />
         </div>
     </dialog>
 </div>
