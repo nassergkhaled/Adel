@@ -63,103 +63,106 @@
             </div>
 
             <button type="button" onclick="addExpenss.showModal()"
-                class="rounded-full bg-adel-Dark text-white text-sm font-bold px-5 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-adel-Dark-active ">طلب
-                دفعة</button>
+                class="rounded-full bg-adel-Dark text-white text-sm font-bold px-5 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-adel-Dark-active ">إضافة
+                نفقة</button>
         </div>
     </div>
 
-    <div class="flex items-center justify-center ">
-        <table class="border-collapse w-full md:w-3/4 lg:w-full mx-4 border" id="printTable">
-            <thead>
-                <tr>
-                    <th class="bg-gray-100 px-4 py-2" colspan="11">
-                        <input type="text"
-                            class="w-1/5 h-8 px-2 py-1 border text-xs justify-start flex border-none focus:ring-adel-Normal border-gray-300 rounded-md"
-                            placeholder="تنقية النفقات حسب القضية...">
-                    </th>
-                </tr>
-                <tr class="bg-white border-t border-b border-[#e1e1e1]">
-                    <th class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>التاريخ <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>النشاط<span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>العدد</button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>المبلغ</button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>وصف</button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>المجموع</button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>حالة الفاتورة</button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>حالة الدفع</button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>المستخدم<span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>القضية</button>
-                    </th>
-                    <th class="px-4 py-2">
-                    </th>
+    <div class="flex items-center justify-center">
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="bg-white text-black text-sm items-center text-center h-12 border-b hover:bg-gray-200">
-                    <td class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                    </td>
-                    <td>Jun 30, 2024</td>
-                    <td>قراءة ملف</td>
-                    <td>5</td>
-                    <td>110 ₪</td>
-                    <td>تم إنهاء المهمة بنجاح</td>
-                    <td>1205 ₪</td>
-                    <td>تم الفتح</td>
-                    <td><span class="text-xs bg-green-500 font-bold rounded-2xl text-white px-3 py-1">مدفوع</span></td>
-                    <td>زهير مدموج</td>
-                    <td>AJAX Co. Taxes</td>
-                    <td>
-                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                    </td>
-                </tr>
+        @if ($data['expenses'] && $data['expenses']->count())
 
-                <tr class="bg-white text-black text-sm items-center text-center h-12 border-b hover:bg-gray-200">
-                    <td class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                    </td>
-                    <td>Jun 30, 2024</td>
-                    <td>قراءة ملف</td>
-                    <td>20</td>
-                    <td>500 ₪</td>
-                    <td>تم إنهاء المهمة بنجاح</td>
-                    <td>1205 ₪</td>
-                    <td>تم الفتح</td>
-                    <td><span class="text-xs bg-red-600 font-bold rounded-2xl text-white px-3 py-1">تأخــرت</span></td>
-                    <td>مصعب صوافطة</td>
-                    <td>Nescafeh Co. Taxes</td>
-                    <td>
-                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <table class="border-collapse w-full md:w-3/4 lg:w-full mx-4 border" id="printTable">
+                <thead>
+                    <tr>
+                        <th class="bg-gray-100 px-4 py-2" colspan="11">
+                            <input type="text"
+                                class="w-1/5 h-8 px-2 py-1 border text-xs justify-start flex border-none focus:ring-adel-Normal border-gray-300 rounded-md"
+                                placeholder="تنقية النفقات حسب القضية...">
+                        </th>
+                    </tr>
+                    <tr class="bg-white border-t border-b border-[#e1e1e1]">
+                        <th class="px-4 py-2">
+                            <input type="checkbox"
+                                class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>التاريخ <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>النشاط<span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>العدد</button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>المبلغ</button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>وصف</button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>المجموع</button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>حالة الفاتورة</button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>حالة الدفع</button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>المستخدم<span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>القضية</button>
+                        </th>
+                        <th class="px-4 py-2">
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach ($data['expenses'] as $expense)
+                        <tr
+                            class="bg-white text-black text-sm items-center text-center h-12 border-b hover:bg-gray-200">
+                            <td class="px-4 py-2">
+                                <input type="checkbox"
+                                    class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                            </td>
+                            <td>{{ $expense->date }}</td>
+                            <td>{{ $expense->activity }}</td>
+                            <td>{{ $expense->quantity }}</td>
+                            <td>{{ $expense->amount }} ₪</td>
+                            <td>{{ $expense->description }}</td>
+                            <td>{{ $expense->total_amount }} ₪</td>
+                            <td>---</td>
+                            @php
+                                $isPaid = $expense->is_paid;
+                                $class;
+                                if ($is_paid) {
+                                    $class = 'bg-green-500';
+                                } else {
+                                    $class = 'bg-red-600';
+                                }
+                                $legalCase = $expense->legalCase;
+                            @endphp
+                            <td><span class="text-xs  font-bold rounded-2xl text-white px-3 py-1">مدفوع</span>
+                            </td>
+                            <td>{{ $legalCase->client->full_name }}</td>
+                            <td>{{ $legalCase->title }}</td>
+                            <td>
+                                <button><i class="fa-solid fa-pen-to-square"></i></button>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+        @else
+            <h1 class="text-center text-2xl text-black my-28">لا يوجد نفقات مضافة</h1>
+        @endif
+
     </div>
 
 
@@ -223,7 +226,7 @@
                     @enderror
                 </div>
 
-               {{--  <div class="flex items-center mb-5 ">
+                {{--  <div class="flex items-center mb-5 ">
                     <label for="form_select_cost" class="w-1/4 text-right pr-2">{{ __('نوع التكلفة:') }}</label>
                     <select id="form_select_cost" name="form_select_cost"
                         class="w-3/4 p-2 border rounded-md focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-adel-Normal-active">
@@ -246,7 +249,7 @@
                     <textarea
                         class="textarea textarea-bordered focus:ring-2 focus:ring-adel-Normal-active placeholder:text-black bg-white w-3/4 border-black"
                         placeholder="أدخل الوصف هنا..." name="form_description"></textarea>
-                        @error('form_description')
+                    @error('form_description')
                         <p class="text-sm text-red-500">
                             * {{ __($message) }}
                         </p>
@@ -293,7 +296,8 @@
                         <div class="relative">
                             <label for="form_quantity"
                                 class="absolute top-0 right-0 text-sm text-black ml-1 -mt-1">{{ __('الكمية') }}</label>
-                            <input type="text" id="form_quantity" value="{{ old('form_quantity') }}" name="form_quantity"
+                            <input type="text" id="form_quantity" value="{{ old('form_quantity') }}"
+                                name="form_quantity"
                                 class="mt-5 w-full p-2 border border-[#cacaca] rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                         </div>
                         @error('form_quantity')
@@ -316,7 +320,8 @@
 <script>
     document.getElementById('dropdownButton').onclick = function() {
         var menu = document.getElementById('dropdownMenu');
-        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        menu.classList.toggle('hidden');
+        // menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
     };
 
     // Close the dropdown menu if the user clicks outside of it

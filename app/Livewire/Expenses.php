@@ -13,8 +13,14 @@ class Expenses extends Component
 
     public function mount()
     {
-        $this->expenses = expense::all();
-
+        $user = Auth::user();
+        if ($user->role === "Lawyer") {
+            $myCasesIds = $user->lawyer->legalCases->pluck('id');
+            $myExpenses = expense::whereIn('case_id', $myCasesIds)->get();
+            $this->data += [
+                'expenses' => $myExpenses,
+            ];
+        }
     }
 
     public function render()
