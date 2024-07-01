@@ -17,15 +17,15 @@ return new class extends Migration
             $table->unsignedBigInteger('case_id');
             $table->foreign('case_id')->references('id')->on('legal_cases')->onDelete('cascade');
 
-            $table->decimal('expenses_amount', 10, 4)->nullable();
-            $table->decimal('paidFunds_amount', 10, 4)->nullable();
+            $table->decimal('expenses_amount', 10, 3)->nullable();
+            $table->decimal('paidFunds_amount', 10, 3)->nullable();
+            $table->decimal('invoice_amount', 10, 3)->nullable();
 
-
-            $table->integer('status')->default(0);
-            $table->decimal('paid_amount', 10, 4)->nullable();
+            $table->integer('status')->default(0); //0:not paid 1:not full paid 2:full paid
+            $table->decimal('paid_amount', 10, 3)->nullable();
             $table->string('pay_method')->nullable();
             $table->date('pay_date')->nullable();
-            $table->date('due_date')->nullable();
+            $table->date('due_date');
             //send data can take it from timestamps (created_at)
 
             $table->timestamps();

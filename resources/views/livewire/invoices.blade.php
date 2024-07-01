@@ -75,30 +75,47 @@
                     </div>
                 </div>
             </div>
-            <span class="text-black text-2xl">180780.00 ₪</span>
+            <span
+                class="text-black text-2xl">{{ number_format($data['invoices']->sum('invoice_amount') - $data['invoices']->sum('paid_amount'), 2) }}
+                ₪</span>
         </div>
         <div class="border-l border-gray-200 h-16 mr-8"></div>
 
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
             <span class="text-xs bg-red-600 font-bold rounded-2xl text-white px-2 py-1">مستحقات/ذمم</span>
-            <span class="text-black text-2xl">290.00 ₪</span>
+            <span
+                class="text-black text-2xl">{{ number_format($data['invoices']->where('due_date', '<', now())->sum('invoice_amount'), 2) }}
+                ₪</span>
         </div>
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
             <span class="text-xs bg-orange-400 font-bold rounded-2xl text-white px-2 py-1">غير مدفوع</span>
-            <span class="text-black text-2xl">500.00 ₪</span>
+            <span
+                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '0')->sum('invoice_amount'), 2) }}
+                ₪</span>
         </div>
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
             <span class="text-xs bg-green-500 font-bold rounded-2xl text-white px-2 py-1">مدفوع</span>
-            <span class="text-black text-2xl">10000.00 ₪</span>
+            <span
+                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '2')->sum('invoice_amount'), 2) }}
+                ₪</span>
+        </div>
+
+        @php
+            $partially = $data['invoices']->where('status', '1');
+
+            $partially_paid = $partially->sum('paid_amount');
+            $partially_unpaid = $partially->sum('invoice_amount') - $partially->sum('paid_amount');
+
+        @endphp
+        <div class="flex flex-col items-center justify-center mx-auto gap-1">
+            <span class="text-xs bg-blue-800 font-bold rounded-2xl text-white px-3 py-1">جزئي (مدفوع)</span>
+            <span class="text-black text-2xl">{{ number_format($partially_paid, 2) }} ₪</span>
         </div>
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
-            <span class="text-xs bg-blue-800 font-bold rounded-2xl text-white px-3 py-1">جزئي</span>
-            <span class="text-black text-2xl">60.00 ₪</span>
+            <span class="text-xs bg-blue-800 font-bold rounded-2xl text-white px-3 py-1">جزئي (غير مدفوع)</span>
+            <span class="text-black text-2xl">{{ number_format($partially_unpaid, 2) }} ₪</span>
         </div>
-        <div class="flex flex-col items-center justify-center mx-auto gap-1">
-            <span class="text-xs bg-black font-bold rounded-2xl text-white px-3 py-1">مسودة</span>
-            <span class="text-black text-2xl">60.00 ₪</span>
-        </div>
+
     </div>
 
     <div class="flex justify-between items-center mx-5 my-4">
@@ -181,7 +198,7 @@
                         <td>{{ $invoice->id }}</td>
                         <td>{{ $invoice->legalCase->client->full_name }}</td>
                         <td>{{ $invoice->legalCase->title }}</td>
-                        <td>{{ number_format($invoice->expenses_amount - $invoice->paidFunds_amount, 2) }} ₪</td>
+                        <td>{{ number_format($invoice->invoice_amount, 2) }} ₪</td>
                         <td>{{ number_format($invoice->paid_amount, 2) }} ₪</td>
                         <td>-- ₪</td>
                         <td>--</td>
@@ -225,8 +242,7 @@
     <dialog id="addEnvoice" class="modal modal-middle sm:modal-middle" style="width: 90%;">
         <div class="modal-box text-black bg-white text-lg" style="width: 90%;">
             <form method="dialog">
-                <button type="submit"
-                    class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
+                <button type="submit" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-[1.37rem]">✕</button>
             </form>
             <h3 class="font-bold text-2xl text-center">{{ __('تفاصيل الفاتورة') }}</h3>
             <div class="my-5">

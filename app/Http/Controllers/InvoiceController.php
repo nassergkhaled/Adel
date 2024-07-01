@@ -48,10 +48,16 @@ class InvoiceController extends Controller
         $expenses = $legalCase->expenses->where('invoice_id', null);
         $funds = $legalCase->requestedFunds->where('paid_amount', '>', '0')->where('invoice_id', null)->sortByDesc('pay_date');
 
+
+        $expenses_amount = $expenses->sum('total_amount');
+        $paidFunds_amount = $funds->sum('paid_amount');
+        $invoice_amount = $expenses_amount - $paidFunds_amount;
+
         $invoice = invoice::create([
             'case_id' => strip_tags($request->related_case),
-            'expenses_amount' => $expenses->sum('total_amount'),
-            'paidFunds_amount' => $funds->sum('paid_amount'),
+            'expenses_amount' => $expenses_amount,
+            'paidFunds_amount' => $paidFunds_amount,
+            'invoice_amount' => $invoice_amount,
             'status' => 0,
         ]);
 
