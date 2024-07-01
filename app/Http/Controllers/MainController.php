@@ -254,7 +254,7 @@ class MainController extends Controller
         }
         if ($user->role === "Client") {
             $client = $user->client;
-        
+
             // Get all lawyers connected to the client through lawyer_clients table
             $newChats = Lawyer::whereExists(function ($query) use ($client) {
                 $query->select(DB::raw(1))
@@ -262,27 +262,51 @@ class MainController extends Controller
                     ->where('lawyer_clients.client_id', $client->id)
                     ->whereColumn('lawyer_clients.lawyer_id', 'lawyers.id');
             })
-            // Filter out those who already have a chat session with the client
-            ->whereNotExists(function ($query) use ($client) {
-                $query->select(DB::raw(1))
-                    ->from('chat_sessions')
-                    ->where(function ($query) use ($client) {
-                        $query->where('user1_id', $client->user_id)
-                            ->whereColumn('user2_id', 'lawyers.id');
-                    })
-                    ->orWhere(function ($query) use ($client) {
-                        $query->where('user2_id', $client->user_id)
-                            ->whereColumn('user1_id', 'lawyers.id');
-                    });
-            })
-            ->get();
+                // Filter out those who already have a chat session with the client
+                ->whereNotExists(function ($query) use ($client) {
+                    $query->select(DB::raw(1))
+                        ->from('chat_sessions')
+                        ->where(function ($query) use ($client) {
+                            $query->where('user1_id', $client->user_id)
+                                ->whereColumn('user2_id', 'lawyers.id');
+                        })
+                        ->orWhere(function ($query) use ($client) {
+                            $query->where('user2_id', $client->user_id)
+                                ->whereColumn('user1_id', 'lawyers.id');
+                        });
+                })
+                ->get();
         }
-        
+
         $data = [
             'chatSessions' => $chatSessions,
             'newChats' => $newChats,
             'api_token' => $token,
         ];
         return view('chating.index', compact('data'));
+    }
+
+
+
+
+    public function createManagerLawyerAccount()
+    {
+        $user = Auth::user();
+        Lawyer::create([
+            'full_name' => $user->full_name,
+            'id' => $user->id,
+        ]);
+        User::find($user->id)->update(['role' => "Lawyer"]);
+        return redirect()->back();
+    }
+    public function switchToLawyerInterface()
+    {
+        User::find(Auth::id())->update(['role' => "Lawyer"]);
+        return redirect()->back();
+    }
+    public function switchToManagerInterface()
+    {
+        User::find(Auth::id())->update(['role' => "Manager"]);
+        return redirect()->back();
     }
 }

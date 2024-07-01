@@ -1,3 +1,11 @@
+@php
+    $user = auth()->user();
+    $lawyer = $user->lawyer;
+    $manager = $user->manager;
+@endphp
+
+
+
 <nav class="bg-white py-2 w-full fixed z-50 border border-x-0 border-t-0 border-adel-Light-active">
     <div class="px-5 mx-auto">
         <div class="flex justify-between py-2">
@@ -13,7 +21,7 @@
                     <!-- Search bar -->
                     @yield('navbarSearchBar')
 
-                    @if (auth()->user()->role !== 'Client')
+                    @if ($user->role !== 'Client')
                         <button type="button" onclick="ocr_scan.showModal()"
                             class=" rounded-full p-2 bg-transparent size-10 flex items-center justify-center border border-adel-Normal hover:bg-adel-Light-active cursor-pointer transition-all duration-100 ease-in-out">
                             <i class="fa-solid fa-file-contract text-xl text-adel-Normal"></i>
@@ -21,7 +29,7 @@
                         <x-ocr-dialog />
                     @endif
                     @php
-                        $role = auth()->user()->role;
+                        $role = $user->role;
                         if ($role === null) {
                             $role = 'New  User';
                         }
@@ -47,7 +55,7 @@
                     </div>
                     <div class="flex flex-col items-center text-start mb-2 ms-2">
                         <p class="text-start w-full text-[#151D48] font-Almarai">
-                            {{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</p>
+                            {{ $user->first_name . ' ' . $user->last_name }}</p>
 
                         <p class="text-start w-full text-sm text-[#737791]">{{ __($role) }}</p>
                     </div>
@@ -67,6 +75,46 @@
                                     </a>
                                 </li>
                                 {{-- <li class=" hover:bg-adel-Light-hover rounded-lg"><a>{{ __('Settings') }}</a></li> --}}
+
+                                {{-- Manager / Lawyer Mode --}}
+                                @if ($manager)
+                                    @if ($lawyer)
+                                        @if ($user->role === 'Manager')
+                                            <form method="POST" class="w-full"
+                                                action="{{ route('switchToLawyerInterface') }}">
+
+                                                <li class="hover:bg-adel-Light-hover rounded-lg">
+                                                    @csrf
+                                                    <button type="submit" class="w-full">
+                                                        {{ __('Switch to Lawyer interface') }}
+                                                    </button>
+                                                </li>
+                                            </form>
+                                        @elseif($user->role === 'Lawyer')
+                                            <form method="POST" class="w-full"
+                                                action="{{ route('switchToManagerInterface') }}">
+
+                                                <li class="hover:bg-adel-Light-hover rounded-lg">
+                                                    @csrf
+                                                    <button type="submit" class="w-full">
+                                                        {{ __('Switch to Manager interface') }}
+                                                    </button>
+                                                </li>
+                                            </form>
+                                        @endif
+                                    @else
+                                        <form method="POST" class="w-full"
+                                            action="{{ route('createManagerLawyerAccount') }}">
+
+                                            <li class="hover:bg-adel-Light-hover rounded-lg">
+                                                @csrf
+                                                <button type="submit" class="w-full">
+                                                    {{ __('Activate Lawyer interface') }}
+                                                </button>
+                                            </li>
+                                        </form>
+                                    @endif
+                                @endif
                                 <form method="POST" class="w-full" action="{{ route('logout') }}">
 
                                     <li class="hover:bg-adel-Light-hover rounded-lg">

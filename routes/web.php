@@ -43,7 +43,7 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
     Route::resource('/expenses', ExpenseController::class);
     Route::resource('/requestedfunds', RequestedFundController::class);
 
-/* Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+    /* Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
 Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
 Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store'); */
 
@@ -62,6 +62,12 @@ Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.st
 
     Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');
     Route::post('/Update_Avatar_Email', [ProfileController::class, 'Update_Avatar_Email'])->name('UpdateAvatarEmail');
+
+
+
+    Route::post('/ManagerInterface', [MainController::class, "switchToManagerInterface"])->name("switchToManagerInterface");
+    Route::post('/LawyerInterface', [MainController::class, "switchToLawyerInterface"])->name("switchToLawyerInterface");
+    Route::post('/ManagerLawyerAccount', [MainController::class, "createManagerLawyerAccount"])->name("createManagerLawyerAccount");
 
 
 
