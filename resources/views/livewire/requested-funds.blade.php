@@ -87,45 +87,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
-                    <td>#0R001</td>
-                    <td>زهير مدموج</td>
-                    <td>موثوق</td>
-                    <td>محامي رائد صالح</td>
-                    <td>1000 ₪</td>
-                    <td>-- ₪</td>
-                    <td>250 ₪</td>
-                    <td>Jun 14, 2024</td>
-                    <td>Jun 14, 2024</td>
-                    <td>تم فتح الطلب</td>
-                    <td>تم الإرسال</td>
-                    <td class="">
-                        <button><i class="fa-regular fa-bell ml-1"></i></button>
-                        <button><i class="fa-solid fa-pen-to-square ml-1"></i></button>
-                        <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
 
-                    </td>
-
-                </tr>
-                <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
-                    <td>#0R005</td>
-                    <td>عمرو قبها</td>
-                    <td>شيكات شخصية</td>
-                    <td>محامي محمد صالح</td>
-                    <td>8546 ₪</td>
-                    <td>-- ₪</td>
-                    <td>400 ₪</td>
-                    <td>Jun 30, 2024</td>
-                    <td>Jun 10, 2024</td>
-                    <td>تم فتح الطلب</td>
-                    <td>تم الإرسال</td>
-                    <td class="">
-                        <button><i class="fa-regular fa-bell ml-1"></i></button>
-                        <button><i class="fa-solid fa-pen-to-square ml-1"></i></button>
-                        <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
-
-                    </td>
-                </tr>
+                @foreach ($data['requestedFunds'] as $requestedFund)
+                    <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
+                        <td>{{ $requestedFund->id }}</td>
+                        @php
+                            $legalCase = $requestedFund->legalCase;
+                        @endphp
+                        <td>{{ $legalCase->client->full_name }}</td>
+                        <td>---</td>
+                        <td>{{ $legalCase->lawyer->full_name }}</td>
+                        <td>{{ number_format($requestedFund->requested_amount, 2) }} ₪</td>
+                        <td>{{ number_format($requestedFund->paid_amount, 2) }} ₪</td>
+                        <td>{{ $requestedFund->requested_amount - $requestedFund->paid_amount }} ₪</td>
+                        <td>{{ $requestedFund->due_date }}</td>
+                        <td>{{ $requestedFund->created_at ? $requestedFund->created_at->format('Y-m-d') : '' }}</td>
+                        <td>---</td>
+                        <td>تم الإرسال</td>
+                        <td class="">
+                            <button><i class="fa-regular fa-bell ml-1"></i></button>
+                            <button><i class="fa-solid fa-pen-to-square ml-1"></i></button>
+                            <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -148,7 +133,8 @@
                         <div class="mb-4">
                             <div class="flex items-center">
                                 <label for="to_contact" class="w-1/4 text-right pr-2">{{ __('إلى الجهة :') }}</label>
-                                <select id="to_contact" name="to_contact" class="w-3/4 p-2 border rounded-md focus:outline-none  focus:ring-2 focus:ring-offset-2 border-black focus:ring-adel-Normal-active">
+                                <select id="to_contact" name="to_contact"
+                                    class="w-3/4 p-2 border rounded-md focus:outline-none  focus:ring-2 focus:ring-offset-2 border-black focus:ring-adel-Normal-active">
                                     <option value="" disabled selected>{{ __('Select a case') }}</option>
                                     <option value="case1">{{ __('هنا يجب عرض أسماء الموكلين والقضاة ') }}</option>
                                 </select>
@@ -157,12 +143,16 @@
 
                         <div class="mb-4">
                             <div class="flex items-center">
-                                <label for="form_funds_cost_label" class="w-1/4 text-right pr-2">{{ __('السعر :') }}</label>
+                                <label for="form_funds_cost_label"
+                                    class="w-1/4 text-right pr-2">{{ __('السعر :') }}</label>
                                 <div class="relative w-3/4">
-                                    <div class="absolute inset-y-0 right-0 flex items-center p-2 rounded-r-md border border-[#cacaca] bg-[#eaeaea]">
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center p-2 rounded-r-md border border-[#cacaca] bg-[#eaeaea]">
                                         <span class="text-black text-md px-1 ">$</span>
                                     </div>
-                                    <input type="text" id="form_funds_cost" name="form_funds_cost" value="{{ old('form_funds_cost') }}" class="pl-8 p-2 w-full border lg:text-[85%] rounded-md border-black focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                                    <input type="text" id="form_funds_cost" name="form_funds_cost"
+                                        value="{{ old('form_funds_cost') }}"
+                                        class="pl-8 p-2 w-full border lg:text-[85%] rounded-md border-black focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                                 </div>
                                 @error('form_funds_cost')
                                     <p class="text-sm text-red-500">
@@ -175,7 +165,8 @@
                         <div class="mb-4">
                             <div class="flex items-center">
                                 <label for="to_contact" class="w-1/4 text-right pr-2">{{ __('التاريخ:') }}</label>
-                                <input type="date" id="form_date" name="form_date" value="{{ old('form_date') }}" class="p-2 w-3/4 lg:text-[85%] rounded-md border border-black focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                                <input type="date" id="form_date" name="form_date" value="{{ old('form_date') }}"
+                                    class="p-2 w-3/4 lg:text-[85%] rounded-md border border-black focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                                 @error('form_date')
                                     <p class="text-sm text-red-500">
                                         * {{ __($message) }}
@@ -186,7 +177,8 @@
 
                         <div class="flex items-center mb-5">
                             <label for="form_select_bank" class="w-1/4 text-right pr-2">{{ __('إيداع في:') }}</label>
-                            <select id="form_select_bank" name="form_select_bank" class="w-3/4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 border-black focus:ring-adel-Normal-active">
+                            <select id="form_select_bank" name="form_select_bank"
+                                class="w-3/4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 border-black focus:ring-adel-Normal-active">
                                 <option value="" disabled selected>{{ __('إختر حساب بنكي') }}</option>
                                 <option value="case1">{{ __('بنك 1') }}</option>
                                 <option value="case1">{{ __('بنك 2') }}</option>
@@ -194,8 +186,11 @@
                         </div>
 
                         <div class="flex items-center ">
-                            <label for="form_email_message" class="w-1/4 text-right pr-2">{{ __('رسالة الإيميل:') }}</label>
-                            <textarea name="form_email_message" class="textarea textarea-bordered focus:ring-2 focus:ring-adel-Normal-active placeholder:text-black bg-white w-3/4 border-black" placeholder="أدخل الرسالة هنا..."></textarea>
+                            <label for="form_email_message"
+                                class="w-1/4 text-right pr-2">{{ __('رسالة الإيميل:') }}</label>
+                            <textarea name="form_email_message"
+                                class="textarea textarea-bordered focus:ring-2 focus:ring-adel-Normal-active placeholder:text-black bg-white w-3/4 border-black"
+                                placeholder="أدخل الرسالة هنا..."></textarea>
                         </div>
                     </form>
                 </div>
@@ -203,13 +198,15 @@
                     <div class="text-center text-sm">
                         <h6>هذا نموذج عن الايميل الذي سيتلقاه العملاء:</h6>
                     </div>
-                    <img src="{{ asset('images\SAMPLE.png') }}" alt="Description of Image" class="w-auto mt-2 h-72 border border-gray-300">
+                    <img src="{{ asset('images\SAMPLE.png') }}" alt="Description of Image"
+                        class="w-auto mt-2 h-72 border border-gray-300">
                 </div>
             </div>
             <div class="flex justify-center w-full mt-3 border-b border-[#e1e1e1]"></div>
-                        <div class="modal-action ">
-                            <button type="submit" class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('إرسال') }}</button>
-                        </div>
+            <div class="modal-action ">
+                <button type="submit"
+                    class="w-[20%] bg-[#BF9874] mx-auto text-sm text-white py-3 text-center rounded-md hover:bg-[#433529] focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">{{ __('إرسال') }}</button>
+            </div>
         </div>
     </dialog>
 

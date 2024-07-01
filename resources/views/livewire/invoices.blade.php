@@ -202,7 +202,7 @@
                         <td>{{ number_format($invoice->paid_amount, 2) }} ₪</td>
                         <td>-- ₪</td>
                         <td>--</td>
-                        <td>{{ $invoice->created_at }}</td>
+                        <td>{{ $invoice->created_at->format('Y-m-d') }}</td>
                         @php
                             $status = $invoice->status;
                             $class;

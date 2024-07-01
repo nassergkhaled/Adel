@@ -28,7 +28,7 @@ class requestedFund extends Model
     ];
     public function legalCase()
     {
-        return $this->belongsTo(LegalCase::class);
+        return $this->belongsTo(LegalCase::class, 'case_id', 'id');
     }
     public function invoice()
     {

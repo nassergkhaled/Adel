@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\requestedFund;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class RequestedFunds extends Component
@@ -11,8 +12,14 @@ class RequestedFunds extends Component
     public $requestedFunds;
     public function mount()
     {
-        $this->requestedFunds = requestedFund::all();
-
+        $user = Auth::user();
+        if ($user->role === "Lawyer") {
+            $myCasesIds = $user->lawyer->legalCases->pluck('id');
+            $myRequestedFunds = RequestedFund::whereIn('case_id', $myCasesIds)->get();
+            $this->data += [
+                'requestedFunds' => $myRequestedFunds,
+            ];
+        }
     }
     public function render()
     {
