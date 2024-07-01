@@ -1,5 +1,5 @@
 <div>
-    <form action="" method="POST">
+    <form action="{{route("invoices.store")}}" method="POST">
         @csrf
         <div class="bg-gray-100 p-6 flex justify-center items-center w-auto border border-gray-200">
             <div class="flex w-1/2">

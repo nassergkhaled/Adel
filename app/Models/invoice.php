@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\GeneratesCustomId;
 use App\Traits\GeneratesInvoiceId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,8 @@ class invoice extends Model
     use HasFactory;
     public $incrementing = false;
     protected $keyType = 'string';
-    use GeneratesInvoiceId;
+    // use GeneratesInvoiceId;
+    use GeneratesCustomId;
 
 
 
