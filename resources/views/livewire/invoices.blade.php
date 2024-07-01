@@ -84,13 +84,13 @@
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
             <span class="text-xs bg-red-600 font-bold rounded-2xl text-white px-2 py-1">مستحقات/ذمم</span>
             <span
-                class="text-black text-2xl">{{ number_format($data['invoices']->where('due_date', '<', now())->sum('invoice_amount'), 2) }}
+                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '0')->where('due_date', '>', now())->sum('invoice_amount'), 2) }}
                 ₪</span>
         </div>
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
             <span class="text-xs bg-orange-400 font-bold rounded-2xl text-white px-2 py-1">غير مدفوع</span>
             <span
-                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '0')->sum('invoice_amount'), 2) }}
+                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '0')->where('due_date', '<=', now())->sum('invoice_amount'), 2) }}
                 ₪</span>
         </div>
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
