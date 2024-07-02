@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
 
             $table->unsignedBigInteger('office_id')->nullable();
-            $table->tinyInteger('acceptedByManager')->default(-1); // -1:decline 0:pending 1:accepted
+            $table->boolean('acceptedByManager')->default(0); // -1:decline 0:pending 1:accepted
 
 
             $table->unsignedbigInteger('id_number')->unique()->nullable(); //National id

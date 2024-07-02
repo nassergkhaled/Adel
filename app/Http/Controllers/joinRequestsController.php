@@ -14,8 +14,8 @@ class joinRequestsController extends Controller
     {
         $user = Auth::user();
         $myOfficeUsers = User::where('office_id', $user->id);
-        $bendingRequests = $myOfficeUsers->where('acceptedByManager', false)->get();
-        $acceptedRequests = $myOfficeUsers->where('acceptedByManager', true)->get();
+        $bendingRequests = $myOfficeUsers->where('acceptedByManager', false)->whereIn('role', ['Secretary', 'Lawyer'])->get();
+        $acceptedRequests = $myOfficeUsers->where('acceptedByManager', true)->whereIn('role', ['Secretary', 'Lawyer'])->get();
         $data = [
             'acceptedRequests' => $acceptedRequests,
             'bendingRequests' => $bendingRequests,
@@ -40,10 +40,13 @@ class joinRequestsController extends Controller
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Unautherized!');
         }
 
-        $min = -1;
-        User::find($user_id)->update([
-            'acceptedByManager' => $request->action == 1 ? 1 : -1,
-        ]);
+        $data = [
+            'acceptedByManager' => $request->action == 1 ? 1 : 0,
+        ];
+        if ($request->action == 0)
+            $data += ['office_id' => null];
+
+        User::find($user_id)->update($data);
         if ($request->action)
             return redirect()->back()->with('msg', 'Request accepted successfully!');
         else
