@@ -121,6 +121,7 @@ class MainController extends Controller
         $user->office_id = $office_id;
         $user->id_number = $request->manager_id;
         $user->phone_number = $request->manager_phone;
+        $user->acceptedByManager = true;
 
         $newManager = [
             'manager_name' => $request->manager_name,
@@ -221,7 +222,8 @@ class MainController extends Controller
 
         User::where('id', Auth::id())->update([
             'completeRegistration' => true,
-            'role' => 'Client'
+            'role' => 'Client',
+            'acceptedByManager' => true,
         ]);
 
         return redirect('dashboard')->with('msg', 'You have been registered successfully.');

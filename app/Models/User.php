@@ -35,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'office_id',
         'id_number',
         'role',
+        'acceptedByManager',
     ];
 
     /**

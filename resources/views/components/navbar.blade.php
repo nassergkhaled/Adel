@@ -49,7 +49,7 @@
 
                         <div class="avatar w-12">
                             <div class="rounded-full">
-                                <img alt="Tailwind CSS Navbar component" src="{{ $avatar }}" />
+                                <img alt="avatar" src="{{ $avatar }}" />
                             </div>
                         </div>
                     </div>
