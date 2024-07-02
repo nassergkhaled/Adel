@@ -23,6 +23,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('office_id')->nullable();
             $table->boolean('acceptedByManager')->default(0); // -1:decline 0:pending 1:accepted
+            $table->boolean('access')->default(1); // to let the manager give access to members or not
 
 
             $table->unsignedbigInteger('id_number')->unique()->nullable(); //National id

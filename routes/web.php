@@ -74,7 +74,9 @@ Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.st
 
     Route::get("/joinRequests", [managerFunctionsController::class, 'joinRequests'])->name('joinRequests');
     Route::put("/joinRequests/{id}", [managerFunctionsController::class, 'updateJoinRequests'])->name('updateJoinRequests');
-    Route::post('/officeMembers', [managerFunctionsController::class, "officeMembers"])->name("officeMembers");
+    Route::get('/officeMembers', [managerFunctionsController::class, "officeMembers"])->name("officeMembers");
+    Route::put("/updateMemberAccess/{id}", [managerFunctionsController::class, 'updateMemberAccess'])->name('updateMemberAccess');
+
 
 
 
