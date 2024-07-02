@@ -15,7 +15,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ExpenseController;
 
 use App\Http\Controllers\BillingsController;
-use App\Http\Controllers\joinRequestsController;
+use App\Http\Controllers\managerFunctionsController;
 use App\Http\Controllers\OCRController;
 
 /* Route::get('/', function () {
@@ -69,7 +69,13 @@ Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.st
     Route::post('/ManagerInterface', [MainController::class, "switchToManagerInterface"])->name("switchToManagerInterface");
     Route::post('/LawyerInterface', [MainController::class, "switchToLawyerInterface"])->name("switchToLawyerInterface");
     Route::post('/ManagerLawyerAccount', [MainController::class, "createManagerLawyerAccount"])->name("createManagerLawyerAccount");
-    Route::resource('joinRequests', joinRequestsController::class);
+
+
+
+    Route::get("/joinRequests", [managerFunctionsController::class, 'joinRequests'])->name('joinRequests');
+    Route::put("/joinRequests/{id}", [managerFunctionsController::class, 'updateJoinRequests'])->name('updateJoinRequests');
+    Route::post('/officeMembers', [managerFunctionsController::class, "officeMembers"])->name("officeMembers");
+
 
 
 

@@ -99,14 +99,14 @@
                                 </a>
                             </div> --}}
                                 <div class=" flex justify-center gap-x-5">
-                                    <form action="{{ route('joinRequests.update', $user->id) }}" method="post">
+                                    <form action="{{ route('updateJoinRequests', $user->id) }}" method="post">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="action" value="1">
                                         <button type="submit"
                                             class="btn btn-outline btn-success rounded-xl btn-sm px-8">قبول</button>
                                     </form>
-                                    <form action="{{ route('joinRequests.update', $user->id) }}" method="post">
+                                    <form action="{{ route('updateJoinRequests', $user->id) }}" method="post">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="action" value="0">

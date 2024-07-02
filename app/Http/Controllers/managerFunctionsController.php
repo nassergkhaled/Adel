@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class joinRequestsController extends Controller
+class managerFunctionsController extends Controller
 {
 
-    public function index()
+    public function joinRequests()
     {
         $user = Auth::user();
         $myOfficeUsers = User::where('office_id', $user->id);
@@ -22,7 +22,7 @@ class joinRequestsController extends Controller
         ];
         return view('manager.joinRequests', compact('data'));
     }
-    public function update($user_id, Request $request)
+    public function updateJoinRequests($user_id, Request $request)
     {
         $validated = Validator::make($request->all(), [
             'action' => 'required|in:1,0',
