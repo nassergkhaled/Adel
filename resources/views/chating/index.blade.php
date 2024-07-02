@@ -73,7 +73,7 @@
                         @foreach ($chatSessions as $chatSession)
                             <button class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2 gap-2 chat_item"
                                 onclick="openChat(this)" id="{{ $chatSession->id }}">
-                                
+
                                 @php
                                     if ($chatSession->user1_id != auth()->id()) {
                                         $id = $chatSession->user1_id;
@@ -543,7 +543,7 @@
         var firebaseConfig = {
             apiKey: "your-apiKey",
             authDomain: "your-authDomain",
-            databaseURL: "https://msgs-8c8de-default-rtdb.firebaseio.com/",
+            databaseURL: "{{ env('FIREBASE_DATABASE_URL') }}",
             projectId: "your-projectId",
             storageBucket: "your-storageBucket",
             messagingSenderId: "your-messagingSenderId",

@@ -155,7 +155,7 @@
                         var firebaseConfig = {
                             apiKey: "your-apiKey",
                             authDomain: "your-authDomain",
-                            databaseURL: "https://msgs-8c8de-default-rtdb.firebaseio.com/",
+                            databaseURL: "{{ env('FIREBASE_DATABASE_URL') }}",
                             projectId: "your-projectId",
                             storageBucket: "your-storageBucket",
                             messagingSenderId: "your-messagingSenderId",
