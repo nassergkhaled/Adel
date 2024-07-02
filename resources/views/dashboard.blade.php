@@ -37,7 +37,7 @@
                     </svg>
                     <span class="text-[#9F9E9E]">عدد الموكلين </span>
                 </div>
-                <p class="text-xl mr-0 font-bold mt-3 text-black">{{ $data['clients']->count() }}</p>
+                <p class="text-xl mr-0 font-bold mt-3 text-black">{{ $data['clientsCount'] }}</p>
             </div>
 
 
@@ -152,7 +152,8 @@
                     @else
                         <li class="flex justify-between items-center px-2 py-1 ">
                             <div class="flex items-center mx-auto">
-                                <span class="text-black mr-2 ">{{ __('There are no clients yet.') }}</span>
+                                <span
+                                    class="text-black mr-2 ">{{ __('There are no clients with active cases.') }}</span>
                             </div>
                         </li>
 
@@ -165,14 +166,14 @@
             <!-- Second Card (Pie Chart) -->
             <div class="col-span-1 bg-white rounded-lg">
                 <div class="rounded-lg overflow-hidden">
-                    <div class="flex justify-between items-center mx-4 my-2 pb-0">
-                        <div class="text-black font-bold">أنواع القضايا</div>
-                        <select id="case_status" name="case_status"
+                    <div class="flex justify-between items-center  ">
+                        <div class="text-black font-bold p-4">أنواع القضايا</div>
+                        {{-- <select id="case_status" name="case_status"
                             class="w-28 border text-center lg:text-[90%] font-bold text-[#9F9E9E] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                             <option value="1">شهري</option>
                             <option value="2">سنوي</option>
                             <option value="3">يومي</option>
-                        </select>
+                        </select> --}}
                     </div>
                     <hr>
                 </div>
@@ -183,40 +184,45 @@
                     </div>
                     <div class="flex justify-center items-center"> <!-- This container centers everything inside it -->
                         <div class=" p-4 leading-10 text-center">
-                            <!-- Added text-center for text alignment within each flex item -->
-                            {{-- <div class="text-black flex justify-center items-center my-2 space-x-4"> <!-- justify-center aligns children horizontally center -->
-                                <span class="bg-[#F9F5F1] rounded-full w-4 h-4 ml-2"></span>
-                                <p class="ml-2">القضايا الجنائية</p>
-                                <p class="text-[#9F9E9E]">60%</p>
-                            </div>
-
-                            <div class="text-black flex justify-center items-center my-2 space-x-4">
-                                <span class="bg-[#775635] rounded-full w-4 h-4 ml-2"></span>
-                                <p class="ml-2">القضايا الحقوقية</p>
-                                <p class="text-[#9F9E9E]">40%</p>
-                            </div>
-
-                            <div class="text-black flex justify-center items-center my-2 space-x-4">
-                                <span class="bg-[#553818] rounded-full w-4 h-4 ml-2"></span>
-                                <p class="ml-2">القضايا الإنهائية</p>
-                                <p class="text-[#9F9E9E]">20%</p>
-                            </div> --}}
                             <ul>
-                                <li class="flex items-center space-x-4 text-black ">
-                                    <span class="bg-[#f9f5f1] rounded-full w-4 h-4 ml-2"></span>
-                                    <span>القضايا الجنائية</span>
-                                    <span class="text-black font-bold">60%</span>
-                                </li>
-                                <li class="flex items-center space-x-4 text-black">
-                                    <span class="bg-[#775635] rounded-full w-4 h-4 ml-2"></span>
-                                    <span>القضايا الحقوقية</span>
-                                    <span class="text-black font-bold">40%</span>
-                                </li>
-                                <li class="flex items-center space-x-4 text-black">
-                                    <span class="bg-[#553818] rounded-full w-4 h-4 ml-2"></span>
-                                    <span>القضايا الإنهائية</span>
-                                    <span class="text-black font-bold">20%</span>
-                                </li>
+                                @php
+                                    $allTypes = $data['cases']->pluck('type');
+                                    $allCasestypes = $allTypes->unique();
+                                    $totalTypes = $allTypes->count();
+                                    $pieData = collect();
+                                    $pieLables = collect();
+                                    $colors = [
+                                        '#3c2815',
+                                        '#5a4128',
+                                        '#c8c3b9',
+                                        '#6e4b23',
+                                        '#8c643c',
+                                        '#ffffff',
+                                        '#553828',
+                                        '#785a3c',
+                                        '#f0f0eb',
+                                    ];
+
+                                @endphp
+                                @foreach ($allCasestypes as $key => $type)
+                                    <li class="flex items-center space-x-4 text-black ">
+                                        <span class="bg-[{{ $colors[$key % 9] }}] rounded-full w-4 h-4 ml-2"></span>
+                                        <span>قضايا {{ $type }}</span>
+                                        @php
+                                            $typeCount = $allTypes
+                                                ->filter(function ($item) use ($type) {
+                                                    return $item == $type;
+                                                })
+                                                ->count();
+                                            $pieData->push($typeCount);
+                                            $pieLables->push($type);
+
+                                        @endphp
+                                        <span
+                                            class="text-black font-bold">{{ ($typeCount / $totalTypes) * 100 }}%</span>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </div>
                     </div>
@@ -224,14 +230,20 @@
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script>
                     const dataPie = {
-                        labels: ["القضايا الإنهائية", "القضايا الحقوقية", "القضايا الجنائية"],
+                        labels: {!! $pieLables->toJson() !!},
                         datasets: [{
                             label: "Number",
-                            data: [230, 75, 100],
+                            data: {{ $pieData }},
                             backgroundColor: [
-                                "rgb(85, 56, 24)",
-                                "rgb(119, 86, 53)",
-                                "rgb(249, 245, 241)"
+                                "#3c2815",
+                                "#5a4128",
+                                "#c8c3b9",
+                                "#6e4b23",
+                                "#8c643c",
+                                "#ffffff",
+                                "#553828",
+                                "#785a3c",
+                                "#f0f0eb"
                             ],
                             hoverOffset: 4
                         }]
@@ -249,6 +261,7 @@
                     };
                     var chartPie = new Chart(document.getElementById("chartPie"), configPie);
                 </script>
+
             </div>
 
 
@@ -316,7 +329,9 @@
                         const profitChart = new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // Default to monthly
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                                    'Dec'
+                                ], // Default to monthly
                                 datasets: [{
                                     label: 'Monthly Profit',
                                     data: [800, 190, 300, 500, 200, 300, 450, 520, 610, 700, 670, 530],

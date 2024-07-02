@@ -59,14 +59,20 @@ class MainController extends Controller
 
             // $clients = $user->lawyer->clients()->whereHas('legalCases')->get();
 
-            $legalCases = $user->lawyer->legalCases;
+            $lawyer = $user->lawyer;
+            $legalCases = $lawyer->legalCases;
 
-            $myClientsIds = $legalCases->pluck('client_id')->unique();
+            $myClientsIds = $legalCases->whereIn('status', ['Open', 'Pending'])->pluck('client_id')->unique();
             $clients = Client::findMany($myClientsIds);
+
+            // $clientsCount = $legalCases->pluck('client_id')->unique()->count();
+            $clientsCount = $lawyer->clients->count();
+
 
             $data = [
                 'clients' => $clients,
                 'cases' => $legalCases,
+                'clientsCount' => $clientsCount,
                 'flag' => true,
             ];
         }
