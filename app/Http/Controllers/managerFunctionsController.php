@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lawyer;
+use App\Models\Secretary;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,13 +40,26 @@ class managerFunctionsController extends Controller
             return redirect()->back()->withErrors($validated)->withInput()->with('ValError', 'Unautherized!');
         }
 
+        $wantedUser = User::find($user_id);
         $data = [
             'acceptedByManager' => $request->action == 1 ? 1 : 0,
         ];
-        if ($request->action == 0)
-            $data += ['office_id' => null];
+        if ($request->action == 0) {
+            $data += ['office_id' => null, 'completeRegistration' => false];
 
-        User::find($user_id)->update($data);
+            switch ($wantedUser->role) {
+                case "Lawyer":
+                    Lawyer::find($wantedUser->id)->delete();
+                    break;
+                case "Secretary":
+                    Secretary::find($wantedUser->id)->delete();
+                    break;
+            }
+        }
+
+        $wantedUser->update($data);
+
+
         if ($request->action)
             return redirect()->back()->with('msg', 'Request accepted successfully!');
         else

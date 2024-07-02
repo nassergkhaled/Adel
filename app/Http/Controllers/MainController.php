@@ -179,6 +179,7 @@ class MainController extends Controller
                     'id_number' => $request->user_id_num,
                     'phone_number' => $request->user_phone,
                     'office_id' => $office_id,
+                    'completeRegistration' => true,
                 ]);
 
                 Secretary::create($userData);
@@ -310,5 +311,23 @@ class MainController extends Controller
     {
         User::find(Auth::id())->update(['role' => "Manager"]);
         return redirect()->back();
+    }
+
+
+    public function cancelMembershipRequest()
+    {
+        $user = User::find(Auth::id());
+        if ($user->acceptedByManager == 0) {
+            $user->update(['office_id', null, 'completeRegistration' => 0]);
+            switch ($user->role) {
+                case "Lawyer":
+                    Lawyer::find($user->id)->delete();
+                    break;
+                case "Secretary":
+                    Secretary::find($user->id)->delete();
+                    break;
+            }
+        }
+        return redirect()->route('joinOffice');
     }
 }
