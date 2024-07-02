@@ -18,7 +18,9 @@ use App\Http\Controllers\BillingsController;
 use App\Http\Controllers\managerFunctionsController;
 use App\Http\Controllers\OCRController;
 use App\Http\Middleware\acceptedJoinRequest;
+use App\Http\Middleware\fullAccess;
 use App\Http\Middleware\pendingJoinRequest;
+use App\Http\Middleware\suspendedAccess;
 
 /* Route::get('/', function () {
     return view('welcome');
@@ -36,7 +38,7 @@ Route::get('/', function () {
 // });
 
 Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(function () {
-    Route::middleware([acceptedJoinRequest::class])->group(function () {
+    Route::middleware([acceptedJoinRequest::class, fullAccess::class])->group(function () {
 
         Route::get('/profile', [MainController::class, 'profile'])->name('profile');
         Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
@@ -79,11 +81,17 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
     });
 
     Route::middleware([pendingJoinRequest::class])->group(function () {
-
         Route::post("/cancelMembershipRequest", [MainController::class, 'cancelMembershipRequest'])->name('cancelMembershipRequest');
         Route::get('/pendingJoinRequest', function () {
             return view('newUser.pendingJoinRequest');
         })->name('pendingJoinRequest');
+    });
+
+
+    Route::middleware([suspendedAccess::class])->group(function () {
+        Route::get('/suspendedAccess', function () {
+            return view('suspendedAccess');
+        })->name('suspendedAccess');
     });
 });
 

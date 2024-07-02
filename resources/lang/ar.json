@@ -122,6 +122,8 @@
     "Switch to Manager interface": "التحويل لواجهة مدير",
     "Cancel membership request":"الغاء طلب الانضمام",
     "Role": "الوظيفة",
+    "All your permissions have been suspended by the office administrator.":"لقد تم تعليق جميع صلاحياتك من قبل مدير المكتب.",
+    "You can contact your manager to restore your access to your account.":"بإمكانك التواصل مع مديرك لاستعادة إمكانية الوصول إلى حسابك.",
     "Your application has been sent to the office manager, please wait until your application is accepted or rejected.": "لقد تم إرسال طلبك إلى مدير المكتب، يرجى الانتظار حتى يتم قبول طلبك أو رفضه.",
     "Phone number": "رقم الهاتف",
     "Request Date": "تاريخ الطلب",
