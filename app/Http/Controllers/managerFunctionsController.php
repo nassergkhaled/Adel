@@ -45,7 +45,13 @@ class managerFunctionsController extends Controller
             'acceptedByManager' => $request->action == 1 ? 1 : 0,
         ];
         if ($request->action == 0) {
-            $data += ['office_id' => null, 'completeRegistration' => false];
+            $data += [
+                'office_id' => null,
+                'completeRegistration' => false,
+                'phone_number' => null,
+                'role' => 'New User',
+                'id_number' => null,
+            ];
 
             switch ($wantedUser->role) {
                 case "Lawyer":
