@@ -84,13 +84,13 @@
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
             <span class="text-xs bg-red-600 font-bold rounded-2xl text-white px-2 py-1">مستحقات/ذمم</span>
             <span
-                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '0')->where('due_date', '>', now())->sum('invoice_amount'), 2) }}
+                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '0')->where('due_date', '>=', now())->sum('invoice_amount'), 2) }}
                 ₪</span>
         </div>
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
             <span class="text-xs bg-orange-400 font-bold rounded-2xl text-white px-2 py-1">غير مدفوع</span>
             <span
-                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '0')->where('due_date', '<=', now())->sum('invoice_amount'), 2) }}
+                class="text-black text-2xl">{{ number_format($data['invoices']->where('status', '0')->where('due_date', '<', now())->sum('invoice_amount'), 2) }}
                 ₪</span>
         </div>
         <div class="flex flex-col items-center justify-center mx-auto gap-1">
@@ -120,122 +120,154 @@
 
     <div class="flex justify-between items-center mx-5 my-4">
         <div class="flex gap-10">
-            <div class="text-center py-2 cursor-pointer text-white font-bold text-sm bg-adel-Dark px-2 rounded-md">الكل
+            {{-- <div class="text-center py-2 cursor-pointer text-white font-bold text-sm bg-adel-Dark px-2 rounded-md">الكل
             </div>
             <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">غير مرسلة</div>
             <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">مرسلة</div>
             <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">مدفوع</div>
             <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">جزئي</div>
-            <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">مستحقات/ذمم</div>
+            <div class="text-center py-2 cursor-pointer text-black font-bold text-sm">مستحقات/ذمم</div> --}}
         </div>
         <div class="flex gap-2">
-            <button
+            {{-- <button
                 class="rounded-full bg-[#B0B3B8] text-white text-sm font-bold px-3 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-[#3A3B3C]">تعديل
-                <span class="triangle bf-red-500 mr-1"></span></button>
-            <button onclick="addEnvoice.showModal()"
-                class="rounded-full bg-adel-Dark text-white text-sm font-bold px-5 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-adel-Dark-active ">أنشئ
-                فاتورة</button>
+                <span class="triangle bf-red-500 mr-1"></span></button> --}}
+            @if ($data['invoices']->count())
+                <button onclick="addEnvoice.showModal()"
+                    class="rounded-full bg-adel-Dark text-white text-sm font-bold px-5 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-adel-Dark-active ">أنشئ
+                    فاتورة</button>
+            @endif
         </div>
     </div>
 
 
 
     <div class="flex items-center justify-center ">
-        <table class="border-collapse w-full md:w-3/4 lg:w-full mx-4 border">
-            <thead>
-                <tr>
-                    <th class="bg-gray-100 px-4 py-2" colspan="11">
+        @if ($data['invoices']->count())
+            <table class="border-collapse w-full md:w-3/4 lg:w-full mx-4 border">
+                <thead>
+                    <tr>
+                        {{-- <th class="bg-gray-100 px-4 py-2" colspan="11">
                         <input type="text"
                             class="w-1/5 h-8 px-2 py-1 border text-xs justify-start flex border-none focus:ring-adel-Normal border-gray-300 rounded-md"
                             placeholder="تنقية الفواتير حسب القضية،جهة إتصال الفاتورة...">
-                    </th>
-                </tr>
-                <tr class="bg-white border-t border-b border-[#e1e1e1]">
-                    <th class="px-4 py-2">
-                        <input type="checkbox"
-                            class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>الرقم <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>جهة الإتصال <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>القضية <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>المجموع <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>المدفوع <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>المبلغ المستحق <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>خلال <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>تاريخ الإنشاء <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>الحالة <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2">
-                        <button>تم مشاهدتها <span class="triangle"></span></button>
-                    </th>
-                    <th class="px-4 py-2"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($data['invoices'] as $invoice)
-                    <tr class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
-                        <td class="px-4 py-2">
+                    </th> --}}
+                    </tr>
+                    <tr class="bg-gray-100 border-t border-b border-[#e1e1e1]">
+                        <th class="px-4 py-2">
                             <input type="checkbox"
                                 class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
-                        </td>
-                        <td>{{ $invoice->id }}</td>
-                        <td>{{ $invoice->legalCase->client->full_name }}</td>
-                        <td>{{ $invoice->legalCase->title }}</td>
-                        <td>{{ number_format($invoice->invoice_amount, 2) }} ₪</td>
-                        <td>{{ number_format($invoice->paid_amount, 2) }} ₪</td>
-                        <td>-- ₪</td>
-                        <td>--</td>
-                        <td>{{ $invoice->created_at->format('Y-m-d') }}</td>
-                        @php
-                            $status = $invoice->status;
-                            $class;
-                            switch ($status) {
-                                case 0:
-                                    $status = 'غير مدفوعة';
-                                    $class = 'bg-red-600';
-                                    break;
-                                case 1:
-                                    $status = 'مدفوعة';
-                                    $class = 'bg-green-500';
-                                    break;
-                                case 2:
-                                    $status = 'مدفوعة جزئياً';
-                                    $class = 'bg-black';
-                                    break;
-                                default:
-                                    break;
-                            }
-                        @endphp
-                        <td><span
-                                class="text-xs {{ $class }} font-bold rounded-2xl text-white px-3 py-1">{{ $status }}</span>
-                        </td>
-                        <td>---</td>
-                        <td class="">
-                            <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
-                            <button><i class="fa-solid fa-trash-can  ml-1"></i></button>
-                        </td>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>الرقم <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>جهة الإتصال <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>القضية <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>المجموع <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>المدفوع <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>المبلغ المستحق <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>تاريخ الإستحقاق <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>تاريخ الإنشاء <span class="triangle"></span></button>
+                        </th>
+                        <th class="px-4 py-2">
+                            <button>الحالة <span class="triangle"></span></button>
+                        </th>
+                        {{-- <th class="px-4 py-2">
+                        <button>تم مشاهدتها <span class="triangle"></span></button>
+                    </th> --}}
+                        <th class="px-4 py-2 me-5"></th>
                     </tr>
-                @endforeach
+                </thead>
+                <tbody>
+                    @foreach ($data['invoices'] as $invoice)
+                        <tr
+                            class="bg-white text-black text-sm items-center text-center h-14 border-b hover:bg-gray-200">
+                            <td class="px-4 py-2">
+                                <input type="checkbox"
+                                    class="form-checkbox h-4 w-4 text-adel-Dark focus:ring-transparent transition ease-in-out duration-100 hover:bg-adel-Light-active" />
+                            </td>
+                            <td>{{ $invoice->id }}</td>
+                            <td>{{ $invoice->legalCase->client->full_name }}</td>
+                            <td>{{ $invoice->legalCase->title }}</td>
+                            <td>{{ number_format($invoice->invoice_amount, 2) }} ₪</td>
+                            <td>{{ number_format($invoice->paid_amount, 2) }} ₪</td>
+                            <td>{{ number_format($invoice->invoice_amount - $invoice->paid_amount, 2) }} ₪</td>
+                            <td>{{ $invoice->due_date }}</td>
+                            <td>{{ $invoice->created_at->format('Y-m-d') }}</td>
+                            @php
+                                $status = $invoice->status;
+                                $class;
+                                switch ($status) {
+                                    case 0:
+                                        if ($invoice->due_date >= now()) {
+                                            $status = 'مستحقّة';
+                                            $class = 'bg-red-600';
+                                        } else {
+                                            $status = 'غير مدفوعة';
+                                            $class = 'bg-orange-400';
+                                        }
+                                        break;
+                                    case 1:
+                                        $status = 'مدفوعة';
+                                        $class = 'bg-green-500';
+                                        break;
+                                    case 2:
+                                        $status = 'مدفوعة جزئياً';
+                                        $class = 'bg-blue-800';
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            @endphp
+                            <td><span
+                                    class="text-xs {{ $class }} font-bold rounded-2xl text-white px-3 py-1">{{ $status }}</span>
+                            </td>
+                            {{-- <td>---</td> --}}
+                            <td>
+                                <div class=" flex justify-center items-center h-full gap-x-2">
 
-            </tbody>
-        </table>
+                                    <div>
+                                        <button><i class="fa-solid fa-paper-plane ml-1"></i></button>
+                                    </div>
+                                    <div>
+                                        @if ($invoice->paid_amount == 0)
+                                            <form action="{{ route('invoices.destroy', $invoice->id) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"><i
+                                                        class=" text-[1rem] fa-solid fa-trash-can  ml-1"></i></button>
+                                            </form>
+                                        @endif
+
+                                    </div>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+        @else
+            <div class="flex flex-col">
+                <h1 class="text-center text-2xl text-black my-20">لا يوجد نفقات مضافة</h1>
+                <button onclick="addEnvoice.showModal()"
+                    class="rounded-full bg-adel-Dark text-white text-sm font-bold px-5 py-2 focus:ring-transparent transition ease-in-out duration-200 hover:bg-adel-Dark-active ">أنشئ
+                    فاتورة</button>
+            </div>
+        @endif
     </div>
 
 

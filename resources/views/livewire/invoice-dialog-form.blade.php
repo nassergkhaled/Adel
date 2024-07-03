@@ -1,8 +1,13 @@
 <div>
-    <form action="{{route("invoices.store")}}" method="POST">
+    <form action="{{ route('invoices.store') }}" method="POST">
         @csrf
         <div class="bg-gray-100 p-6 flex justify-center items-center w-auto border border-gray-200">
             <div class="flex w-1/2">
+                @error('related_case')
+                    <p class="text-sm text-red-500">
+                        * {{ __($message) }}
+                    </p>
+                @enderror
                 <div class="flex items-center gap-6">
                     <label for="label_select_invoice" class="font-bold text-black ">القضية المعنية:</label>
                     <select wire:change="selectCase($event.target.value)" id="related_case" name="related_case"
@@ -15,9 +20,32 @@
                                 {{ $case->title }}</option>
                         @endforeach
                     </select>
+
+                </div>
+            </div>
+            <div class="bg-gray-100 p-6 flex justify-center items-center w-auto ">
+
+                <div class="flex items-center gap-6">
+                    @error('due_date')
+                        <p class="text-sm text-red-500">
+                            * {{ __($message) }}
+                        </p>
+                    @enderror
+                    <label for="due_date" class=" text-start ps-2">{{ __('تاريخ الاستحقاق:') }}</label>
+                    <input type="date" id="due_date" name="due_date" value="{{ old('due_date') }}"
+                        class="p-2 lg:text-[85%] rounded-md border border-black focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+
+
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <div class="flex items-center">
+
                 </div>
             </div>
         </div>
+
         <div class="p-6 flex justify-center overflow-auto">
             <div class="mb-4 w-1/2">
                 <!-- Separator line before Total Amount -->

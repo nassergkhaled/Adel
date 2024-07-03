@@ -237,7 +237,7 @@
                             const time = timestamp.toLocaleTimeString();
             
                             const notification = `
-                                <li class="hover:bg-adel-Light-hover text-black rounded-md min-h-20 h-fit cursor-pointer p-2">
+                                <li class="hover:bg-adel-Light-hover mx-2 p-2 my-2 text-black rounded-md min-h-20 h-fit cursor-pointer p-2">
                                     <div>
                                         <h1 class="text-lg">${msgObj.title}</h1>
                                         <p class="text-sm">${msgObj.body}</p>

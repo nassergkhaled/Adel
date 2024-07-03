@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('id')->primary();
 
             $table->string('invoice_id')->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete(null);
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('set null');
 
             $table->unsignedBigInteger('case_id');
             $table->foreign('case_id')->references('id')->on('legal_cases')->onDelete('cascade');

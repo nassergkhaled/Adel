@@ -31,7 +31,7 @@ class expense extends Model
 
     public function legalCase()
     {
-        return $this->belongsTo(legalCase::class);
+        return $this->belongsTo(legalCase::class,'case_id','id');
     }
     public function invoice()
     {
