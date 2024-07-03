@@ -8,7 +8,7 @@
         @endphp
 
         <div class=" flex ">
-            <div class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mx-4 flex flex-col w-[30%]">
+            <div class="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mx-4 flex flex-col w-[30%]">
                 <div class="bg-white rounded-md p-4 flex flex-col justify-center">
                     <div class="flex items-center space-x-2">
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" class="ml-2"
@@ -75,7 +75,43 @@
                     </div>
                     <p class="text-xl mr-1 font-bold mt-3 text-black">{{ $closed }}</p>
                 </div>
+
+                <div class="bg-white rounded-md p-4 flex flex-col justify-center">
+                    <div class="flex justify-between">
+                        <div class="flex items-center space-x-2 ">
+                            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" class="ml-2"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect width="30" height="30" rx="4" fill="#89CFF0" fill-opacity="0.25" />
+                                <path
+                                    d="M15.6657 8.33301L15.6653 9.18501L18.999 10.2969L21.4207 9.48973L21.8423 10.7546L19.8213 11.4283L21.8848 17.1029C21.1569 17.8611 20.1331 18.333 18.999 18.333C17.865 18.333 16.8412 17.8611 16.1133 17.1029L18.1759 11.4283L15.6653 10.591V19.6663H18.3323V20.9997H11.6657V19.6663H14.3319V10.591L11.8213 11.4283L13.8848 17.1029C13.1569 17.8611 12.133 18.333 10.999 18.333C9.865 18.333 8.84119 17.8611 8.11328 17.1029L10.1759 11.4283L8.15575 10.7546L8.57739 9.48973L10.999 10.2969L14.3319 9.18501L14.3323 8.33301H15.6657ZM18.999 13.0681L18.0539 15.6663H19.9439L18.999 13.0681ZM10.999 13.0681L10.0539 15.6663H11.9439L10.999 13.0681Z"
+                                    fill="#0047AB" />
+                            </svg>
+                            <span class="text-[#9F9E9E] ms-8">كود الإنضمام للمكتب</span>
+                        </div>
+                        <div class="">
+                            <p class="mt-1 text-[#9F9E9E] hover:text-black hover:underline cursor-pointer"
+                                onclick="showCode()" id="codeButton">اظهار</p>
+                        </div>
+                    </div>
+                    <input type="password" id="code" disabled
+                        value="{{ auth()->user()->office->subscription_code }}"
+                        class="text-xl mr-1 border-none mx-auto w-full text-center font-bold mt-3 text-black">
+                </div>
             </div>
+            <script>
+                function showCode() {
+                    const codeInput = document.getElementById('code');
+                    const codeButton = document.getElementById('codeButton');
+
+                    if (codeInput.type === 'password') {
+                        codeInput.type = 'text';
+                        codeButton.textContent = 'اخفاء'; // Change button text to "Hide"
+                    } else {
+                        codeInput.type = 'password';
+                        codeButton.textContent = 'اظهار'; // Change button text to "Show"
+                    }
+                }
+            </script>
 
             <div class="min-h-[456px] mx-4 min-w-[38%]">
                 <!-- (Pie Chart) -->
@@ -204,11 +240,11 @@
                 document.addEventListener('DOMContentLoaded', (event) => {
                     fetchMessages();
                 });
-            
+
                 function fetchMessages() {
                     const id = {{ auth()->id() }};
                     const messagesRef = firebase.database().ref(`notifications/${id}`);
-            
+
                     messagesRef.on('value', function(snapshot) {
                         const messages = snapshot.val();
                         if (messages) {
@@ -218,24 +254,24 @@
                         }
                     });
                 }
-            
+
                 function displayManagerNotifications(messages) {
                     const notificationList = document.getElementById('managerbellMenu');
                     notificationList.innerHTML = ''; // Clear the list
-            
+
                     if (Object.keys(messages).length === 0) {
                         const emptyNotification = `<li class="text-center text-black mt-5">لا يوجد اشعارات</li>`;
                         notificationList.innerHTML = emptyNotification;
                         return;
                     }
-            
+
                     for (const key in messages) {
                         if (Object.prototype.hasOwnProperty.call(messages, key)) {
                             const msgObj = messages[key];
                             const timestamp = new Date(msgObj.timestamp);
                             const date = timestamp.toLocaleDateString();
                             const time = timestamp.toLocaleTimeString();
-            
+
                             const notification = `
                                 <li class="hover:bg-adel-Light-hover mx-2 p-2 my-2 text-black rounded-md min-h-20 h-fit cursor-pointer p-2">
                                     <div>
@@ -249,14 +285,14 @@
                             `;
                             const notificationElement = document.createElement('div');
                             notificationElement.innerHTML = notification.trim();
-            
+
                             const firstNotification = notificationList.firstChild;
                             notificationList.insertBefore(notificationElement.firstChild, firstNotification);
                         }
                     }
                 }
             </script>
-            
+
         </div>
 
         <div class="grid grid-cols-1 gap-1 mx-4 my-4">
