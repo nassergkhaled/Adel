@@ -78,6 +78,19 @@
                                             </p>
                                         @enderror
                                     </div>
+
+                                    <div class="grid-cols-6">
+                                        <label for="address" class="block text-sm font-medium text-gray-700">مكان
+                                            السكن<span class="text-red-600 ms-1 text-lg">*</span></label>
+                                        <input type="text" id="address" name="address" required
+                                            value="{{ old('address') }}"
+                                            class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
+                                        @error('address')
+                                            <p class="text-sm text-red-500">
+                                                * {{ __($message) }}
+                                            </p>
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <div class="modal-action ">

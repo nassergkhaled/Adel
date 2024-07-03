@@ -168,7 +168,7 @@
 
                                                 @endphp
                                                 <span
-                                                    class="text-black font-bold">{{ ($typeCount / $totalTypes) * 100 }}%</span>
+                                                    class="text-black font-bold">{{ number_format(($typeCount / $totalTypes) * 100, 2) }}%</span>
                                             </li>
                                         @endforeach
 

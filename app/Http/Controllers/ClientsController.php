@@ -117,6 +117,7 @@ class ClientsController extends Controller
             // 'client_id_num' => 'required | integer  | unique:users,id_number',
             'client_id_num' => 'required | integer', // we should check if theres no chance to find two ids with the same number in deferent countrieis
             'phone' => 'required|max:14|string|unique:clients,phone_number|unique:users,phone_number',
+            'address' => 'max:255|string',
         ], [
             'user_name.required' => 'The client name is required.',
             'user_name.max' => 'The client name must not be greater than 50 characters.',
@@ -153,6 +154,7 @@ class ClientsController extends Controller
             $client->full_name = strip_tags($request->input('user_name'));
             $client->id_number = strip_tags($request->input('client_id_num'));
             $client->phone_number = strip_tags($request->input('phone'));
+            $client->address = strip_tags($request->input('address'));
             $client->signupToken = 'client-' . $signupToken;
             $client->save();
 

@@ -16,7 +16,7 @@
         <div class="grid grid-flow-col gap-x-2">
             <div class="col-span-10">
                 <label for="client_id_num" class="block text-sm font-medium text-gray-700">رقم
-                    الهوية<span class="text-red-600 mr-1 text-lg">*</span></label>
+                    الهوية<span class="text-red-600 ms-1 text-lg">*</span></label>
                 <input type="search" id="client_id_num" wire:model="clientId" required placeholder="ادخل رقم الهوية"
                     value="{{ old('client_id_num') }}" inputmode="numeric" class="{{ $inputClass }}">
                 @error('client_id_num')
@@ -45,13 +45,14 @@
 
                 <div class="w-full bg-white rounded-lg h-auto flex flex-col justify-start">
                     <div class="mx-5 my-1">
-                        <div class="w-full text-center text-red-800 my-5 text-sm">{{ __('Client does not exist, you can add his information below') }}</div>
+                        <div class="w-full text-center text-red-800 my-5 text-sm">
+                            {{ __('Client does not exist, you can add his information below') }}</div>
 
                         <div class="grid grid-flow-col gap-4 my-5">
 
                             <div class="grid-cols-6">
                                 <label for="user_name" class="block text-sm font-medium text-gray-700">اسم
-                                    المستخدم<span class="text-red-600 mr-1 text-lg">*</span></label>
+                                    المستخدم<span class="text-red-600 ms-1 text-lg">*</span></label>
                                 <input type="text" id="user_name" name="user_name" required
                                     placeholder="ادخل اسم المستخدم" value="{{ old('user_name') }}"
                                     class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
@@ -65,7 +66,7 @@
 
                             <div class="grid-cols-6">
                                 <label for="client_id_num" class="block text-sm font-medium text-gray-700">رقم
-                                    الهوية<span class="text-red-600 mr-1 text-lg">*</span></label>
+                                    الهوية<span class="text-red-600 ms-1 text-lg">*</span></label>
                                 <input type="text" id="client_id_num" name="client_id_num" required
                                     wire:model="clientId" placeholder="ادخل رقم الهوية"
                                     value="{{ old('client_id_num') }}"
@@ -77,6 +78,7 @@
                                 @enderror
                             </div>
 
+
                         </div>
 
                         <div class="grid grid-flow-col gap-4">
@@ -84,7 +86,7 @@
                             <div class="grid-cols-6">
                                 <label for="phone"
                                     class="block text-sm font-medium text-gray-700">{{ __('Phone') }}<span
-                                        class="text-red-600 mr-1 text-lg">*</span></label>
+                                        class="text-red-600 ms-1 text-lg">*</span></label>
                                 <input type="text" inputmode="tel" id="phone" name="phone" required
                                     placeholder="ادخل {{ __('Phone') }}" value="{{ old('phone') }}"
                                     class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
@@ -94,6 +96,19 @@
                                     </p>
                                 @enderror
                             </div>
+                            <div class="grid-cols-6">
+                                <label for="address" class="block text-sm font-medium text-gray-700">مكان السكن<span
+                                        class="text-red-600 ms-1 text-lg">*</span></label>
+                                <input type="text" id="address" name="address" required
+                                    value="{{ old('address') }}"
+                                    class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
+                                @error('address')
+                                    <p class="text-sm text-red-500">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
+
                         </div>
 
                         <div class="modal-action ">
@@ -107,12 +122,13 @@
 
                 <div class="w-full bg-white rounded-lg h-auto flex flex-col justify-start">
                     <div class="mx-5 my-1">
-                        <div class="w-full text-center text-green-800 my-5 text-sm">{{ __('The client already exists, click to add him') }}</div>
+                        <div class="w-full text-center text-green-800 my-5 text-sm">
+                            {{ __('The client already exists, click to add him') }}</div>
                         <div class="grid grid-flow-col gap-4 my-5">
 
                             <div class="grid-cols-6">
                                 <label for="user_name" class="block text-sm font-medium text-gray-700">اسم
-                                    المستخدم<span class="text-red-600 mr-1 text-lg">*</span></label>
+                                    المستخدم<span class="text-red-600 ms-1 text-lg">*</span></label>
                                 <div
                                     class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
                                     {{ $this->client->full_name }}
@@ -122,7 +138,7 @@
 
                             <div class="grid-cols-6">
                                 <label for="client_id_num" class="block text-sm font-medium text-gray-700">رقم
-                                    الهوية<span class="text-red-600 mr-1 text-lg">*</span></label>
+                                    الهوية<span class="text-red-600 ms-1 text-lg">*</span></label>
                                 <div
                                     class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
                                     {{ $this->client->id_number }}
@@ -136,10 +152,18 @@
                             <div class="grid-cols-6">
                                 <label for="phone"
                                     class="block text-sm font-medium text-gray-700">{{ __('Phone') }}<span
-                                        class="text-red-600 mr-1 text-lg">*</span></label>
+                                        class="text-red-600 ms-1 text-lg">*</span></label>
                                 <div
                                     class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
                                     {{ $this->client->phone_number }}
+                                </div>
+                            </div>
+                            <div class="grid-cols-6">
+                                <label for="address" class="block text-sm font-medium text-gray-700">مكان السكن<span
+                                        class="text-red-600 ms-1 text-lg">*</span></label>
+                                <div
+                                    class="mt-1 p-2 w-full border lg:text-[75%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 focus:text-black text-black transition-colors duration-300">
+                                    {{ $this->client->address }}
                                 </div>
                             </div>
                         </div>

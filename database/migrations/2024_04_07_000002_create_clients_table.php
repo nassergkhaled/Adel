@@ -21,11 +21,13 @@ return new class extends Migration
             $table->string('full_name');
             $table->unsignedInteger('id_number')->unique();
             $table->string('phone_number',15)->unique(); // cause if the lawyer create the client then theres no use row for him to store phone number in it
+            $table->string('address')->nullable();
+
+            // $table->date('date_of_birth');
+
 
             // $table->json('contact_info'); // Phone, Email
             // $table->string('nationality')->nullable();
-            // $table->string('address')->nullable();
-            // $table->date('date_of_birth')->nullable();
 
 
             $table->timestamps();
