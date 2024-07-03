@@ -184,22 +184,19 @@
                                     </p>
                                 @enderror
                             </div>
+                            @php
+                                $casesTypes = \app\Models\legalCase::pluck('type')->unique();
+                            @endphp
                             <div>
                                 <label for="case_type"
                                     class="block text-sm font-medium text-gray-700">{{ __('نوع القصية') }}
                                     <span class="text-red-500">*</span></label>
-                                <select type="text" id="case_type" name="case_type"
+                                <select type="text" id="case_type" name="case_type" onchange="checkTypeValue(this)"
                                     class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                                    <option disabled selected></option>
-                                    <option value="1">{{ __('جنائية') }}</option>
-                                    <option value="2">{{ __('مدنية') }}</option>
-                                    <option value="3">{{ __('تجارية') }}</option>
-                                    <option value="4">{{ __('إدارية') }}</option>
-                                    <option value="5">{{ __('عمالية') }}</option>
-                                    <option value="6">{{ __('هجرة') }}</option>
-                                    <option value="7">{{ __('أسريّة') }}</option>
-                                    <option value="8">{{ __('دستورية') }}</option>
-                                    <option value="9">{{ __('بيئية') }}</option>
+                                    <option value="" selected>اختر نوع القضية</option>
+                                    @foreach ($casesTypes as $type)
+                                        <option value="{{ $type }}">{{ $type }}</option>
+                                    @endforeach
                                 </select>
                                 @error('case_type')
                                     <p class="text-sm text-red-500">
@@ -208,7 +205,52 @@
                                 @enderror
 
                             </div>
+
+                            <div id="wantedDiv" class="flex items-center pt-5 underline hover:text-adel-Dark-hover">
+                                <button type="button" class="text-sm" onclick="addNewCaseType()">اضافة نوع
+                                    جديد</button>
+
+
+                            </div>
                         </div>
+                        <script>
+                            function addNewCaseType() {
+                                const newInput = `
+                                <label for="new_case_type"
+                                    class="block text-sm font-medium text-gray-700">{{ __('اضافة نوع قضية جديد') }}
+                                    <span class="text-red-500">*</span></label>
+                                <input type="text" id="new_case_type" name="case_type"
+                                    value="{{ old('case_type') }}"
+                                    class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                                    `;
+                                let wantedDiv = document.getElementById('wantedDiv');
+                                let case_type = document.getElementById('case_type');
+                                case_type.value = '';
+                                case_type.name = '';
+
+                                wantedDiv.innerHTML = newInput;
+                                wantedDiv.classList = '';
+                                // document.getElementById('new_case_type').insertAdjacentHTML('beforeend', newInput);
+                            }
+
+                            function returnAddButton() {
+                                const button = `<button type="button" class="text-sm" onclick="addNewCaseType()">اضافة نوع جديد</button>`;
+                                let wantedDiv = document.getElementById('wantedDiv');
+                                wantedDiv.innerHTML = button;
+                                wantedDiv.classList = 'flex items-center pt-5 underline hover:text-adel-Dark-hover';
+                                let case_type = document.getElementById('case_type');
+                                case_type.value = '';
+                                case_type.name = 'case_type';
+                            }
+
+                            function checkTypeValue(option) {
+                                if (option.value) {
+                                    returnAddButton();
+                                } else {
+                                    addNewCaseType();
+                                }
+                            }
+                        </script>
                         <div class="grid grid-flow-col gap-x-5">
                             <div>
                                 <label for="case_openDate"
@@ -223,7 +265,7 @@
                                     </p>
                                 @enderror
                             </div>
-                            <div>
+                            {{-- <div>
                                 <label for="case_closeDate"
                                     class="block text-sm font-medium text-gray-700">{{ __('تاريخ الاغلاق') }} <span
                                         class="text-red-500">*</span></label>
@@ -231,6 +273,34 @@
                                     value="{{ old('case_closeDate') }}"
                                     class="mt-1 p-2 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                                 @error('case_closeDate')
+                                    <p class="text-sm text-red-500">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div> --}}
+                            <div>
+                                <label for="fees_type"
+                                    class="block text-sm font-medium text-gray-700">{{ __('الأتعاب') }}
+                                    <span class="text-red-500">*</span></label>
+                                <select type="text" id="fees_type" name="fees_type" rows="3"
+                                    value="{{ old('fees_type') }}"
+                                    class="mt-1 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                                    <option value="static" selected>ثابت</option>
+                                </select>
+                                @error('fees_type')
+                                    <p class="text-sm text-red-500">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label for="fees_amount"
+                                    class="block text-sm font-medium text-gray-700">{{ __('مبلغ الأتعاب') }}<span
+                                        class="text-red-500">*</span></label>
+                                <input type="number" step="0.01" inputmode="numeric" id="fees_amount"
+                                    name="fees_amount" rows="3" value="{{ old('fees_amount') }}"
+                                    class="mt-1 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                                @error('fees_amount')
                                     <p class="text-sm text-red-500">
                                         * {{ __($message) }}
                                     </p>
@@ -263,6 +333,9 @@
                                 @enderror
                             </div>
                         </div>
+
+
+
                     </div>
 
                     <div class="modal-action ">

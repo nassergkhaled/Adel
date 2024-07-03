@@ -70,9 +70,8 @@
 
                     <div class="flex items-center space-x-4">
                         <div>
-                            <span class="text-black">تاريخ الفتح والإغلاق :</span>
-                            <span class="text-[#9B9B9B] text-md">{{ $case->open_date }}</span><span
-                                class="font-bold px-1 text-adel-Dark">-</span><span>{{ $case->close_date }}</span>
+                            <span class="text-black">تاريخ الفتح :</span>
+                            <span class="text-[#9B9B9B] text-md">{{ $case->open_date }}</span>
                         </div>
                     </div>
 
@@ -99,6 +98,10 @@
                         <span class="{{ $class }}">{{ __($case->status) }}</span>
                     </div>
 
+                    <div class="flex items-center gap-1 ">
+                        <span class="text-black">اتعاب المحامي :</span>
+                        <span class="text-md bg-[#b2eef8] px-2 py-0 rounded-lg text-[#2f413f] tracking-wide border border-[#5e9e97]">{{ $case->fees_amount ?? 'لم يحدد بعد' }}</span>
+                    </div>
                 </div>
             </div>
 

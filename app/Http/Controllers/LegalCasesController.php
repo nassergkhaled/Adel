@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\expense;
 use App\Models\LawyerClient;
 use App\Models\LegalCase;
 use App\Models\Role;
@@ -37,10 +38,9 @@ class LegalCasesController extends Controller
                 'cases' => $legalCases,
                 'isLowyer' => true,
             ];
-        }
-        else if ($user->role == 'Client') {
+        } else if ($user->role == 'Client') {
 
-             $legalCases =LegalCase::where('client_id',$user->client->id)->get();
+            $legalCases = LegalCase::where('client_id', $user->client->id)->get();
             $data = [
                 'clients' => [],
                 'cases' => $legalCases,
@@ -105,7 +105,12 @@ class LegalCasesController extends Controller
             'case_name' => 'required|string|max:255',
             'client_id' => 'required|integer|exists:clients,id',
             'case_status' => 'required|string|in:Open,Closed,Pending',
-            'case_type' => 'required|string',
+            'case_type' => 'required_without:new_case_type',
+
+            'new_case_type' => 'string',
+            'fees_type' => 'required|string',
+            'fees_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+
             'case_openDate' => 'required|date',
             'case_closeDate' => 'required|date',
             'case_description' => 'required|string',
@@ -146,7 +151,7 @@ class LegalCasesController extends Controller
         $legalCase = new LegalCase();
         $legalCase->title = $request->case_name;
         $legalCase->status = $request->case_status;
-        $legalCase->type = $request->case_type;
+        $legalCase->type = $request->case_type ?? $request->new_case_type;
         $legalCase->open_date = $request->case_openDate;
         $legalCase->close_date = $request->case_closeDate;
         $legalCase->description = $request->case_description;
@@ -154,6 +159,21 @@ class LegalCasesController extends Controller
         $legalCase->lawyer_id = $user->id;
         $legalCase->client_id = $request->client_id;
         $legalCase->save();
+
+        dd($legalCase);
+
+
+        expense::create([
+            'description' => 'اتعاب محامي',
+            'date' => $request->case_openDate,
+            'quantity' => 1,
+            'case_id' => $legalCase->id,
+            'activity' => 'اتعاب محامي',
+            'activity_type' => 1,
+            'amount' => $request->fees_amount,
+            'total_amount' => $request->fees_amount,
+            'is_paid' => 0,
+        ]);
 
 
         // $role_ids = [$request->client_id, Auth::user()->roles->first()->id];
@@ -168,7 +188,88 @@ class LegalCasesController extends Controller
     }
     public function store(Request $request)
     {
-        $this->sharedStore($request, Auth::user());
+        // Validate the incoming request data
+        $validated = Validator::make($request->all(), [
+            'case_name' => 'required|string|max:255',
+            'client_id' => 'required|integer|exists:clients,id',
+            'case_status' => 'required|string|in:Open,Closed,Pending',
+            'case_type' => 'required|string',
+
+            'fees_type' => 'required|string',
+            'fees_amount' => 'nullable',
+
+            'case_openDate' => 'required|date',
+            'case_closeDate' => 'nullable|date',
+            'case_description' => 'required|string',
+            'case_notes' => 'nullable|string',
+        ]);
+
+        $user = Auth::user();
+
+        if ($validated->fails()) {
+            return redirect()->back()->withErrors($validated->fails())->withInput()->with('ValError', 'Verify the entered data!');
+        }
+
+
+        $officeId = $user->office_id;
+
+
+        // // Get IDs of all clients in my office
+        // $clientRoleIds = Client::whereHas('role', function ($query) use ($officeId) {
+        //     $query->where('office_id', $officeId);
+        // })->pluck('role_id');
+        // $client_id = $request->client_id;
+
+        // // Check if the client role ID exists in my office role IDs
+        // if (!$clientRoleIds->contains($client_id)) {
+        //     return back()->with('errMsg', "Please do not tamper with the system.");
+        // }
+
+
+
+
+        $clientIds = $user->lawyer->clients->pluck('id');
+
+        // Check if the client role ID exists in my office role IDs
+        if (!$clientIds->contains($request->client_id)) {
+            return back()->with('errMsg', "Please do not tamper with the system.");
+        }
+
+
+        $legalCase = new LegalCase();
+        $legalCase->title = $request->case_name;
+        $legalCase->status = $request->case_status;
+        $legalCase->type = $request->case_type ?? $request->new_case_type;
+        $legalCase->open_date = $request->case_openDate;
+        $legalCase->close_date = $request->case_closeDate;
+        $legalCase->description = $request->case_description;
+        $legalCase->notes = $request->case_notes;
+        $legalCase->lawyer_id = $user->id;
+        $legalCase->client_id = $request->client_id;
+        $legalCase->save();
+
+
+        expense::create([
+            'description' => 'اتعاب محامي',
+            'date' => $request->case_openDate,
+            'quantity' => 1,
+            'case_id' => $legalCase->id,
+            'activity' => 'اتعاب محامي',
+            'activity_type' => 1,
+            'amount' => $request->fees_amount,
+            'total_amount' => $request->fees_amount,
+            'is_paid' => 0,
+        ]);
+
+
+        // $role_ids = [$request->client_id, Auth::user()->roles->first()->id];
+        // $legalCase->roles()->attach($role_ids);
+
+
+
+
+        // to return response depends on where request come from (API or WEP)
+
         return redirect()->back()->with('msg', 'Case added successfully!');
     }
     public function APIstore(Request $request)

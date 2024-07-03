@@ -24,11 +24,13 @@ return new class extends Migration
             $table->string('type');
             $table->date('open_date');
             $table->date('close_date')->nullable();
+            $table->string('fees_type');
+            $table->decimal('fees_amount', 10, 3)->nullable();
+
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });
-        
     }
 
     /**
