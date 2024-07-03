@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('phone_number', 15)->unique()->nullable();
             $table->string('address')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('provider_id')->nullable();
+
 
             $table->unsignedBigInteger('office_id')->nullable();
             $table->boolean('acceptedByManager')->default(0); // -1:decline 0:pending 1:accepted
@@ -33,7 +35,7 @@ return new class extends Migration
 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
