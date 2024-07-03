@@ -19,6 +19,10 @@ use App\Http\Controllers\managerFunctionsController;
 use App\Http\Controllers\OCRController;
 use App\Http\Middleware\acceptedJoinRequest;
 use App\Http\Middleware\fullAccess;
+use App\Http\Middleware\Lawyer;
+use App\Http\Middleware\Manager;
+use App\Http\Middleware\notLawyer;
+use App\Http\Middleware\notManager;
 use App\Http\Middleware\pendingJoinRequest;
 use App\Http\Middleware\suspendedAccess;
 
@@ -43,38 +47,52 @@ Route::middleware(['auth', RegistrationComplete::class, 'verified'])->group(func
         Route::get('/profile', [MainController::class, 'profile'])->name('profile');
         Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
         Route::get('/calendar', [MainController::class, 'calendar'])->name('calendar');
-        Route::resource('/legalCases', LegalCasesController::class);
-        Route::resource('/witnesses', witnessesController::class);
-        Route::resource('/Sessions', SessionsController::class);
-        Route::resource('/billings', BillingsController::class);
-        Route::resource('/invoices', InvoiceController::class);
-        Route::resource('/expenses', ExpenseController::class);
-        Route::resource('/requestedfunds', RequestedFundController::class);
 
 
         Route::get('/chating', [MainController::class, 'fetchChatSessions'])->name('chating.index');
 
         Route::resource('tasks', TasksController::class);
-        Route::resource('clients', ClientsController::class);
-        Route::post('/clients/storeById/{id}', [ClientsController::class, 'storeById'])->name('clients.storeById');
-        Route::post('/witnesses/storeById/{id}', [witnessesController::class, 'storeById'])->name('witnesses.storeById');
+
 
 
         Route::put('/updateBasicInfo', [ProfileController::class, 'updateBasicInfo'])->name('updateBasicInfo');
         Route::post('/Update_Avatar_Email', [ProfileController::class, 'Update_Avatar_Email'])->name('UpdateAvatarEmail');
 
 
+        Route::middleware([notManager::class])->group(function () {
+            Route::resource('/legalCases', LegalCasesController::class);
+            Route::resource('/witnesses', witnessesController::class);
+            Route::resource('/Sessions', SessionsController::class);
+            Route::resource('/billings', BillingsController::class);
+            Route::resource('/invoices', InvoiceController::class);
+            Route::resource('/expenses', ExpenseController::class);
+            Route::resource('/requestedfunds', RequestedFundController::class);
+        });
 
-        Route::post('/ManagerInterface', [MainController::class, "switchToManagerInterface"])->name("switchToManagerInterface");
-        Route::post('/LawyerInterface', [MainController::class, "switchToLawyerInterface"])->name("switchToLawyerInterface");
-        Route::post('/ManagerLawyerAccount', [MainController::class, "createManagerLawyerAccount"])->name("createManagerLawyerAccount");
+
+
+        Route::middleware([Lawyer::class])->group(function () {
+            Route::resource('clients', ClientsController::class);
+            Route::post('/clients/storeById/{id}', [ClientsController::class, 'storeById'])->name('clients.storeById');
+            Route::post('/witnesses/storeById/{id}', [witnessesController::class, 'storeById'])->name('witnesses.storeById');
+            Route::post('/ManagerInterface', [MainController::class, "switchToManagerInterface"])->name("switchToManagerInterface");
+        });
+
+
+        Route::middleware([Manager::class])->group(function () {
+
+            Route::post('/LawyerInterface', [MainController::class, "switchToLawyerInterface"])->name("switchToLawyerInterface");
+            Route::post('/ManagerLawyerAccount', [MainController::class, "createManagerLawyerAccount"])->name("createManagerLawyerAccount");
+
+
+            Route::get("/joinRequests", [managerFunctionsController::class, 'joinRequests'])->name('joinRequests');
+            Route::put("/joinRequests/{id}", [managerFunctionsController::class, 'updateJoinRequests'])->name('updateJoinRequests');
+            Route::get('/officeMembers', [managerFunctionsController::class, "officeMembers"])->name("officeMembers");
+            Route::put("/updateMemberAccess/{id}", [managerFunctionsController::class, 'updateMemberAccess'])->name('updateMemberAccess');
+        });
 
 
 
-        Route::get("/joinRequests", [managerFunctionsController::class, 'joinRequests'])->name('joinRequests');
-        Route::put("/joinRequests/{id}", [managerFunctionsController::class, 'updateJoinRequests'])->name('updateJoinRequests');
-        Route::get('/officeMembers', [managerFunctionsController::class, "officeMembers"])->name("officeMembers");
-        Route::put("/updateMemberAccess/{id}", [managerFunctionsController::class, 'updateMemberAccess'])->name('updateMemberAccess');
 
         // Route::post('/ocr', [OCRController::class, 'parseImage'])->name('ocr');
 
