@@ -343,7 +343,13 @@ class MainController extends Controller
     {
         $user = User::find(Auth::id());
         if ($user->acceptedByManager == 0) {
-            $user->update(['office_id', null, 'completeRegistration' => 0]);
+            $user->update([
+                'completeRegistration' => 0,
+                'office_id' => null,
+                'phone_number' => null,
+                'role' => 'New User',
+                'id_number' => null,
+            ]);
             switch ($user->role) {
                 case "Lawyer":
                     Lawyer::find($user->id)->delete();
