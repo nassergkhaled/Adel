@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="min-h-[456px] mx-4">
+            <div class="min-h-[456px] mx-4 min-w-[38%]">
                 <!-- (Pie Chart) -->
                 <div class="col-span-1 h-full bg-white rounded-lg">
                     <div class="rounded-lg overflow-hidden">
