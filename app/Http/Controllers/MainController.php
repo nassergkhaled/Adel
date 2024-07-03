@@ -51,30 +51,49 @@ class MainController extends Controller
 
         $user = Auth::user();
 
-        $data = [
-            'flag' => false
-        ];
-        if (Auth::user()->role == 'Lawyer') {
+        switch ($user->role) {
+            case 'Manager':
+                $legalCases = LegalCase::whereHas('lawyer', function ($query) use ($user) {
+                    $query->whereHas('user', function ($subQuery) use ($user) {
+                        $subQuery->where('office_id', $user->office_id)
+                            ->where('role', 'Lawyer');
+                    });
+                })->get();
 
+                $clientsCount = Office::find($user->office_id)->clients->count();
+                $data = [
+                    'cases' => $legalCases,
+                    'clientsCount' => $clientsCount,
+                    'role' => $user->role,
+                ];
+                break;
 
-            // $clients = $user->lawyer->clients()->whereHas('legalCases')->get();
+            case 'Lawyer':
+                // $clients = $user->lawyer->clients()->whereHas('legalCases')->get();
+                $lawyer = $user->lawyer;
+                $legalCases = $lawyer->legalCases;
 
-            $lawyer = $user->lawyer;
-            $legalCases = $lawyer->legalCases;
+                $myClientsIds = $legalCases->whereIn('status', ['Open', 'Pending'])->pluck('client_id')->unique();
+                $clients = Client::findMany($myClientsIds);
 
-            $myClientsIds = $legalCases->whereIn('status', ['Open', 'Pending'])->pluck('client_id')->unique();
-            $clients = Client::findMany($myClientsIds);
+                // $clientsCount = $legalCases->pluck('client_id')->unique()->count();
+                $clientsCount = $lawyer->clients->count();
 
-            // $clientsCount = $legalCases->pluck('client_id')->unique()->count();
-            $clientsCount = $lawyer->clients->count();
+                $data = [
+                    'clients' => $clients,
+                    'cases' => $legalCases,
+                    'clientsCount' => $clientsCount,
+                    'role' => $user->role,
+                ];
+                break;
 
-
-            $data = [
-                'clients' => $clients,
-                'cases' => $legalCases,
-                'clientsCount' => $clientsCount,
-                'flag' => true,
-            ];
+            case "Client":
+                $legalCases = LegalCase::where('client_id', $user->client->id)->get();
+                $data = [
+                    'cases' => $legalCases,
+                    'role' => $user->role,
+                ];
+                break;
         }
 
 

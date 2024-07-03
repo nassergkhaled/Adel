@@ -91,6 +91,7 @@
     "The password field confirmation does not match.": "كلمة المرور المدخلة غير متطابقة مع حقل التأكيد .",
     "The email has already been taken.": "البريد الإلكتروني موجود مسبقا .",
     "There are no clients with active cases.": "لا يوجد موكّلين لديهم قضايا نشطة .",
+    "There's no Legal Case added yet.":"لم يتم إضافة أي قضية قانونية حتى الآن.",
     "There are no cases registered yet.": "لا يوجد قضايا مسجلة حتى الآن .",
     "There are no registered clients yet.": "لا يوجد موكلين مسجلين حتى الآن .",
     "Don't work in an office?": "لا تعمل في مكتب ؟",
