@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FundRequested;
 use App\Models\LegalCase;
 use App\Models\requestedFund;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+
 
 class RequestedFundController extends Controller
 {
@@ -55,7 +58,7 @@ class RequestedFundController extends Controller
 
 
 
-        requestedFund::create([
+        $fund = requestedFund::create([
             'case_id' => $request->case_id,
             'requested_amount' => $request->form_funds_cost,
             /* 'paid_amount'=>, */
@@ -65,6 +68,11 @@ class RequestedFundController extends Controller
             'message' => $request->form_email_message,
 
         ]);
+        $case = LegalCase::find($request->case_id);
+        $clientUser = $case->client->user;
+        if ($clientUser)
+            Mail::to($clientUser->email)->send(new FundRequested($case, $fund, $request->bank_name, $request->bank_account_number, $request->pay_method));
+
 
         return redirect('billings?Tab=requestedFunds')->with('msg', 'Requested Fund successfully created.');
     }
