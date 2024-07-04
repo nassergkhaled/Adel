@@ -165,6 +165,20 @@
                                     </p>
                                 @enderror
                             </div>
+
+                            <div>
+                                <label for="case_no"
+                                    class="block text-sm font-medium text-gray-700">{{ __('رقم القضية') }}<span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="case_no"
+                                    name="case_no" rows="3" value="{{ old('case_no') }}"
+                                    class="mt-1 w-full border lg:text-[85%] rounded-md border-[#E1E1E1] focus:border-[#E1E1E1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                                @error('case_no')
+                                    <p class="text-sm text-red-500">
+                                        * {{ __($message) }}
+                                    </p>
+                                @enderror
+                            </div>
                         </div>
                         <div class="grid grid-flow-col gap-x-5">
                             <div>
@@ -239,7 +253,6 @@
                                 wantedDiv.innerHTML = button;
                                 wantedDiv.classList = 'flex items-center pt-5 underline hover:text-adel-Dark-hover';
                                 let case_type = document.getElementById('case_type');
-                                case_type.value = '';
                                 case_type.name = 'case_type';
                             }
 

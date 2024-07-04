@@ -191,6 +191,7 @@ class LegalCasesController extends Controller
         // Validate the incoming request data
         $validated = Validator::make($request->all(), [
             'case_name' => 'required|string|max:255',
+            'case_no' => 'required|string|max:100|unique:legal_cases,case_no',
             'client_id' => 'required|integer|exists:clients,id',
             'case_status' => 'required|string|in:Open,Closed,Pending',
             'case_type' => 'required|string',
@@ -246,21 +247,25 @@ class LegalCasesController extends Controller
         $legalCase->notes = $request->case_notes;
         $legalCase->lawyer_id = $user->id;
         $legalCase->client_id = $request->client_id;
+        $legalCase->fees_type = $request->fees_type;
+        $legalCase->fees_amount = $request->fees_amount;
+        $legalCase->case_no = $request->case_no;
+
         $legalCase->save();
 
-
-        expense::create([
-            'description' => 'اتعاب محامي',
-            'date' => $request->case_openDate,
-            'quantity' => 1,
-            'case_id' => $legalCase->id,
-            'activity' => 'اتعاب محامي',
-            'activity_type' => 1,
-            'amount' => $request->fees_amount,
-            'total_amount' => $request->fees_amount,
-            'is_paid' => 0,
-        ]);
-
+        if ($request->fees_amount != null) {
+            expense::create([
+                'description' => 'اتعاب محامي',
+                'date' => $request->case_openDate,
+                'quantity' => 1,
+                'case_id' => $legalCase->id,
+                'activity' => 'اتعاب محامي',
+                'activity_type' => 1,
+                'amount' => $request->fees_amount,
+                'total_amount' => $request->fees_amount,
+                'is_paid' => 0,
+            ]);
+        }
 
         // $role_ids = [$request->client_id, Auth::user()->roles->first()->id];
         // $legalCase->roles()->attach($role_ids);
